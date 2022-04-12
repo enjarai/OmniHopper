@@ -154,7 +154,7 @@ public class OmniHopperBlockEntity extends LootableContainerBlockEntity implemen
         return inventory instanceof SidedInventory ? IntStream.of(((SidedInventory)inventory).getAvailableSlots(side)) : IntStream.range(0, inventory.size());
     }
 
-    private static boolean isInventoryFull(Inventory inventory, Direction direction) {
+    private static boolean isInventoryFull(Inventory inventory, Direction direction) { // TODO cleanup
         return getAvailableSlots(inventory, direction).allMatch((slot) -> {
             ItemStack itemStack = inventory.getStack(slot);
             return itemStack.getCount() >= itemStack.getMaxCount();
@@ -282,7 +282,7 @@ public class OmniHopperBlockEntity extends LootableContainerBlockEntity implemen
             if (bl) {
                 if (bl2 && to instanceof HopperBlockEntity) {
                     HopperBlockEntity hopperBlockEntity = (HopperBlockEntity)to;
-//                    if (!hopperBlockEntity.isDisabled()) {
+//                    if (!hopperBlockEntity.isDisabled()) { // TODO use some of this to make delay better
 //                        int j = 0;
 //                        if (from instanceof net.minecraft.block.entity.HopperBlockEntity) {
 //                            net.minecraft.block.entity.HopperBlockEntity hopperBlockEntity2 = (net.minecraft.block.entity.HopperBlockEntity)from;
