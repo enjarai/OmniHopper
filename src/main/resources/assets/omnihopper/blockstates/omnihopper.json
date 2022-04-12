@@ -1,0 +1,161 @@
+{
+  "variants": {
+    "pointy_bit=up,sucky_bit=up": {
+      "model": "omnihopper:block/hopper_up"
+    },
+    "pointy_bit=down,sucky_bit=up": {
+      "model": "minecraft:block/hopper"
+    },
+    "pointy_bit=north,sucky_bit=up": {
+      "model": "omnihopper:block/hopper_north"
+    },
+    "pointy_bit=east,sucky_bit=up": {
+      "model": "omnihopper:block/hopper_east"
+    },
+    "pointy_bit=south,sucky_bit=up": {
+      "model": "omnihopper:block/hopper_south"
+    },
+    "pointy_bit=west,sucky_bit=up": {
+      "model": "omnihopper:block/hopper_west"
+    },
+
+    "pointy_bit=down,sucky_bit=down": {
+      "model": "omnihopper:block/hopper_up",
+      "x": 180
+    },
+    "pointy_bit=up,sucky_bit=down": {
+      "model": "minecraft:block/hopper",
+      "x": 180
+    },
+    "pointy_bit=north,sucky_bit=down": {
+      "model": "omnihopper:block/hopper_north",
+      "x": 180,
+      "y": 180
+    },
+    "pointy_bit=east,sucky_bit=down": {
+      "model": "omnihopper:block/hopper_east",
+      "x": 180
+    },
+    "pointy_bit=south,sucky_bit=down": {
+      "model": "omnihopper:block/hopper_south",
+      "x": 180,
+      "y": 180
+    },
+    "pointy_bit=west,sucky_bit=down": {
+      "model": "omnihopper:block/hopper_west",
+      "x": 180
+    },
+
+    "pointy_bit=north,sucky_bit=north": {
+      "model": "omnihopper:block/hopper_up",
+      "x": 90
+    },
+    "pointy_bit=south,sucky_bit=north": {
+      "model": "minecraft:block/hopper",
+      "x": 90
+    },
+    "pointy_bit=up,sucky_bit=north": {
+      "model": "omnihopper:block/hopper_south",
+      "x": 90
+    },
+    "pointy_bit=east,sucky_bit=north": {
+      "model": "omnihopper:block/hopper_east",
+      "x": 90
+    },
+    "pointy_bit=down,sucky_bit=north": {
+      "model": "omnihopper:block/hopper_north",
+      "x": 90
+    },
+    "pointy_bit=west,sucky_bit=north": {
+      "model": "omnihopper:block/hopper_west",
+      "x": 90
+    },
+
+    "pointy_bit=south,sucky_bit=south": {
+      "model": "omnihopper:block/hopper_up",
+      "x": 270
+    },
+    "pointy_bit=north,sucky_bit=south": {
+      "model": "minecraft:block/hopper",
+      "x": 270
+    },
+    "pointy_bit=up,sucky_bit=south": {
+      "model": "omnihopper:block/hopper_north",
+      "x": 270
+    },
+    "pointy_bit=east,sucky_bit=south": {
+      "model": "omnihopper:block/hopper_east",
+      "x": 270
+    },
+    "pointy_bit=down,sucky_bit=south": {
+      "model": "omnihopper:block/hopper_south",
+      "x": 270
+    },
+    "pointy_bit=west,sucky_bit=south": {
+      "model": "omnihopper:block/hopper_west",
+      "x": 270
+    },
+
+    "pointy_bit=east,sucky_bit=east": {
+      "model": "omnihopper:block/hopper_up",
+      "x": 90,
+      "y": 90
+    },
+    "pointy_bit=west,sucky_bit=east": {
+      "model": "minecraft:block/hopper",
+      "x": 90,
+      "y": 90
+    },
+    "pointy_bit=up,sucky_bit=east": {
+      "model": "omnihopper:block/hopper_south",
+      "x": 90,
+      "y": 90
+    },
+    "pointy_bit=north,sucky_bit=east": {
+      "model": "omnihopper:block/hopper_west",
+      "x": 90,
+      "y": 90
+    },
+    "pointy_bit=down,sucky_bit=east": {
+      "model": "omnihopper:block/hopper_north",
+      "x": 90,
+      "y": 90
+    },
+    "pointy_bit=south,sucky_bit=east": {
+      "model": "omnihopper:block/hopper_east",
+      "x": 90,
+      "y": 90
+    },
+
+    "pointy_bit=west,sucky_bit=west": {
+      "model": "omnihopper:block/hopper_up",
+      "x": 90,
+      "y": 270
+    },
+    "pointy_bit=east,sucky_bit=west": {
+      "model": "minecraft:block/hopper",
+      "x": 90,
+      "y": 270
+    },
+    "pointy_bit=up,sucky_bit=west": {
+      "model": "omnihopper:block/hopper_south",
+      "x": 90,
+      "y": 270
+    },
+    "pointy_bit=north,sucky_bit=west": {
+      "model": "omnihopper:block/hopper_east",
+      "x": 90,
+      "y": 270
+    },
+    "pointy_bit=down,sucky_bit=west": {
+      "model": "omnihopper:block/hopper_north",
+      "x": 90,
+      "y": 270
+    },
+    "pointy_bit=south,sucky_bit=west": {
+      "model": "omnihopper:block/hopper_west",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

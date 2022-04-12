@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "omnihopper",
+  "version": "${version}",
+
+  "name": "Omni-Hopper",
+  "description": "#TODO",
+  "authors": [
+    "enjarai"
+  ],
+  "contact": {
+    "sources": "https://github.com/enjarai/OmniHopper"
+  },
+
+  "license": "MIT",
+  "icon": "assets/omnihopper/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "nl.enjarai.omnihopper.OmniHopper"
+    ]
+  },
+  "mixins": [
+  ],
+
+  "depends": {
+    "fabric": "*",
+    "minecraft": "1.18.x",
+    "java": ">=17"
+  }
+}
