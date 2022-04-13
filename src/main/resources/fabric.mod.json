@@ -4,12 +4,13 @@
   "version": "${version}",
 
   "name": "Omni-Hopper",
-  "description": "#TODO",
+  "description": "Break free from the constraints of normal hoppers. Experience true item transportation freedom.",
   "authors": [
     "enjarai"
   ],
   "contact": {
-    "sources": "https://github.com/enjarai/OmniHopper"
+    "sources": "https://github.com/enjarai/OmniHopper",
+    "issues": "https://github.com/enjarai/OmniHopper/issues"
   },
 
   "license": "MIT",
