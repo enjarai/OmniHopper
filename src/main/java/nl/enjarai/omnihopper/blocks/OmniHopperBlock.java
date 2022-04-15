@@ -4,20 +4,21 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
+import net.minecraft.util.Hand;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -28,15 +29,16 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class OmniHopperBlock extends BlockWithEntity {
+@SuppressWarnings("deprecation")
+public abstract class OmniHopperBlock extends BlockWithEntity {
     public static final EnumProperty<Direction> POINTY_BIT;
     public static final EnumProperty<Direction> SUCKY_BIT;
     public static final BooleanProperty ENABLED;
+    public static final VoxelShape[] SUCKY_AREA;
     private static final VoxelShape MIDDLE_SHAPE;
     private static final VoxelShape POINTY_SHAPE;
     private static final VoxelShape[][] SHAPES;
     private static final VoxelShape[][] SHAPES_RAYCAST;
-    public static final VoxelShape[] SUCKY_AREA;
 
     static {
         POINTY_BIT = DirectionProperty.of("pointy_bit", Direction.values());
@@ -104,17 +106,19 @@ public class OmniHopperBlock extends BlockWithEntity {
 
     public OmniHopperBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState().with(POINTY_BIT, Direction.DOWN).with(SUCKY_BIT, Direction.UP));
     }
 
+    @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPES[state.get(POINTY_BIT).ordinal()][state.get(SUCKY_BIT).ordinal()];
     }
 
+    @Override
     public VoxelShape getRaycastShape(BlockState state, BlockView world, BlockPos pos) {
         return SHAPES_RAYCAST[state.get(POINTY_BIT).ordinal()][state.get(SUCKY_BIT).ordinal()];
     }
 
+    @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         return this.getDefaultState()
                 .with(POINTY_BIT, ctx.getSide().getOpposite())
@@ -122,31 +126,58 @@ public class OmniHopperBlock extends BlockWithEntity {
                 .with(ENABLED, true);
     }
 
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new OmniHopperBlockEntity(pos, state);
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
+    }
+
+    @Override
+    public boolean hasComparatorOutput(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+//        // TODO this doesn't work right now because of a problem with the transfer api, so comparator outputs will have to wait
+//        if (world.getBlockEntity(pos) instanceof OmniHopperBlockEntity<?> hopperBlockEntity) {
+//            return StorageUtil.calculateComparatorOutput(hopperBlockEntity.getStorage(), null);
+//        }
+        return 0;
     }
 
     @Nullable
+    @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return world.isClient ? null : checkType(type, ModBlocks.OMNIHOPPER_BLOCK_ENTITY, OmniHopperBlockEntity::serverTick);
-    }
-
-    public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
-        if (itemStack.hasCustomName()) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof OmniHopperBlockEntity hopperBlockEntity) {
-                hopperBlockEntity.setCustomName(itemStack.getName());
+        return world.isClient ? null : (world1, pos, state1, blockEntity) -> {
+            if (blockEntity instanceof OmniHopperBlockEntity<?> hopperBlockEntity) {
+                hopperBlockEntity.tick(world, pos, state);
             }
-        }
-
+        };
     }
 
-    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
-        if (!oldState.isOf(state.getBlock())) {
-            this.updateEnabled(world, pos, state);
-        }
+    @Override
+    public BlockState rotate(BlockState state, BlockRotation rotation) {
+        return state
+                .with(POINTY_BIT, rotation.rotate(state.get(POINTY_BIT)))
+                .with(SUCKY_BIT, rotation.rotate(state.get(SUCKY_BIT)));
     }
 
+    @Override
+    public BlockState mirror(BlockState state, BlockMirror mirror) {
+        return state.rotate(mirror.getRotation(state.get(POINTY_BIT)));
+    }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(POINTY_BIT).add(SUCKY_BIT).add(ENABLED);
+    }
+
+    @Override
+    public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+        return false;
+    }
+
+    @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world.isClient) {
             return ActionResult.SUCCESS;
@@ -161,8 +192,20 @@ public class OmniHopperBlock extends BlockWithEntity {
         }
     }
 
+    @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
+        if (itemStack.hasCustomName()) {
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof OmniHopperBlockEntity hopperBlockEntity) {
+                hopperBlockEntity.setCustomName(itemStack.getName());
+            }
+        }
+    }
+
+    @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         this.updateEnabled(world, pos, state);
+        super.neighborUpdate(state, world, pos, block, fromPos, notify);
     }
 
     private void updateEnabled(World world, BlockPos pos, BlockState state) {
@@ -172,45 +215,17 @@ public class OmniHopperBlock extends BlockWithEntity {
         }
     }
 
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (!state.isOf(newState.getBlock())) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof HopperBlockEntity) {
-                ItemScatterer.spawn(world, pos, (HopperBlockEntity)blockEntity);
-                world.updateComparators(pos, this);
-            }
-
-            super.onStateReplaced(state, world, pos, newState, moved);
+    @Override
+    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
+        if (!oldState.isOf(state.getBlock())) {
+            this.updateEnabled(world, pos, state);
         }
+        super.onBlockAdded(state, world, pos, oldState, notify);
     }
 
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
-    }
-
-    public boolean hasComparatorOutput(BlockState state) {
-        return true;
-    }
-
-    public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
-        return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
-    }
-
-    public BlockState rotate(BlockState state, BlockRotation rotation) {
-        return state
-                .with(POINTY_BIT, rotation.rotate(state.get(POINTY_BIT)))
-                .with(SUCKY_BIT, rotation.rotate(state.get(SUCKY_BIT)));
-    }
-
-    public BlockState mirror(BlockState state, BlockMirror mirror) {
-        return state.rotate(mirror.getRotation(state.get(POINTY_BIT)));
-    }
-
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(POINTY_BIT).add(SUCKY_BIT).add(ENABLED);
-    }
-
-    public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
-        return false;
+    @Override
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        world.updateComparators(pos, this);
+        super.onStateReplaced(state, world, pos, newState, moved);
     }
 }
