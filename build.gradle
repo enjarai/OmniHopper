@@ -35,8 +35,8 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// Include Cooldown Coordinator 0.2.1 via cursemaven
-	include(modImplementation("curse.maven:cooldown-coordinator-594072:3697367"))
+	// Include Cooldown Coordinator 0.3.0 via cursemaven
+	include(modImplementation("curse.maven:cooldown-coordinator-594072:3757479"))
 }
 
 processResources {
