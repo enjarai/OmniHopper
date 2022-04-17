@@ -16,6 +16,15 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+
+	// for Cooldown Coordinator
+	maven {
+		url "https://maven.pkg.github.com/gniftygnome/cooldown-coordinator"
+		credentials {
+			username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+			password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+		}
+	}
 }
 
 dependencies {
@@ -26,6 +35,9 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+	// Coordinate item movement cooldowns with other mods
+    modImplementation "net.gnomecraft:cooldown-coordinator:${project.cooldowncoordinator_version}"
 }
 
 processResources {

@@ -3,6 +3,7 @@ package nl.enjarai.omnihopper.blocks;
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
+import net.gnomecraft.cooldowncoordinator.*;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HopperBlock;
 import net.minecraft.block.entity.BlockEntity;
@@ -18,7 +19,7 @@ import static nl.enjarai.omnihopper.blocks.OmniHopperBlock.POINTY_BIT;
 import static nl.enjarai.omnihopper.blocks.OmniHopperBlock.SUCKY_BIT;
 
 @SuppressWarnings("UnstableApiUsage")
-public abstract class OmniHopperBlockEntity<T> extends BlockEntity implements NamedScreenHandlerFactory {
+public abstract class OmniHopperBlockEntity<T> extends BlockEntity implements CoordinatedCooldown, NamedScreenHandlerFactory {
     protected int transferCooldown;
     protected long lastTickTime;
     private Text customName;
@@ -83,22 +84,19 @@ public abstract class OmniHopperBlockEntity<T> extends BlockEntity implements Na
 
         if (target != null) {
             BlockEntity blockEntityTarget = world.getBlockEntity(pos.offset(direction));
-            boolean moved = StorageUtil.move(
+            boolean targetEmpty = StorageUtil.findStoredResource(target, null) == null;
+            if (StorageUtil.move(
                     getStorage(),
                     target,
                     iv -> true,
                     1,
                     null
-            ) == 1;
-            if (moved && blockEntityTarget instanceof ItemOmniHopperBlockEntity otherHopperBlock && !otherHopperBlock.isDisabled()) {
-                int j = 0;
-                if (otherHopperBlock.lastTickTime >= lastTickTime) {
-                    j = 1;
+            ) == 1) {
+                if (targetEmpty) {
+                    CooldownCoordinator.notify(blockEntityTarget);
                 }
-
-                otherHopperBlock.setTransferCooldown(8 - j);
+                return true;
             }
-            return moved;
         }
         return false;
     }
@@ -123,6 +121,21 @@ public abstract class OmniHopperBlockEntity<T> extends BlockEntity implements Na
 
     protected boolean pickupInWorldObjects(World world, BlockPos pos, Direction suckyDirection) {
         return false;
+    }
+
+    @Override
+    public void notifyCooldown() {
+        if (world == null || this.isDisabled()) {
+            return;
+        }
+
+        if (this.lastTickTime >= world.getTime()) {
+            this.transferCooldown = 7;
+        } else {
+            this.transferCooldown = 8;
+        }
+
+        this.markDirty();
     }
 
     public abstract Text getName();
