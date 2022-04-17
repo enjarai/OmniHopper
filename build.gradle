@@ -19,10 +19,9 @@ repositories {
 
 	// for Cooldown Coordinator
 	maven {
-		url "https://maven.pkg.github.com/gniftygnome/cooldown-coordinator"
-		credentials {
-			username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-			password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+		url "https://www.cursemaven.com"
+		content {
+			includeGroup "curse.maven"
 		}
 	}
 }
@@ -36,8 +35,8 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// Coordinate item movement cooldowns with other mods
-    modImplementation "net.gnomecraft:cooldown-coordinator:${project.cooldowncoordinator_version}"
+	// Include Cooldown Coordinator 0.2.1 via cursemaven
+	include(modImplementation("curse.maven:cooldown-coordinator-594072:3697367"))
 }
 
 processResources {
