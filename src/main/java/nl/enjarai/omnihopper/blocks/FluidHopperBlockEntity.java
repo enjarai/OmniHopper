@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class FluidHopperBlockEntity extends FluidOmniHopperBlockEntity {
     public FluidHopperBlockEntity(BlockPos blockPos, BlockState blockState) {
-        super(blockPos, blockState);
+        super(ModBlocks.FLUID_HOPPER_BLOCK_ENTITY, blockPos, blockState);
     }
 
     @Override
