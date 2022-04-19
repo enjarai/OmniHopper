@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "c c",
+    "cCc",
+    " c "
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:chest"
+    },
+    "c": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "result": {
+    "item": "omnihopper:fluid_hopper"
+  }
+}

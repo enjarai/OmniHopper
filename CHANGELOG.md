@@ -1,1 +1,4 @@
+- Added Fluid Hoppers and Fluid Omni-Hoppers
 - Performance improvements thanks to fully embracing the Fabric Transfer API.
+- Fixed effective tool not being a pickaxe on Omni-Hoppers
+- Added integration with Cooldown Coordinator to sync cooldowns with other hopper-like blocks

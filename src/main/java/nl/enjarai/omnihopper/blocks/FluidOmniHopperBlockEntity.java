@@ -15,6 +15,7 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -67,6 +68,12 @@ public class FluidOmniHopperBlockEntity extends OmniHopperBlockEntity<FluidVaria
     @Override
     protected long getAmountPerActivation() {
         return FluidConstants.BUCKET / 2;
+    }
+
+    @Override
+    protected boolean pickupInWorldObjects(World world, BlockPos pos, Direction suckyDirection) {
+        // TODO pickup source blocks from world
+        return super.pickupInWorldObjects(world, pos, suckyDirection);
     }
 
     @Override

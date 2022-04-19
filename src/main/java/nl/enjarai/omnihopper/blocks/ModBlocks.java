@@ -4,11 +4,11 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.MapColor;
+import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import nl.enjarai.omnihopper.OmniHopper;
 
@@ -31,19 +31,11 @@ public class ModBlocks {
     public static final BlockEntityType<FluidOmniHopperBlockEntity> FLUID_OMNIHOPPER_BLOCK_ENTITY =
             FabricBlockEntityTypeBuilder.create(FluidOmniHopperBlockEntity::new, FLUID_OMNIHOPPER_BLOCK).build(null);
 
-    // Hacky workaround for creating a normal fluid hopper, mostly for consistency
-    public static final Block FLUID_HOPPER_BLOCK = new FluidOmniHopperBlock(OMNIHOPPER_BLOCK_SETTINGS) {
-        @Override
-        public BlockState getPlacementState(ItemPlacementContext ctx) {
-            Direction direction = ctx.getSide().getOpposite();
-            return this.getDefaultState()
-                    .with(SUCKY_BIT, Direction.UP)
-                    .with(POINTY_BIT, direction.getAxis() == Direction.Axis.Y ? Direction.DOWN : direction)
-                    .with(ENABLED, true);
-        }
-    };
-    public static final BlockEntityType<FluidOmniHopperBlockEntity> FLUID_HOPPER_BLOCK_ENTITY =
-            FabricBlockEntityTypeBuilder.create(FluidOmniHopperBlockEntity::new, FLUID_HOPPER_BLOCK).build(null);
+    // Hacky workaround for creating a normal fluid hopper, made by overriding the placement state to behave
+    // like a normal hopper. mostly for consistency
+    public static final Block FLUID_HOPPER_BLOCK = new FluidHopperBlock(OMNIHOPPER_BLOCK_SETTINGS);
+    public static final BlockEntityType<FluidHopperBlockEntity> FLUID_HOPPER_BLOCK_ENTITY =
+            FabricBlockEntityTypeBuilder.create(FluidHopperBlockEntity::new, FLUID_HOPPER_BLOCK).build(null);
 
 
     public static void register() {
@@ -55,6 +47,7 @@ public class ModBlocks {
         Registry.register(Registry.BLOCK_ENTITY_TYPE, OmniHopper.id("fluid_omnihopper"), FLUID_OMNIHOPPER_BLOCK_ENTITY);
         Registry.register(Registry.BLOCK_ENTITY_TYPE, OmniHopper.id("fluid_hopper"), FLUID_HOPPER_BLOCK_ENTITY);
 
+        // Register block entities with the Transfer API
         ItemStorage.SIDED.registerForBlockEntity((blockEntity, direction) -> blockEntity.getStorage(), OMNIHOPPER_BLOCK_ENTITY);
         FluidStorage.SIDED.registerForBlockEntity((blockEntity, direction) -> blockEntity.getStorage(), FLUID_OMNIHOPPER_BLOCK_ENTITY);
         FluidStorage.SIDED.registerForBlockEntity((blockEntity, direction) -> blockEntity.getStorage(), FLUID_HOPPER_BLOCK_ENTITY);
