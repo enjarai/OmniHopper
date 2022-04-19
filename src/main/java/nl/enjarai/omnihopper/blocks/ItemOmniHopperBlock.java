@@ -8,10 +8,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 public class ItemOmniHopperBlock extends OmniHopperBlock {
-
     public ItemOmniHopperBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState().with(POINTY_BIT, Direction.DOWN).with(SUCKY_BIT, Direction.UP));
     }
 
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {

@@ -50,6 +50,11 @@ public class ItemOmniHopperBlockEntity extends OmniHopperBlockEntity<ItemVariant
     }
 
     @Override
+    protected long getAmountPerActivation() {
+        return 1;
+    }
+
+    @Override
     public BlockApiLookup<Storage<ItemVariant>, Direction> getBlockApiLookup() {
         return ItemStorage.SIDED;
     }
