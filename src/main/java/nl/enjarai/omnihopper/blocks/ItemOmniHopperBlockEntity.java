@@ -50,7 +50,7 @@ public class ItemOmniHopperBlockEntity extends OmniHopperBlockEntity<ItemVariant
     }
 
     @Override
-    protected long getAmountPerActivation() {
+    protected long getAmountPerActivation(BlockState targetState) {
         return 1;
     }
 

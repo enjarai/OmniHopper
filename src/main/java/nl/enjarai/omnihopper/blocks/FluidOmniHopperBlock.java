@@ -9,6 +9,7 @@ public class FluidOmniHopperBlock extends OmniHopperBlock {
     public FluidOmniHopperBlock(Settings settings) {
         super(settings);
     }
+    // TODO add oxidization and use datagen for models
 
     @Nullable
     @Override

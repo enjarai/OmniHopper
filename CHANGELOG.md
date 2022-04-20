@@ -1,1 +1,4 @@
+- The Fluid Hopper and Omni-Hopper can now pick up liquids from the world or waterlogged blocks
 - Edit Fluid Hopper recipe to make sense
+- Added an exception for insertion and extraction amounts from cauldrons, this way lava can be transported between cauldrons without issues
+- Update item textures for Fluid Hoppers to not look like clay

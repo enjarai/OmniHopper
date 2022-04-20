@@ -24,6 +24,11 @@ repositories {
 			includeGroup "curse.maven"
 		}
 	}
+
+	// for ARRP
+	maven {
+		url "https://storage.googleapis.com/devan-maven/"
+	}
 }
 
 dependencies {
@@ -37,6 +42,9 @@ dependencies {
 
 	// Include Cooldown Coordinator 0.3.0 via cursemaven
 	include(modImplementation("curse.maven:cooldown-coordinator-594072:3757479"))
+
+	// Include ARRP
+	include(modImplementation("net.devtech:arrp:${project.arrp_version}"))
 }
 
 processResources {

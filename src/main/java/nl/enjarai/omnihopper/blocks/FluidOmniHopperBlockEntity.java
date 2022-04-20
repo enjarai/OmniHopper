@@ -6,10 +6,15 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleVariantStorage;
+import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.CauldronBlock;
+import net.minecraft.block.FluidDrainable;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
@@ -71,14 +76,33 @@ public class FluidOmniHopperBlockEntity extends OmniHopperBlockEntity<FluidVaria
     }
 
     @Override
-    protected long getAmountPerActivation() {
-        return FluidConstants.BUCKET / 2;
+    protected long getAmountPerActivation(BlockState targetState) {
+        return FluidConstants.BUCKET / (targetState.isOf(Blocks.CAULDRON) ? 1 : 4);
     }
 
     @Override
     protected boolean pickupInWorldObjects(World world, BlockPos pos, Direction suckyDirection) {
-        // TODO pickup source blocks from world
-        return super.pickupInWorldObjects(world, pos, suckyDirection);
+        var fluidPos = pos.offset(suckyDirection);
+        var fluid = world.getFluidState(fluidPos);
+        var state = world.getBlockState(fluidPos);
+
+        if (fluid.isStill() && state.getBlock() instanceof FluidDrainable drainable) {
+            try (var transaction = Transaction.openOuter()) {
+                long inserted = getStorage().insert(
+                        FluidVariant.of(fluid.getFluid()),
+                        FluidConstants.BUCKET,
+                        transaction
+                );
+
+                if (inserted == FluidConstants.BUCKET && !drainable.tryDrainFluid(world, fluidPos, state).isEmpty()) {
+                    transaction.commit();
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     @Override
