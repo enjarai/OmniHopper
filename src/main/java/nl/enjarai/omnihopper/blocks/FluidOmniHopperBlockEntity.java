@@ -8,15 +8,13 @@ import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleVariantStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CauldronBlock;
 import net.minecraft.block.FluidDrainable;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
@@ -77,7 +75,7 @@ public class FluidOmniHopperBlockEntity extends OmniHopperBlockEntity<FluidVaria
 
     @Override
     protected long getAmountPerActivation(BlockState targetState) {
-        return FluidConstants.BUCKET / (targetState.isOf(Blocks.CAULDRON) ? 1 : 4);
+        return FluidConstants.BUCKET / (targetState.isIn(BlockTags.CAULDRONS) ? 1 : 4);
     }
 
     @Override

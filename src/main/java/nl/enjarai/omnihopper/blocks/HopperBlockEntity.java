@@ -107,15 +107,15 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
 
     protected boolean extract(World world, BlockPos pos, BlockState state) {
         Direction suckyDirection = getSuckyDirection(state);
-        BlockPos targetPos = pos.offset(suckyDirection);
-        Storage<T> source = getBlockApiLookup().find(world, targetPos, suckyDirection.getOpposite());
+        BlockPos sourcePos = pos.offset(suckyDirection);
+        Storage<T> source = getBlockApiLookup().find(world, sourcePos, suckyDirection.getOpposite());
 
         if (source != null) {
             long moved = StorageUtil.move(
                     source,
                     getStorage(),
                     iv -> true,
-                    getAmountPerActivation(world.getBlockState(targetPos)),
+                    getAmountPerActivation(world.getBlockState(sourcePos)),
                     null
             );
             return moved >= 1;
