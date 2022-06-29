@@ -2,7 +2,6 @@ package nl.enjarai.omnihopper.blocks;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 
 public class FluidHopperBlockEntity extends FluidOmniHopperBlockEntity {
@@ -12,6 +11,6 @@ public class FluidHopperBlockEntity extends FluidOmniHopperBlockEntity {
 
     @Override
     public Text getName() {
-        return new TranslatableText("container.fluid_hopper");
+        return Text.translatable("container.fluid_hopper");
     }
 }

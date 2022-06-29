@@ -27,7 +27,13 @@
   "accessWidener" : "omnihopper.accesswidener",
   "depends": {
     "fabric": "*",
-    "minecraft": "1.18.x",
+    "minecraft": "1.19.x",
     "java": ">=17"
+  },
+  "custom": {
+    "projects": {
+      "modrinth": "i2u9r3li",
+      "curseforge": 610606
+    }
   }
 }

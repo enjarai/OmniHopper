@@ -18,7 +18,6 @@ import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.screen.HopperScreenHandler;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -118,7 +117,7 @@ public class ItemOmniHopperBlockEntity extends OmniHopperBlockEntity<ItemVariant
 
     @Override
     public Text getName() {
-        return new TranslatableText("container.omnihopper");
+        return Text.translatable("container.omnihopper");
     }
 
     @Nullable

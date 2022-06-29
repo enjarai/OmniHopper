@@ -41,10 +41,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// Include Cooldown Coordinator 0.3.0 via cursemaven
-	include(modImplementation("curse.maven:cooldown-coordinator-594072:3757479"))
-
-	// Include ARRP
-	include(modImplementation("net.devtech:arrp:${project.arrp_version}"))
+	include(modImplementation("curse.maven:cooldown-coordinator-594072:3820917"))
 }
 
 processResources {

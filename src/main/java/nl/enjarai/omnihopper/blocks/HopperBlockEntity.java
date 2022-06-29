@@ -88,7 +88,7 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
 
         if (target != null) {
             BlockEntity blockEntityTarget = world.getBlockEntity(targetPos);
-            boolean targetEmpty = StorageUtil.findStoredResource(target, null) == null;
+            boolean targetEmpty = StorageUtil.findStoredResource(target) == null;
             if (StorageUtil.move(
                     getStorage(),
                     target,

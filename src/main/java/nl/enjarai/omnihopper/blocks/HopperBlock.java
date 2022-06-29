@@ -1,5 +1,6 @@
 package nl.enjarai.omnihopper.blocks;
 
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -28,6 +29,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("UnstableApiUsage")
 public abstract class HopperBlock extends BlockWithEntity {
     public static final BooleanProperty ENABLED;
     public static final VoxelShape[] SUCKY_AREA;
@@ -126,10 +128,9 @@ public abstract class HopperBlock extends BlockWithEntity {
 
     @Override
     public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
-//        // TODO this doesn't work right now because of a problem with the transfer api, so comparator outputs will have to wait
-//        if (world.getBlockEntity(pos) instanceof OmniHopperBlockEntity<?> hopperBlockEntity) {
-//            return StorageUtil.calculateComparatorOutput(hopperBlockEntity.getStorage(), null);
-//        }
+        if (world.getBlockEntity(pos) instanceof OmniHopperBlockEntity<?> hopperBlockEntity) {
+            return StorageUtil.calculateComparatorOutput(hopperBlockEntity.getStorage());
+        }
         return 0;
     }
 

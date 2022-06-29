@@ -16,7 +16,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -105,7 +104,7 @@ public class FluidOmniHopperBlockEntity extends OmniHopperBlockEntity<FluidVaria
 
     @Override
     public Text getName() {
-        return new TranslatableText("container.fluid_omnihopper");
+        return Text.translatable("container.fluid_omnihopper");
     }
 
     @Nullable

@@ -1,1 +1,2 @@
-- Fix fluid hoppers not interacting with cauldrons properly
+- Update to 1.19.
+- Added comparator output to hoppers, similar to vanilla ones.
