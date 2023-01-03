@@ -1,2 +1,1 @@
-- Update to 1.19.
-- Added comparator output to hoppers, similar to vanilla ones.
+- Updated to 1.19.3.
