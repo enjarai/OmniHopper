@@ -8,8 +8,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.util.registry.Registry;
 import nl.enjarai.omnihopper.OmniHopper;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -39,13 +40,13 @@ public class ModBlocks {
 
 
     public static void register() {
-        Registry.register(Registry.BLOCK, OmniHopper.id("omnihopper"), OMNIHOPPER_BLOCK);
-        Registry.register(Registry.BLOCK, OmniHopper.id("fluid_omnihopper"), FLUID_OMNIHOPPER_BLOCK);
-        Registry.register(Registry.BLOCK, OmniHopper.id("fluid_hopper"), FLUID_HOPPER_BLOCK);
+        Registry.register(Registries.BLOCK, OmniHopper.id("omnihopper"), OMNIHOPPER_BLOCK);
+        Registry.register(Registries.BLOCK, OmniHopper.id("fluid_omnihopper"), FLUID_OMNIHOPPER_BLOCK);
+        Registry.register(Registries.BLOCK, OmniHopper.id("fluid_hopper"), FLUID_HOPPER_BLOCK);
 
-        Registry.register(Registry.BLOCK_ENTITY_TYPE, OmniHopper.id("omnihopper"), OMNIHOPPER_BLOCK_ENTITY);
-        Registry.register(Registry.BLOCK_ENTITY_TYPE, OmniHopper.id("fluid_omnihopper"), FLUID_OMNIHOPPER_BLOCK_ENTITY);
-        Registry.register(Registry.BLOCK_ENTITY_TYPE, OmniHopper.id("fluid_hopper"), FLUID_HOPPER_BLOCK_ENTITY);
+        Registry.register(Registries.BLOCK_ENTITY_TYPE, OmniHopper.id("omnihopper"), OMNIHOPPER_BLOCK_ENTITY);
+        Registry.register(Registries.BLOCK_ENTITY_TYPE, OmniHopper.id("fluid_omnihopper"), FLUID_OMNIHOPPER_BLOCK_ENTITY);
+        Registry.register(Registries.BLOCK_ENTITY_TYPE, OmniHopper.id("fluid_hopper"), FLUID_HOPPER_BLOCK_ENTITY);
 
         // Register block entities with the Transfer API
         ItemStorage.SIDED.registerForBlockEntity((blockEntity, direction) -> blockEntity.getStorage(), OMNIHOPPER_BLOCK_ENTITY);
