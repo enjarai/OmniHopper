@@ -1,28 +1,20 @@
 package nl.enjarai.omnihopper.blocks;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import nl.enjarai.omnihopper.blocks.entity.ItemOmniHopperBlockEntity;
 
 public class ItemOmniHopperBlock extends OmniHopperBlock {
     public ItemOmniHopperBlock(Settings settings) {
         super(settings);
     }
 
+    @Nullable
+    @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new ItemOmniHopperBlockEntity(pos, state);
-    }
-
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (!state.isOf(newState.getBlock())) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof ItemOmniHopperBlockEntity hopperBlockEntity) {
-                ItemScatterer.spawn(world, pos, hopperBlockEntity.inventory);
-            }
-
-            super.onStateReplaced(state, world, pos, newState, moved);
-        }
     }
 }

@@ -13,7 +13,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
 
 @SuppressWarnings("deprecation")
 public abstract class OmniHopperBlock extends HopperBlock {
@@ -40,12 +39,12 @@ public abstract class OmniHopperBlock extends HopperBlock {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return SHAPES[state.get(OmniHopperBlock.POINTY_BIT).ordinal()][state.get(OmniHopperBlock.SUCKY_BIT).ordinal()];
+        return SHAPES[state.get(POINTY_BIT).ordinal()][state.get(SUCKY_BIT).ordinal()];
     }
 
     @Override
     public VoxelShape getRaycastShape(BlockState state, BlockView world, BlockPos pos) {
-        return SHAPES_RAYCAST[state.get(OmniHopperBlock.POINTY_BIT).ordinal()][state.get(OmniHopperBlock.SUCKY_BIT).ordinal()];
+        return SHAPES_RAYCAST[state.get(POINTY_BIT).ordinal()][state.get(SUCKY_BIT).ordinal()];
     }
 
     @Override

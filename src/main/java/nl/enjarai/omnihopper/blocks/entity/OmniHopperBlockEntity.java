@@ -1,16 +1,16 @@
-package nl.enjarai.omnihopper.blocks;
+package nl.enjarai.omnihopper.blocks.entity;
+
+import static nl.enjarai.omnihopper.blocks.OmniHopperBlock.POINTY_BIT;
+import static nl.enjarai.omnihopper.blocks.OmniHopperBlock.SUCKY_BIT;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
-import static nl.enjarai.omnihopper.blocks.OmniHopperBlock.POINTY_BIT;
-import static nl.enjarai.omnihopper.blocks.OmniHopperBlock.SUCKY_BIT;
-
 public abstract class OmniHopperBlockEntity<T> extends HopperBlockEntity<T> {
-    public OmniHopperBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
-        super(blockEntityType, blockPos, blockState);
+    public OmniHopperBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
 
     @Override

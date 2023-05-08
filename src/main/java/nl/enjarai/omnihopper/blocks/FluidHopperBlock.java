@@ -1,28 +1,20 @@
 package nl.enjarai.omnihopper.blocks;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
-public class FluidHopperBlock extends FluidOmniHopperBlock {
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.util.math.BlockPos;
+import nl.enjarai.omnihopper.blocks.entity.FluidHopperBlockEntity;
+
+public class FluidHopperBlock extends BasicHopperBlock {
     public FluidHopperBlock(Settings settings) {
         super(settings);
     }
 
+    @Nullable
     @Override
-    public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new FluidHopperBlockEntity(pos, state);
-    }
-
-    @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        Direction direction = ctx.getSide().getOpposite();
-        return this.getDefaultState()
-                .with(SUCKY_BIT, Direction.UP)
-                .with(POINTY_BIT, direction.getAxis() == Direction.Axis.Y ? Direction.DOWN : direction)
-                .with(ENABLED, true);
     }
 }

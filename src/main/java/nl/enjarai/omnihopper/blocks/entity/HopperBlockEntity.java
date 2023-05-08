@@ -1,6 +1,7 @@
-package nl.enjarai.omnihopper.blocks;
+package nl.enjarai.omnihopper.blocks.entity;
 
-import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup;
+import org.jetbrains.annotations.Nullable;
+
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
 import net.gnomecraft.cooldowncoordinator.CooldownCoordinator;
@@ -9,29 +10,29 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.HopperBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Nameable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
+import nl.enjarai.omnihopper.blocks.behaviour.HopperBehaviour;
 
 @SuppressWarnings("UnstableApiUsage")
 public abstract class HopperBlockEntity<T> extends BlockEntity implements CoordinatedCooldown, NamedScreenHandlerFactory, Nameable {
     protected int transferCooldown;
     protected long lastTickTime;
     private Text customName;
+    protected HopperBehaviour<T> behaviour;
 
     public HopperBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         this.transferCooldown = -1;
     }
-
-    public abstract Storage<T> getStorage();
-
-    public abstract BlockApiLookup<Storage<T>, Direction> getBlockApiLookup();
 
     public abstract Direction getSuckyDirection(BlockState state);
 
@@ -44,6 +45,8 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
             customName = Text.Serializer.fromJson(nbt.getString("CustomName"));
         }
         transferCooldown = nbt.getInt("TransferCooldown");
+
+        behaviour.readNbt(nbt);
     }
 
     protected void writeNbt(NbtCompound nbt) {
@@ -53,9 +56,11 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
             nbt.putString("CustomName", Text.Serializer.toJson(customName));
         }
         nbt.putInt("TransferCooldown", transferCooldown);
+
+        behaviour.writeNbt(nbt);
     }
 
-    protected void tick(World world, BlockPos pos, BlockState state) {
+    public void tick(World world, BlockPos pos, BlockState state) {
         --transferCooldown;
         lastTickTime = world.getTime();
         if (!needsCooldown()) {
@@ -84,16 +89,16 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
     protected boolean insert(World world, BlockPos pos, BlockState state) {
         Direction direction = getPointyDirection(state);
         BlockPos targetPos = pos.offset(direction);
-        Storage<T> target = getBlockApiLookup().find(world, targetPos, direction.getOpposite());
+        Storage<T> target = behaviour.getBlockApiLookup().find(world, targetPos, direction.getOpposite());
 
         if (target != null) {
             BlockEntity blockEntityTarget = world.getBlockEntity(targetPos);
             boolean targetEmpty = StorageUtil.findStoredResource(target) == null;
             if (StorageUtil.move(
-                    getStorage(),
+                    behaviour.getStorage(),
                     target,
                     iv -> true,
-                    getAmountPerActivation(world.getBlockState(targetPos)),
+                    behaviour.getAmountPerActivation(world.getBlockState(targetPos)),
                     null
             ) == 1) {
                 if (targetEmpty) {
@@ -108,24 +113,20 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
     protected boolean extract(World world, BlockPos pos, BlockState state) {
         Direction suckyDirection = getSuckyDirection(state);
         BlockPos sourcePos = pos.offset(suckyDirection);
-        Storage<T> source = getBlockApiLookup().find(world, sourcePos, suckyDirection.getOpposite());
+        Storage<T> source = behaviour.getBlockApiLookup().find(world, sourcePos, suckyDirection.getOpposite());
 
         if (source != null) {
             long moved = StorageUtil.move(
                     source,
-                    getStorage(),
+                    behaviour.getStorage(),
                     iv -> true,
-                    getAmountPerActivation(world.getBlockState(sourcePos)),
+                    behaviour.getAmountPerActivation(world.getBlockState(sourcePos)),
                     null
             );
             return moved >= 1;
         } else {
-            return pickupInWorldObjects(world, pos, suckyDirection);
+            return behaviour.pickupInWorldObjects(world, pos, suckyDirection);
         }
-    }
-
-    protected boolean pickupInWorldObjects(World world, BlockPos pos, Direction suckyDirection) {
-        return false;
     }
 
     @Override
@@ -143,7 +144,9 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
         this.markDirty();
     }
 
-    protected abstract long getAmountPerActivation(BlockState targetState);
+    public HopperBehaviour<T> getBehaviour() {
+        return behaviour;
+    }
 
     @Nullable
     @Override
@@ -170,5 +173,11 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
 
     public void setCustomName(Text name) {
         customName = name;
+    }
+
+    @Nullable
+    @Override
+    public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
+        return behaviour.createMenu(syncId, playerInventory, player);
     }
 }

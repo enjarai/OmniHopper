@@ -1,5 +1,7 @@
 package nl.enjarai.omnihopper.blocks;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
@@ -19,6 +21,7 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -27,9 +30,10 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
+import nl.enjarai.omnihopper.blocks.behaviour.ItemHopperBehaviour;
+import nl.enjarai.omnihopper.blocks.entity.HopperBlockEntity;
 
-@SuppressWarnings("UnstableApiUsage")
+@SuppressWarnings({"UnstableApiUsage", "deprecation"})
 public abstract class HopperBlock extends BlockWithEntity {
     public static final BooleanProperty ENABLED;
     public static final VoxelShape[] SUCKY_AREA;
@@ -128,8 +132,8 @@ public abstract class HopperBlock extends BlockWithEntity {
 
     @Override
     public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
-        if (world.getBlockEntity(pos) instanceof OmniHopperBlockEntity<?> hopperBlockEntity) {
-            return StorageUtil.calculateComparatorOutput(hopperBlockEntity.getStorage());
+        if (world.getBlockEntity(pos) instanceof HopperBlockEntity<?> hopperBlockEntity) {
+            return StorageUtil.calculateComparatorOutput(hopperBlockEntity.getBehaviour().getStorage());
         }
         return 0;
     }
@@ -155,7 +159,7 @@ public abstract class HopperBlock extends BlockWithEntity {
             return ActionResult.SUCCESS;
         } else {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof HopperBlockEntity hopperBlockEntity) {
+            if (blockEntity instanceof HopperBlockEntity<?> hopperBlockEntity) {
                 player.openHandledScreen(hopperBlockEntity);
                 player.incrementStat(Stats.INSPECT_HOPPER);
             }
@@ -168,7 +172,7 @@ public abstract class HopperBlock extends BlockWithEntity {
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         if (itemStack.hasCustomName()) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof HopperBlockEntity hopperBlockEntity) {
+            if (blockEntity instanceof HopperBlockEntity<?> hopperBlockEntity) {
                 hopperBlockEntity.setCustomName(itemStack.getName());
             }
         }
@@ -198,6 +202,16 @@ public abstract class HopperBlock extends BlockWithEntity {
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         world.updateComparators(pos, this);
+
+        if (!state.isOf(newState.getBlock())) {
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof HopperBlockEntity<?> hopperBlockEntity) {
+                if (hopperBlockEntity.getBehaviour() instanceof ItemHopperBehaviour itemBehaviour) {
+                    ItemScatterer.spawn(world, pos, itemBehaviour.inventory);
+                }
+            }
+        }
+
         super.onStateReplaced(state, world, pos, newState, moved);
     }
 }
