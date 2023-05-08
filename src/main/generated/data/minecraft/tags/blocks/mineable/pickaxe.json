@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "omnihopper:omnihopper",
+    "omnihopper:fluid_omnihopper",
+    "omnihopper:fluid_hopper"
+  ]
+}

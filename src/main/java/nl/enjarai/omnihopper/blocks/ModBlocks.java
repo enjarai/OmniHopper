@@ -44,6 +44,11 @@ public class ModBlocks {
     public static final BlockEntityType<FluidHopperBlockEntity> FLUID_HOPPER_BLOCK_ENTITY =
             FabricBlockEntityTypeBuilder.create(FluidHopperBlockEntity::new, FLUID_HOPPER_BLOCK).build(null);
 
+    public static final List<Block> ALL = List.of(
+            OMNIHOPPER_BLOCK,
+            FLUID_OMNIHOPPER_BLOCK,
+            FLUID_HOPPER_BLOCK
+    );
 
     public static void register() {
         Registry.register(Registries.BLOCK, OmniHopper.id("omnihopper"), OMNIHOPPER_BLOCK);

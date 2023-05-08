@@ -37,6 +37,10 @@ dependencies {
 
 	// Include Cooldown Coordinator
 	include(modImplementation("net.gnomecraft:cooldown-coordinator:${project.cooldowncoordinator_version}"))
+
+	include modImplementation("nl.enjarai:cicada-lib:${project.cicada_version}") {
+		exclude group: "net.fabricmc.fabric-api"
+	}
 }
 
 processResources {
@@ -86,4 +90,17 @@ publishing {
 
 loom {
 	accessWidenerPath = file("src/main/resources/omnihopper.accesswidener")
+
+	runs {
+		datagenClient {
+			client()
+			name "Data Generation Client"
+			vmArg "-Dfabric-api.datagen"
+			vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
+			vmArg "-Dfabric-api.datagen.modid=omnihopper"
+
+			ideConfigGenerated = true
+			runDir "build/datagen"
+		}
+	}
 }

@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
       "nl.enjarai.omnihopper.OmniHopper"
+    ],
+    "fabric-datagen": [
+      "nl.enjarai.omnihopper.datagen.ModDatagen"
     ]
   },
   "mixins": [

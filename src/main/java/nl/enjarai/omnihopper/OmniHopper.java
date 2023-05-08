@@ -1,6 +1,7 @@
 package nl.enjarai.omnihopper;
 
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 import nl.enjarai.omnihopper.blocks.ModBlocks;
 import nl.enjarai.omnihopper.items.ModItems;
