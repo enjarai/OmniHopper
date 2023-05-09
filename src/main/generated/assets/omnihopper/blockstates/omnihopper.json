@@ -6,8 +6,8 @@
       "y": 0
     },
     "pointy_bit=down,sucky_bit=east": {
-      "model": "omnihopper:block/omnihopper_east",
-      "x": 0,
+      "model": "omnihopper:block/omnihopper_north",
+      "x": 90,
       "y": 90
     },
     "pointy_bit=down,sucky_bit=north": {
@@ -26,8 +26,8 @@
       "y": 0
     },
     "pointy_bit=down,sucky_bit=west": {
-      "model": "omnihopper:block/omnihopper_west",
-      "x": 0,
+      "model": "omnihopper:block/omnihopper_north",
+      "x": 90,
       "y": 270
     },
     "pointy_bit=east,sucky_bit=down": {
@@ -37,7 +37,7 @@
     },
     "pointy_bit=east,sucky_bit=east": {
       "model": "omnihopper:block/omnihopper_up",
-      "x": 0,
+      "x": 90,
       "y": 90
     },
     "pointy_bit=east,sucky_bit=north": {
@@ -57,7 +57,7 @@
     },
     "pointy_bit=east,sucky_bit=west": {
       "model": "omnihopper:block/omnihopper_down",
-      "x": 0,
+      "x": 90,
       "y": 270
     },
     "pointy_bit=north,sucky_bit=down": {
@@ -66,8 +66,8 @@
       "y": 0
     },
     "pointy_bit=north,sucky_bit=east": {
-      "model": "omnihopper:block/omnihopper_north",
-      "x": 0,
+      "model": "omnihopper:block/omnihopper_west",
+      "x": 90,
       "y": 90
     },
     "pointy_bit=north,sucky_bit=north": {
@@ -86,8 +86,8 @@
       "y": 0
     },
     "pointy_bit=north,sucky_bit=west": {
-      "model": "omnihopper:block/omnihopper_north",
-      "x": 0,
+      "model": "omnihopper:block/omnihopper_east",
+      "x": 90,
       "y": 270
     },
     "pointy_bit=south,sucky_bit=down": {
@@ -96,8 +96,8 @@
       "y": 0
     },
     "pointy_bit=south,sucky_bit=east": {
-      "model": "omnihopper:block/omnihopper_south",
-      "x": 0,
+      "model": "omnihopper:block/omnihopper_east",
+      "x": 90,
       "y": 90
     },
     "pointy_bit=south,sucky_bit=north": {
@@ -116,8 +116,8 @@
       "y": 0
     },
     "pointy_bit=south,sucky_bit=west": {
-      "model": "omnihopper:block/omnihopper_south",
-      "x": 0,
+      "model": "omnihopper:block/omnihopper_west",
+      "x": 90,
       "y": 270
     },
     "pointy_bit=up,sucky_bit=down": {
@@ -126,8 +126,8 @@
       "y": 0
     },
     "pointy_bit=up,sucky_bit=east": {
-      "model": "omnihopper:block/omnihopper_west",
-      "x": 0,
+      "model": "omnihopper:block/omnihopper_south",
+      "x": 90,
       "y": 90
     },
     "pointy_bit=up,sucky_bit=north": {
@@ -146,8 +146,8 @@
       "y": 0
     },
     "pointy_bit=up,sucky_bit=west": {
-      "model": "omnihopper:block/omnihopper_east",
-      "x": 0,
+      "model": "omnihopper:block/omnihopper_south",
+      "x": 90,
       "y": 270
     },
     "pointy_bit=west,sucky_bit=down": {
@@ -157,7 +157,7 @@
     },
     "pointy_bit=west,sucky_bit=east": {
       "model": "omnihopper:block/omnihopper_down",
-      "x": 0,
+      "x": 90,
       "y": 90
     },
     "pointy_bit=west,sucky_bit=north": {
@@ -177,7 +177,7 @@
     },
     "pointy_bit=west,sucky_bit=west": {
       "model": "omnihopper:block/omnihopper_up",
-      "x": 0,
+      "x": 90,
       "y": 270
     }
   }

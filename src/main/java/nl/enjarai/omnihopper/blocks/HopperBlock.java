@@ -1,5 +1,6 @@
 package nl.enjarai.omnihopper.blocks;
 
+import nl.enjarai.omnihopper.util.TextureMapProvider;
 import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
@@ -34,7 +35,7 @@ import nl.enjarai.omnihopper.blocks.behaviour.ItemHopperBehaviour;
 import nl.enjarai.omnihopper.blocks.entity.HopperBlockEntity;
 
 @SuppressWarnings({"UnstableApiUsage", "deprecation"})
-public abstract class HopperBlock extends BlockWithEntity {
+public abstract class HopperBlock extends BlockWithEntity implements TextureMapProvider {
     public static final BooleanProperty ENABLED;
     public static final VoxelShape[] SUCKY_AREA;
     private static final VoxelShape MIDDLE_SHAPE;

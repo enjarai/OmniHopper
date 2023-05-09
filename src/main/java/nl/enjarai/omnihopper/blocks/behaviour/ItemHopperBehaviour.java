@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
@@ -31,6 +32,8 @@ import nl.enjarai.omnihopper.blocks.entity.HopperBlockEntity;
 
 @SuppressWarnings("UnstableApiUsage")
 public class ItemHopperBehaviour extends HopperBehaviour<ItemVariant> {
+	public static final Identifier TYPE_ID = new Identifier("hopper");
+
 	public final SimpleInventory inventory = new SimpleInventory(5) {
 		@Override
 		public void markDirty() {
@@ -40,7 +43,7 @@ public class ItemHopperBehaviour extends HopperBehaviour<ItemVariant> {
 	private final InventoryStorage inventoryWrapper = InventoryStorage.of(inventory, null);
 
 	public ItemHopperBehaviour(HopperBlockEntity<?> blockEntity) {
-		super(blockEntity, ItemStorage.SIDED);
+		super(TYPE_ID, ItemStorage.SIDED, blockEntity);
 	}
 
 	@Override

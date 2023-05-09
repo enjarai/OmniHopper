@@ -10,13 +10,17 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.FluidDrainable;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import nl.enjarai.omnihopper.OmniHopper;
 import nl.enjarai.omnihopper.blocks.entity.HopperBlockEntity;
 
 @SuppressWarnings("UnstableApiUsage")
 public class FluidHopperBehaviour extends HopperBehaviour<FluidVariant> {
+	public static final Identifier TYPE_ID = OmniHopper.id("fluid_hopper");
+
 	private final SingleVariantStorage<FluidVariant> fluidStorage = new SingleVariantStorage<>() {
 		@Override
 		protected FluidVariant getBlankVariant() {
@@ -35,7 +39,7 @@ public class FluidHopperBehaviour extends HopperBehaviour<FluidVariant> {
 	};
 
 	public FluidHopperBehaviour(HopperBlockEntity<?> blockEntity) {
-		super(blockEntity, FluidStorage.SIDED);
+		super(TYPE_ID, FluidStorage.SIDED, blockEntity);
 	}
 
 	@Override

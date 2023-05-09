@@ -34,12 +34,12 @@ public record HopperRotation(Direction modelDirection, VariantSettings.Rotation 
                     Direction.WEST, new HopperRotation(Direction.WEST, R90)
             ),
             Direction.EAST, Map.of(
-                    Direction.UP, new HopperRotation(Direction.WEST, R0, R90),
-                    Direction.DOWN, new HopperRotation(Direction.EAST, R0, R90),
-                    Direction.NORTH, new HopperRotation(Direction.NORTH, R0, R90),
-                    Direction.EAST, new HopperRotation(Direction.UP, R0, R90),
-                    Direction.SOUTH, new HopperRotation(Direction.SOUTH, R0, R90),
-                    Direction.WEST, new HopperRotation(Direction.DOWN, R0, R90)
+                    Direction.UP, new HopperRotation(Direction.SOUTH, R90, R90),
+                    Direction.DOWN, new HopperRotation(Direction.NORTH, R90, R90),
+                    Direction.NORTH, new HopperRotation(Direction.WEST, R90, R90),
+                    Direction.EAST, new HopperRotation(Direction.UP, R90, R90),
+                    Direction.SOUTH, new HopperRotation(Direction.EAST, R90, R90),
+                    Direction.WEST, new HopperRotation(Direction.DOWN, R90, R90)
             ),
             Direction.SOUTH, Map.of(
                     Direction.UP, new HopperRotation(Direction.NORTH, R270),
@@ -50,12 +50,12 @@ public record HopperRotation(Direction modelDirection, VariantSettings.Rotation 
                     Direction.WEST, new HopperRotation(Direction.WEST, R270)
             ),
             Direction.WEST, Map.of(
-                    Direction.UP, new HopperRotation(Direction.EAST, R0, R270),
-                    Direction.DOWN, new HopperRotation(Direction.WEST, R0, R270),
-                    Direction.NORTH, new HopperRotation(Direction.NORTH, R0, R270),
-                    Direction.EAST, new HopperRotation(Direction.DOWN, R0, R270),
-                    Direction.SOUTH, new HopperRotation(Direction.SOUTH, R0, R270),
-                    Direction.WEST, new HopperRotation(Direction.UP, R0, R270)
+                    Direction.UP, new HopperRotation(Direction.SOUTH, R90, R270),
+                    Direction.DOWN, new HopperRotation(Direction.NORTH, R90, R270),
+                    Direction.NORTH, new HopperRotation(Direction.EAST, R90, R270),
+                    Direction.EAST, new HopperRotation(Direction.DOWN, R90, R270),
+                    Direction.SOUTH, new HopperRotation(Direction.WEST, R90, R270),
+                    Direction.WEST, new HopperRotation(Direction.UP, R90, R270)
             )
     );
 

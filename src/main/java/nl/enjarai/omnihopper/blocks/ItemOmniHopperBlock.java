@@ -1,5 +1,7 @@
 package nl.enjarai.omnihopper.blocks;
 
+import net.minecraft.data.client.TextureMap;
+import nl.enjarai.omnihopper.util.TextureMapProvider;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
@@ -16,5 +18,10 @@ public class ItemOmniHopperBlock extends OmniHopperBlock {
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new ItemOmniHopperBlockEntity(pos, state);
+    }
+
+    @Override
+    public TextureMap getTextureMap() {
+        return TextureMapProvider.forVanillaHopper();
     }
 }
