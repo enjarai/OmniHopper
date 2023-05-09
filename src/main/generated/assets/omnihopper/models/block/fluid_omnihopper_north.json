@@ -1,0 +1,9 @@
+{
+  "parent": "omnihopper:block/hopper_north",
+  "textures": {
+    "inside": "omnihopper:block/fluid_omnihopper_inside",
+    "particle": "omnihopper:block/fluid_omnihopper_outside",
+    "side": "omnihopper:block/fluid_omnihopper_outside",
+    "top": "omnihopper:block/fluid_omnihopper_top"
+  }
+}
