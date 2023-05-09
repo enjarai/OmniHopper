@@ -1,0 +1,10 @@
+{
+  "parent": "omnihopper:block/hopper_south",
+  "textures": {
+    "bottom": "omnihopper:block/wooden_hopper_bottom",
+    "inside": "omnihopper:block/wooden_hopper_inside",
+    "particle": "omnihopper:block/wooden_hopper_side",
+    "side": "omnihopper:block/wooden_hopper_side",
+    "top": "omnihopper:block/wooden_hopper_top"
+  }
+}

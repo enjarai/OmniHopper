@@ -3,6 +3,8 @@
   "values": [
     "omnihopper:omnihopper",
     "omnihopper:fluid_omnihopper",
-    "omnihopper:fluid_hopper"
+    "omnihopper:fluid_hopper",
+    "omnihopper:wooden_omnihopper",
+    "omnihopper:wooden_hopper"
   ]
 }

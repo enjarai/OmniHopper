@@ -19,6 +19,8 @@ public class ModItems {
     public static final Item OMNIHOPPER = registerBlockItem(ModBlocks.OMNIHOPPER_BLOCK);
     public static final Item FLUID_HOPPER = registerBlockItem(ModBlocks.FLUID_HOPPER_BLOCK);
     public static final Item FLUID_OMNIHOPPER = registerBlockItem(ModBlocks.FLUID_OMNIHOPPER_BLOCK);
+    public static final Item WOODEN_HOPPER = registerBlockItem(ModBlocks.WOODEN_HOPPER_BLOCK);
+    public static final Item WOODEN_OMNIHOPPER = registerBlockItem(ModBlocks.WOODEN_OMNIHOPPER_BLOCK);
 
 
     public static void register() {}
