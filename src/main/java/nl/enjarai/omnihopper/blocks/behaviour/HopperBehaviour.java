@@ -44,6 +44,10 @@ public abstract class HopperBehaviour<T> {
 		return 1;
 	}
 
+	public int getCooldown() {
+		return 8;
+	}
+
 	public boolean pickupInWorldObjects(World world, BlockPos pos, Direction suckyDirection) {
 		return false;
 	}

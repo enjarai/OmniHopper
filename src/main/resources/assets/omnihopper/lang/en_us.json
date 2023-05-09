@@ -1,8 +1,12 @@
 {
   "block.omnihopper.omnihopper": "Omni-Hopper",
-  "block.omnihopper.fluid_omnihopper": "Fluid Omni-Hopper",
-  "block.omnihopper.fluid_hopper": "Fluid Hopper",
+  "block.omnihopper.fluid_omnihopper": "Omni-Flopper",
+  "block.omnihopper.fluid_hopper": "Flopper",
+  "block.omnihopper.wooden_omnihopper": "Omni-Whopper",
+  "block.omnihopper.wooden_hopper": "Whopper",
   "container.omnihopper": "Omni-Hopper",
-  "container.fluid_omnihopper": "Fluid Omni-Hopper",
-  "container.fluid_hopper": "Fluid Hopper"
+  "container.fluid_omnihopper": "Omni-Flopper",
+  "container.fluid_hopper": "Flopper",
+  "container.wooden_omnihopper": "Omni-Whopper",
+  "container.wooden_hopper": "Whopper"
 }

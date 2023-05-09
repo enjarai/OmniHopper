@@ -31,10 +31,8 @@ import nl.enjarai.omnihopper.blocks.ItemOmniHopperBlock;
 import nl.enjarai.omnihopper.blocks.entity.HopperBlockEntity;
 
 @SuppressWarnings("UnstableApiUsage")
-public class ItemHopperBehaviour extends HopperBehaviour<ItemVariant> {
-	public static final Identifier TYPE_ID = new Identifier("hopper");
-
-	public final SimpleInventory inventory = new SimpleInventory(5) {
+public abstract class ItemHopperBehaviour extends HopperBehaviour<ItemVariant> {
+	public final SimpleInventory inventory = new SimpleInventory(getInventorySize()) {
 		@Override
 		public void markDirty() {
 			blockEntity.markDirty();
@@ -42,8 +40,12 @@ public class ItemHopperBehaviour extends HopperBehaviour<ItemVariant> {
 	};
 	private final InventoryStorage inventoryWrapper = InventoryStorage.of(inventory, null);
 
-	public ItemHopperBehaviour(HopperBlockEntity<?> blockEntity) {
-		super(TYPE_ID, ItemStorage.SIDED, blockEntity);
+	public ItemHopperBehaviour(Identifier typeId, HopperBlockEntity<?> blockEntity) {
+		super(typeId, ItemStorage.SIDED, blockEntity);
+	}
+
+	public int getInventorySize() {
+		return 5;
 	}
 
 	@Override

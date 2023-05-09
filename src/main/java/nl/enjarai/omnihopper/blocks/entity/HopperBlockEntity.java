@@ -79,7 +79,7 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
                 bl |= extract(world, pos, state);
 
                 if (bl) {
-                    setTransferCooldown(8);
+                    setTransferCooldown(behaviour.getCooldown());
                     markDirty(world, pos, state);
                 }
             }
@@ -136,9 +136,9 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
         }
 
         if (this.lastTickTime >= world.getTime()) {
-            this.transferCooldown = 7;
+            this.transferCooldown = behaviour.getCooldown() - 1;
         } else {
-            this.transferCooldown = 8;
+            this.transferCooldown = behaviour.getCooldown();
         }
 
         this.markDirty();
@@ -168,7 +168,7 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
     }
 
     protected boolean isDisabled() {
-        return this.transferCooldown > 8;
+        return this.transferCooldown > behaviour.getCooldown();
     }
 
     public void setCustomName(Text name) {
