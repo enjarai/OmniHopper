@@ -1,5 +1,7 @@
 package nl.enjarai.omnihopper.blocks.behaviour;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.minecraft.block.BlockState;
@@ -12,7 +14,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import nl.enjarai.omnihopper.blocks.entity.HopperBlockEntity;
-import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("UnstableApiUsage")
 public abstract class HopperBehaviour<T> {

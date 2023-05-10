@@ -21,6 +21,9 @@
     "main": [
       "nl.enjarai.omnihopper.OmniHopper"
     ],
+    "client": [
+      "nl.enjarai.omnihopper.OmniHopperClient"
+    ],
     "fabric-datagen": [
       "nl.enjarai.omnihopper.datagen.ModDatagen"
     ]

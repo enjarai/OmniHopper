@@ -1,6 +1,5 @@
 package nl.enjarai.omnihopper.blocks;
 
-import nl.enjarai.omnihopper.util.TextureMapProvider;
 import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
@@ -33,6 +32,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import nl.enjarai.omnihopper.blocks.behaviour.ItemHopperBehaviour;
 import nl.enjarai.omnihopper.blocks.entity.HopperBlockEntity;
+import nl.enjarai.omnihopper.util.TextureMapProvider;
 
 @SuppressWarnings({"UnstableApiUsage", "deprecation"})
 public abstract class HopperBlock extends BlockWithEntity implements TextureMapProvider {

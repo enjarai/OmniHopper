@@ -1,5 +1,7 @@
 package nl.enjarai.omnihopper.datagen;
 
+import java.util.Optional;
+
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
@@ -8,10 +10,8 @@ import nl.enjarai.omnihopper.OmniHopper;
 import nl.enjarai.omnihopper.blocks.BasicHopperBlock;
 import nl.enjarai.omnihopper.blocks.ModBlocks;
 import nl.enjarai.omnihopper.blocks.OmniHopperBlock;
-import nl.enjarai.omnihopper.util.TextureMapProvider;
 import nl.enjarai.omnihopper.items.ModItems;
-
-import java.util.Optional;
+import nl.enjarai.omnihopper.util.TextureMapProvider;
 
 public class ModModels extends FabricModelProvider {
     public ModModels(FabricDataOutput output) {

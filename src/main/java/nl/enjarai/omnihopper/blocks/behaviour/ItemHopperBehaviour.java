@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
@@ -22,6 +21,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.screen.HopperScreenHandler;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;

@@ -5,7 +5,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import nl.enjarai.omnihopper.blocks.ModBlocks;
-import nl.enjarai.omnihopper.blocks.behaviour.ItemHopperBehaviour;
 import nl.enjarai.omnihopper.blocks.behaviour.VanillaHopperBehaviour;
 
 @SuppressWarnings("UnstableApiUsage")

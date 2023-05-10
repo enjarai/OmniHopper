@@ -1,11 +1,11 @@
 package nl.enjarai.omnihopper.datagen;
 
-import net.minecraft.data.client.VariantSettings;
-import net.minecraft.util.math.Direction;
+import static net.minecraft.data.client.VariantSettings.Rotation.*;
 
 import java.util.Map;
 
-import static net.minecraft.data.client.VariantSettings.Rotation.*;
+import net.minecraft.data.client.VariantSettings;
+import net.minecraft.util.math.Direction;
 
 public record HopperRotation(Direction modelDirection, VariantSettings.Rotation rotX, VariantSettings.Rotation rotY) {
     public static final Map<Direction, Map<Direction, HopperRotation>> ALL = Map.of(
