@@ -1,0 +1,184 @@
+{
+  "variants": {
+    "pointy_bit=down,sucky_bit=down": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_up",
+      "x": 180,
+      "y": 0
+    },
+    "pointy_bit=down,sucky_bit=east": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_north",
+      "x": 90,
+      "y": 90
+    },
+    "pointy_bit=down,sucky_bit=north": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_north",
+      "x": 90,
+      "y": 0
+    },
+    "pointy_bit=down,sucky_bit=south": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_south",
+      "x": 270,
+      "y": 0
+    },
+    "pointy_bit=down,sucky_bit=up": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_down",
+      "x": 0,
+      "y": 0
+    },
+    "pointy_bit=down,sucky_bit=west": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_north",
+      "x": 90,
+      "y": 270
+    },
+    "pointy_bit=east,sucky_bit=down": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_east",
+      "x": 180,
+      "y": 0
+    },
+    "pointy_bit=east,sucky_bit=east": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_up",
+      "x": 90,
+      "y": 90
+    },
+    "pointy_bit=east,sucky_bit=north": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_east",
+      "x": 90,
+      "y": 0
+    },
+    "pointy_bit=east,sucky_bit=south": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_east",
+      "x": 270,
+      "y": 0
+    },
+    "pointy_bit=east,sucky_bit=up": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_east",
+      "x": 0,
+      "y": 0
+    },
+    "pointy_bit=east,sucky_bit=west": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_down",
+      "x": 90,
+      "y": 270
+    },
+    "pointy_bit=north,sucky_bit=down": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_south",
+      "x": 180,
+      "y": 0
+    },
+    "pointy_bit=north,sucky_bit=east": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_west",
+      "x": 90,
+      "y": 90
+    },
+    "pointy_bit=north,sucky_bit=north": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_up",
+      "x": 90,
+      "y": 0
+    },
+    "pointy_bit=north,sucky_bit=south": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_down",
+      "x": 270,
+      "y": 0
+    },
+    "pointy_bit=north,sucky_bit=up": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_north",
+      "x": 0,
+      "y": 0
+    },
+    "pointy_bit=north,sucky_bit=west": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_east",
+      "x": 90,
+      "y": 270
+    },
+    "pointy_bit=south,sucky_bit=down": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_north",
+      "x": 180,
+      "y": 0
+    },
+    "pointy_bit=south,sucky_bit=east": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_east",
+      "x": 90,
+      "y": 90
+    },
+    "pointy_bit=south,sucky_bit=north": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_down",
+      "x": 90,
+      "y": 0
+    },
+    "pointy_bit=south,sucky_bit=south": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_up",
+      "x": 270,
+      "y": 0
+    },
+    "pointy_bit=south,sucky_bit=up": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_south",
+      "x": 0,
+      "y": 0
+    },
+    "pointy_bit=south,sucky_bit=west": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_west",
+      "x": 90,
+      "y": 270
+    },
+    "pointy_bit=up,sucky_bit=down": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_down",
+      "x": 180,
+      "y": 0
+    },
+    "pointy_bit=up,sucky_bit=east": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_south",
+      "x": 90,
+      "y": 90
+    },
+    "pointy_bit=up,sucky_bit=north": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_south",
+      "x": 90,
+      "y": 0
+    },
+    "pointy_bit=up,sucky_bit=south": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_north",
+      "x": 270,
+      "y": 0
+    },
+    "pointy_bit=up,sucky_bit=up": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_up",
+      "x": 0,
+      "y": 0
+    },
+    "pointy_bit=up,sucky_bit=west": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_south",
+      "x": 90,
+      "y": 270
+    },
+    "pointy_bit=west,sucky_bit=down": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_west",
+      "x": 180,
+      "y": 0
+    },
+    "pointy_bit=west,sucky_bit=east": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_down",
+      "x": 90,
+      "y": 90
+    },
+    "pointy_bit=west,sucky_bit=north": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_west",
+      "x": 90,
+      "y": 0
+    },
+    "pointy_bit=west,sucky_bit=south": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_west",
+      "x": 270,
+      "y": 0
+    },
+    "pointy_bit=west,sucky_bit=up": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_west",
+      "x": 0,
+      "y": 0
+    },
+    "pointy_bit=west,sucky_bit=west": {
+      "model": "omnihopper:block/oxidized_fluid_omnihopper_up",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

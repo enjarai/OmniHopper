@@ -3,6 +3,7 @@ package nl.enjarai.omnihopper.blocks;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Oxidizable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.data.client.TextureMap;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,23 +17,26 @@ import nl.enjarai.omnihopper.blocks.entity.FluidHopperBlockEntity;
 import nl.enjarai.omnihopper.util.TextureMapProvider;
 
 public class FluidHopperBlock extends BasicHopperBlock {
-    public FluidHopperBlock(Settings settings) {
-        super(settings);
-    }
+	protected final Oxidizable.OxidationLevel degradationLevel;
 
-    @Nullable
-    @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new FluidHopperBlockEntity(pos, state);
-    }
+	public FluidHopperBlock(Oxidizable.OxidationLevel degradationLevel, Settings settings) {
+		super(settings);
+		this.degradationLevel = degradationLevel;
+	}
 
-    @Override
-    public TextureMap getTextureMap() {
-        return TextureMapProvider.forHopperType(FluidHopperBehaviour.TYPE_ID);
-    }
+	@Nullable
+	@Override
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+		return new FluidHopperBlockEntity(pos, state);
+	}
 
-    @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        return ActionResult.PASS;
-    }
+	@Override
+	public TextureMap getTextureMap() {
+		return TextureMapProvider.forOxidizableHopperType(FluidHopperBehaviour.TYPE_ID, degradationLevel);
+	}
+
+	@Override
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		return ActionResult.PASS;
+	}
 }

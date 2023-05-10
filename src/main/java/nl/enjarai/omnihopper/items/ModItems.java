@@ -15,17 +15,11 @@ import nl.enjarai.omnihopper.blocks.ModBlocks;
 
 public class ModItems {
     public static final List<BlockItem> ALL = new ArrayList<>();
-
-    public static final Item OMNIHOPPER = registerBlockItem(ModBlocks.OMNIHOPPER_BLOCK);
-    public static final Item FLUID_HOPPER = registerBlockItem(ModBlocks.FLUID_HOPPER_BLOCK);
-    public static final Item FLUID_OMNIHOPPER = registerBlockItem(ModBlocks.FLUID_OMNIHOPPER_BLOCK);
-    public static final Item WOODEN_HOPPER = registerBlockItem(ModBlocks.WOODEN_HOPPER_BLOCK);
-    public static final Item WOODEN_OMNIHOPPER = registerBlockItem(ModBlocks.WOODEN_OMNIHOPPER_BLOCK);
-
+    public static final List<BlockItem> HOPPERS = ModBlocks.ALL.stream().map(ModItems::registerBlockItem).toList();
 
     public static void register() {}
 
-    private static Item registerBlockItem(Block block) {
+    private static BlockItem registerBlockItem(Block block) {
         var item = Registry.register(Registries.ITEM, Registries.BLOCK.getId(block),
                 new BlockItem(block, new FabricItemSettings()));
 

@@ -3,6 +3,7 @@ package nl.enjarai.omnihopper.blocks;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Oxidizable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.data.client.TextureMap;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,10 +17,12 @@ import nl.enjarai.omnihopper.blocks.entity.FluidOmniHopperBlockEntity;
 import nl.enjarai.omnihopper.util.TextureMapProvider;
 
 public class FluidOmniHopperBlock extends OmniHopperBlock {
-    public FluidOmniHopperBlock(Settings settings) {
+    protected final Oxidizable.OxidationLevel degradationLevel;
+
+    public FluidOmniHopperBlock(Oxidizable.OxidationLevel degradationLevel, Settings settings) {
         super(settings);
+        this.degradationLevel = degradationLevel;
     }
-    // TODO add oxidization and use datagen for models
 
     @Nullable
     @Override
@@ -29,7 +32,7 @@ public class FluidOmniHopperBlock extends OmniHopperBlock {
 
     @Override
     public TextureMap getTextureMap() {
-        return TextureMapProvider.forHopperType(FluidHopperBehaviour.TYPE_ID);
+        return TextureMapProvider.forOxidizableHopperType(FluidHopperBehaviour.TYPE_ID, degradationLevel);
     }
 
     @Override
