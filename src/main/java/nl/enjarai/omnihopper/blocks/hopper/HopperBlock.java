@@ -1,7 +1,5 @@
 package nl.enjarai.omnihopper.blocks.hopper;
 
-import org.jetbrains.annotations.Nullable;
-
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
@@ -10,6 +8,9 @@ import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.data.client.BlockStateModelGenerator;
+import net.minecraft.data.client.Model;
+import net.minecraft.data.client.TextureKey;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,12 +31,17 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import nl.enjarai.omnihopper.blocks.entity.hopper.behaviour.ItemHopperBehaviour;
+import nl.enjarai.omnihopper.OmniHopper;
 import nl.enjarai.omnihopper.blocks.entity.hopper.HopperBlockEntity;
+import nl.enjarai.omnihopper.blocks.entity.hopper.behaviour.ItemHopperBehaviour;
+import nl.enjarai.omnihopper.util.Datagen;
 import nl.enjarai.omnihopper.util.TextureMapProvider;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 @SuppressWarnings({"UnstableApiUsage", "deprecation"})
-public abstract class HopperBlock extends BlockWithEntity implements TextureMapProvider {
+public abstract class HopperBlock extends BlockWithEntity implements Datagen, TextureMapProvider {
     public static final BooleanProperty ENABLED;
     public static final VoxelShape[] SUCKY_AREA;
     private static final VoxelShape MIDDLE_SHAPE;
@@ -214,5 +220,27 @@ public abstract class HopperBlock extends BlockWithEntity implements TextureMapP
         }
 
         super.onStateReplaced(state, world, pos, newState, moved);
+    }
+
+    protected abstract void buildHopperBlockStateModel(BlockStateModelGenerator blockStateModelGenerator);
+
+    @Override
+    public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+        for (var direction : Direction.values()) {
+            var suffix = "_" + direction.getName();
+
+            blockStateModelGenerator.createSubModel(
+                    this, suffix,
+                    new Model(
+                            Optional.of(OmniHopper.id("block/hopper" + suffix)),
+                            Optional.empty(),
+                            TextureKey.PARTICLE, TextureKey.SIDE,
+                            TextureKey.TOP, TextureKey.INSIDE, TextureKey.BOTTOM
+                    ),
+                    id -> getTextureMap()
+            );
+        }
+
+        buildHopperBlockStateModel(blockStateModelGenerator);
     }
 }

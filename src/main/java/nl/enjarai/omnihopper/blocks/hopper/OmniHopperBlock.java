@@ -3,6 +3,7 @@ package nl.enjarai.omnihopper.blocks.hopper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.data.client.*;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
@@ -13,6 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
+import nl.enjarai.omnihopper.datagen.HopperRotation;
 
 @SuppressWarnings("deprecation")
 public abstract class OmniHopperBlock extends HopperBlock {
@@ -62,5 +64,25 @@ public abstract class OmniHopperBlock extends HopperBlock {
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder.add(POINTY_BIT).add(SUCKY_BIT));
+    }
+
+    @Override
+    protected void buildHopperBlockStateModel(BlockStateModelGenerator blockStateModelGenerator) {
+        var variants = BlockStateVariantMap.create(OmniHopperBlock.POINTY_BIT, OmniHopperBlock.SUCKY_BIT);
+
+        variants.register(
+                (pointy, sucky) -> {
+                    var settings = HopperRotation.getFor(sucky, pointy);
+                    return BlockStateVariant.create().put(
+                                    VariantSettings.MODEL,
+                                    ModelIds.getBlockSubModelId(this, "_" + settings.modelDirection().getName())
+                            )
+                            .put(VariantSettings.X, settings.rotX())
+                            .put(VariantSettings.Y, settings.rotY());
+                }
+        );
+
+        blockStateModelGenerator.blockStateCollector.accept(
+                VariantsBlockStateSupplier.create(this).coordinate(variants));
     }
 }

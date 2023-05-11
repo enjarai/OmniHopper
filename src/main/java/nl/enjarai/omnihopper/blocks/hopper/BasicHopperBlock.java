@@ -3,6 +3,7 @@ package nl.enjarai.omnihopper.blocks.hopper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.data.client.*;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
@@ -58,5 +59,20 @@ public abstract class BasicHopperBlock extends HopperBlock {
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
 		super.appendProperties(builder.add(POINTY_BIT));
+	}
+
+	@Override
+	protected void buildHopperBlockStateModel(BlockStateModelGenerator blockStateModelGenerator) {
+		var variants = BlockStateVariantMap.create(BasicHopperBlock.POINTY_BIT);
+
+		variants.register(
+				direction -> BlockStateVariant.create().put(
+						VariantSettings.MODEL,
+						ModelIds.getBlockSubModelId(this, "_" + direction.getName())
+				)
+		);
+
+		blockStateModelGenerator.blockStateCollector.accept(
+				VariantsBlockStateSupplier.create(this).coordinate(variants));
 	}
 }
