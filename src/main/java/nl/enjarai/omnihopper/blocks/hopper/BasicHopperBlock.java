@@ -1,4 +1,4 @@
-package nl.enjarai.omnihopper.blocks;
+package nl.enjarai.omnihopper.blocks.hopper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

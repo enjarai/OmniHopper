@@ -1,4 +1,4 @@
-package nl.enjarai.omnihopper.blocks;
+package nl.enjarai.omnihopper.blocks.hopper;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -30,8 +30,8 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import nl.enjarai.omnihopper.blocks.behaviour.ItemHopperBehaviour;
-import nl.enjarai.omnihopper.blocks.entity.HopperBlockEntity;
+import nl.enjarai.omnihopper.blocks.entity.hopper.behaviour.ItemHopperBehaviour;
+import nl.enjarai.omnihopper.blocks.entity.hopper.HopperBlockEntity;
 import nl.enjarai.omnihopper.util.TextureMapProvider;
 
 @SuppressWarnings({"UnstableApiUsage", "deprecation"})

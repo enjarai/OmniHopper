@@ -1,7 +1,7 @@
-package nl.enjarai.omnihopper.blocks.entity;
+package nl.enjarai.omnihopper.blocks.entity.hopper;
 
-import static nl.enjarai.omnihopper.blocks.OmniHopperBlock.POINTY_BIT;
-import static nl.enjarai.omnihopper.blocks.OmniHopperBlock.SUCKY_BIT;
+import static nl.enjarai.omnihopper.blocks.hopper.OmniHopperBlock.POINTY_BIT;
+import static nl.enjarai.omnihopper.blocks.hopper.OmniHopperBlock.SUCKY_BIT;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;

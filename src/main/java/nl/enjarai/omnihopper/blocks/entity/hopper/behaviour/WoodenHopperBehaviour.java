@@ -1,4 +1,4 @@
-package nl.enjarai.omnihopper.blocks.behaviour;
+package nl.enjarai.omnihopper.blocks.entity.hopper.behaviour;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -7,7 +7,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.Identifier;
 import nl.enjarai.omnihopper.OmniHopper;
-import nl.enjarai.omnihopper.blocks.entity.HopperBlockEntity;
+import nl.enjarai.omnihopper.blocks.entity.hopper.HopperBlockEntity;
 import nl.enjarai.omnihopper.screen.OneSlotHopperScreenHandler;
 
 public class WoodenHopperBehaviour extends ItemHopperBehaviour {

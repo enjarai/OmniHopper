@@ -16,7 +16,8 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import nl.enjarai.omnihopper.OmniHopper;
-import nl.enjarai.omnihopper.blocks.entity.*;
+import nl.enjarai.omnihopper.blocks.entity.hopper.*;
+import nl.enjarai.omnihopper.blocks.hopper.*;
 
 @SuppressWarnings("UnstableApiUsage")
 public class ModBlocks {

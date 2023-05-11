@@ -1,4 +1,4 @@
-package nl.enjarai.omnihopper.blocks.entity;
+package nl.enjarai.omnihopper.blocks.entity.hopper;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -20,7 +20,7 @@ import net.minecraft.util.Nameable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import nl.enjarai.omnihopper.blocks.behaviour.HopperBehaviour;
+import nl.enjarai.omnihopper.blocks.entity.hopper.behaviour.HopperBehaviour;
 
 @SuppressWarnings("UnstableApiUsage")
 public abstract class HopperBlockEntity<T> extends BlockEntity implements CoordinatedCooldown, NamedScreenHandlerFactory, Nameable {

@@ -1,4 +1,4 @@
-package nl.enjarai.omnihopper.blocks;
+package nl.enjarai.omnihopper.blocks.hopper;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -12,8 +12,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import nl.enjarai.omnihopper.blocks.behaviour.FluidHopperBehaviour;
-import nl.enjarai.omnihopper.blocks.entity.FluidHopperBlockEntity;
+import nl.enjarai.omnihopper.blocks.entity.hopper.behaviour.FluidHopperBehaviour;
+import nl.enjarai.omnihopper.blocks.entity.hopper.FluidHopperBlockEntity;
 import nl.enjarai.omnihopper.util.TextureMapProvider;
 
 public class FluidHopperBlock extends BasicHopperBlock {

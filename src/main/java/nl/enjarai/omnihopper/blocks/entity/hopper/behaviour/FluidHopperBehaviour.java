@@ -1,4 +1,4 @@
-package nl.enjarai.omnihopper.blocks.behaviour;
+package nl.enjarai.omnihopper.blocks.entity.hopper.behaviour;
 
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import nl.enjarai.omnihopper.OmniHopper;
-import nl.enjarai.omnihopper.blocks.entity.HopperBlockEntity;
+import nl.enjarai.omnihopper.blocks.entity.hopper.HopperBlockEntity;
 
 @SuppressWarnings("UnstableApiUsage")
 public class FluidHopperBehaviour extends HopperBehaviour<FluidVariant> {

@@ -1,4 +1,4 @@
-package nl.enjarai.omnihopper.blocks.behaviour;
+package nl.enjarai.omnihopper.blocks.entity.hopper.behaviour;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -13,7 +13,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import nl.enjarai.omnihopper.blocks.entity.HopperBlockEntity;
+import nl.enjarai.omnihopper.blocks.entity.hopper.HopperBlockEntity;
 
 @SuppressWarnings("UnstableApiUsage")
 public abstract class HopperBehaviour<T> {

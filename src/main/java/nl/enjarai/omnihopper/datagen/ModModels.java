@@ -7,9 +7,9 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
 import net.minecraft.util.math.Direction;
 import nl.enjarai.omnihopper.OmniHopper;
-import nl.enjarai.omnihopper.blocks.BasicHopperBlock;
+import nl.enjarai.omnihopper.blocks.hopper.BasicHopperBlock;
 import nl.enjarai.omnihopper.blocks.ModBlocks;
-import nl.enjarai.omnihopper.blocks.OmniHopperBlock;
+import nl.enjarai.omnihopper.blocks.hopper.OmniHopperBlock;
 import nl.enjarai.omnihopper.items.ModItems;
 import nl.enjarai.omnihopper.util.TextureMapProvider;
 
