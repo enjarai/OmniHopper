@@ -16,6 +16,8 @@ import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -34,14 +36,15 @@ import net.minecraft.world.World;
 import nl.enjarai.omnihopper.OmniHopper;
 import nl.enjarai.omnihopper.blocks.entity.hopper.HopperBlockEntity;
 import nl.enjarai.omnihopper.blocks.entity.hopper.behaviour.ItemHopperBehaviour;
-import nl.enjarai.omnihopper.util.Datagen;
+import nl.enjarai.omnihopper.util.DatagenBlock;
 import nl.enjarai.omnihopper.util.TextureMapProvider;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
+import java.util.Set;
 
 @SuppressWarnings({"UnstableApiUsage", "deprecation"})
-public abstract class HopperBlock extends BlockWithEntity implements Datagen, TextureMapProvider {
+public abstract class HopperBlock extends BlockWithEntity implements DatagenBlock, TextureMapProvider {
     public static final BooleanProperty ENABLED;
     public static final VoxelShape[] SUCKY_AREA;
     private static final VoxelShape MIDDLE_SHAPE;
@@ -191,7 +194,7 @@ public abstract class HopperBlock extends BlockWithEntity implements Datagen, Te
         super.neighborUpdate(state, world, pos, block, fromPos, notify);
     }
 
-    private void updateEnabled(World world, BlockPos pos, BlockState state) {
+    protected void updateEnabled(World world, BlockPos pos, BlockState state) {
         boolean bl = !world.isReceivingRedstonePower(pos);
         if (bl != state.get(ENABLED)) {
             world.setBlockState(pos, state.with(ENABLED, bl), 4);
@@ -242,5 +245,10 @@ public abstract class HopperBlock extends BlockWithEntity implements Datagen, Te
         }
 
         buildHopperBlockStateModel(blockStateModelGenerator);
+    }
+
+    @Override
+    public Set<TagKey<Block>> getConfiguredTags() {
+        return Set.of(BlockTags.PICKAXE_MINEABLE);
     }
 }

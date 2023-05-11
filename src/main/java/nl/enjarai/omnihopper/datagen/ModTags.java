@@ -9,6 +9,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
 import nl.enjarai.omnihopper.blocks.ModBlocks;
+import nl.enjarai.omnihopper.util.DatagenBlock;
 
 public class ModTags extends FabricTagProvider<Block> {
 	public ModTags(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
@@ -17,10 +18,13 @@ public class ModTags extends FabricTagProvider<Block> {
 
 	@Override
 	protected void configure(RegistryWrapper.WrapperLookup arg) {
-		var pickaxeMineable = getTagBuilder(BlockTags.PICKAXE_MINEABLE);
-
-		ModBlocks.ALL.stream()
-				.map(Registries.BLOCK::getId)
-				.forEach(pickaxeMineable::add);
+		for (var block : ModBlocks.ALL) {
+			if (block instanceof DatagenBlock datagen) {
+				for (var tagKey : datagen.getConfiguredTags()) {
+					var tag = getOrCreateTagBuilder(tagKey);
+					tag.add(block);
+				}
+			}
+		}
 	}
 }

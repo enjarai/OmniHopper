@@ -17,8 +17,6 @@
     "omnihopper:waxed_fluid_hopper",
     "omnihopper:waxed_exposed_fluid_hopper",
     "omnihopper:waxed_weathered_fluid_hopper",
-    "omnihopper:waxed_oxidized_fluid_hopper",
-    "omnihopper:wooden_omnihopper",
-    "omnihopper:wooden_hopper"
+    "omnihopper:waxed_oxidized_fluid_hopper"
   ]
 }

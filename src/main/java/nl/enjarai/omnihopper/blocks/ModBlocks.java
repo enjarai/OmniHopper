@@ -79,6 +79,10 @@ public class ModBlocks {
     public static final BlockEntityType<WoodenHopperBlockEntity> WOODEN_HOPPER_BLOCK_ENTITY =
             FabricBlockEntityTypeBuilder.create(WoodenHopperBlockEntity::new, WOODEN_HOPPER_BLOCK).build(null);
 
+
+    // Open Box Block
+    public static final Block OPEN_BOX_BLOCK = register("open_box", new OpenBoxBlock(WOODEN_HOPPER_SETTINGS));
+
     public static final List<Block> ALL = List.of(
             OMNIHOPPER_BLOCK,
             FLUID_OMNIHOPPER_BLOCK, FLUID_OMNIHOPPER_BLOCK_EXPOSED, FLUID_OMNIHOPPER_BLOCK_WEATHERED, FLUID_OMNIHOPPER_BLOCK_OXIDIZED,
@@ -86,7 +90,9 @@ public class ModBlocks {
             FLUID_HOPPER_BLOCK, FLUID_HOPPER_BLOCK_EXPOSED, FLUID_HOPPER_BLOCK_WEATHERED, FLUID_HOPPER_BLOCK_OXIDIZED,
             FLUID_HOPPER_BLOCK_WAXED, FLUID_HOPPER_BLOCK_WAXED_EXPOSED, FLUID_HOPPER_BLOCK_WAXED_WEATHERED, FLUID_HOPPER_BLOCK_WAXED_OXIDIZED,
             WOODEN_OMNIHOPPER_BLOCK,
-            WOODEN_HOPPER_BLOCK
+            WOODEN_HOPPER_BLOCK,
+
+            OPEN_BOX_BLOCK
     );
 
     private static Block register(String name, Block block) {

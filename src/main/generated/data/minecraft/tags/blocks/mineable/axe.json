@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "omnihopper:wooden_omnihopper",
+    "omnihopper:wooden_hopper",
+    "omnihopper:open_box"
+  ]
+}

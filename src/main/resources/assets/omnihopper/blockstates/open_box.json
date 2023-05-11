@@ -1,0 +1,29 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "omnihopper:block/open_box",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "omnihopper:block/open_box",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "omnihopper:block/open_box",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "omnihopper:block/open_box",
+      "x": 270
+    },
+    "facing=up": {
+      "model": "omnihopper:block/open_box"
+    },
+    "facing=west": {
+      "model": "omnihopper:block/open_box",
+      "x": 270,
+      "y": 90
+    }
+  }
+}

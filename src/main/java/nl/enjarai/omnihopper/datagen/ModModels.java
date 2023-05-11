@@ -7,7 +7,7 @@ import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Models;
 import nl.enjarai.omnihopper.blocks.ModBlocks;
 import nl.enjarai.omnihopper.items.ModItems;
-import nl.enjarai.omnihopper.util.Datagen;
+import nl.enjarai.omnihopper.util.DatagenBlock;
 
 public class ModModels extends FabricModelProvider {
     public ModModels(FabricDataOutput output) {
@@ -17,7 +17,7 @@ public class ModModels extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         for (var block : ModBlocks.ALL) {
-            if (block instanceof Datagen datagenBlock) {
+            if (block instanceof DatagenBlock datagenBlock) {
                 datagenBlock.generateBlockStateModels(blockStateModelGenerator);
             }
         }

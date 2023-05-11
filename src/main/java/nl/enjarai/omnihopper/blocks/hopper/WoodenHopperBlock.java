@@ -1,11 +1,17 @@
 package nl.enjarai.omnihopper.blocks.hopper;
 
+import java.util.Set;
+
 import org.jetbrains.annotations.Nullable;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.data.client.TextureMap;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import nl.enjarai.omnihopper.blocks.entity.hopper.behaviour.WoodenHopperBehaviour;
 import nl.enjarai.omnihopper.blocks.entity.hopper.WoodenHopperBlockEntity;
 import nl.enjarai.omnihopper.util.TextureMapProvider;
@@ -22,7 +28,16 @@ public class WoodenHopperBlock extends BasicHopperBlock {
     }
 
     @Override
+    protected void updateEnabled(World world, BlockPos pos, BlockState state) {
+    }
+
+    @Override
     public TextureMap getTextureMap() {
         return TextureMapProvider.forHopperType(WoodenHopperBehaviour.TYPE_ID);
+    }
+
+    @Override
+    public Set<TagKey<Block>> getConfiguredTags() {
+        return Set.of(BlockTags.AXE_MINEABLE);
     }
 }
