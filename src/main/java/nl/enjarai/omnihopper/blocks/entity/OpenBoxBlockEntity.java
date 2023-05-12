@@ -2,8 +2,6 @@ package nl.enjarai.omnihopper.blocks.entity;
 
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
-import net.fabricmc.fabric.api.transfer.v1.storage.base.InsertionOnlyStorage;
-import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
@@ -11,29 +9,33 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import nl.enjarai.omnihopper.blocks.ModBlocks;
 import nl.enjarai.omnihopper.blocks.OpenBoxBlock;
+import nl.enjarai.omnihopper.util.ExecutingInsertionStorage;
 
 @SuppressWarnings("UnstableApiUsage")
 public class OpenBoxBlockEntity extends BlockEntity {
-    @SuppressWarnings("Convert2Lambda")
-    private final Storage<ItemVariant> itemStorage = new InsertionOnlyStorage<>() {
+    private final ExecutingInsertionStorage<ItemVariant> itemStorage = new ExecutingInsertionStorage<>() {
         @Override
-        public long insert(ItemVariant resource, long maxAmount, TransactionContext transaction) {
-            var amount = Math.min(maxAmount, resource.getItem().getMaxCount());
-            var stack = resource.toStack((int) amount);
+        protected void handleEntry(ItemVariant resource, long amount) {
             var world = getWorld();
             var state = getCachedState();
-            if (world == null) return 0;
+            // Not sure when world would be null, but feels like something would be wrong if it was.
+            if (world == null) throw new IllegalStateException("Can't drop items in a world that doesn't exist!");
 
             var direction = state.get(OpenBoxBlock.FACING);
             var vOffset = new Vec3d(0, -0.125, 0);
             var dOffset = new Vec3d(direction.getUnitVector().mul(0.25f));
             var pos = getPos().toCenterPos().add(dOffset).add(vOffset);
 
-            var entity = new ItemEntity(world, pos.x, pos.y, pos.z, stack);
-            entity.setVelocity(dOffset);
-            world.spawnEntity(entity);
+            while (amount > 0) {
+                var stackSize = Math.min(amount, resource.getItem().getMaxCount());
+                var stack = resource.toStack((int) stackSize);
 
-            return amount;
+                var entity = new ItemEntity(world, pos.x, pos.y, pos.z, stack);
+                entity.setVelocity(dOffset);
+                world.spawnEntity(entity);
+
+                amount -= stackSize;
+            }
         }
     };
 
