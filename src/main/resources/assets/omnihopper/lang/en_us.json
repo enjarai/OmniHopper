@@ -18,6 +18,9 @@
   "block.omnihopper.waxed_oxidized_fluid_hopper": "Waxed Oxidized Flopper",
   "block.omnihopper.wooden_omnihopper": "Omni-Whopper",
   "block.omnihopper.wooden_hopper": "Whopper",
+
+  "block.omnihopper.open_box": "Lidless Chest",
+
   "container.omnihopper": "Omni-Hopper",
   "container.fluid_omnihopper": "Omni-Flopper",
   "container.fluid_hopper": "Flopper",

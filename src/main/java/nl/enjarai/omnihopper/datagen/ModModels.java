@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Models;
+import net.minecraft.item.BlockItem;
 import nl.enjarai.omnihopper.blocks.ModBlocks;
 import nl.enjarai.omnihopper.items.ModItems;
 import nl.enjarai.omnihopper.util.DatagenBlock;
@@ -25,6 +26,12 @@ public class ModModels extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-        ModItems.ALL.forEach(item -> itemModelGenerator.register(item, Models.GENERATED));
+        for (var item : ModItems.ALL) {
+            if (item instanceof BlockItem blockItem) {
+                if (blockItem.getBlock() instanceof DatagenBlock datagenBlock) {
+                    datagenBlock.generateItemModel(itemModelGenerator, blockItem);
+                }
+            }
+        }
     }
 }

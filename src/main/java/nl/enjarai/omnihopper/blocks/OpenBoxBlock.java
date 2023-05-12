@@ -14,6 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
+import nl.enjarai.omnihopper.blocks.entity.OpenBoxBlockEntity;
 import nl.enjarai.omnihopper.util.DatagenBlock;
 
 import org.jetbrains.annotations.Nullable;
@@ -71,7 +72,7 @@ public class OpenBoxBlock extends BlockWithEntity implements DatagenBlock {
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return null;
+        return new OpenBoxBlockEntity(pos, state);
     }
 
     @Override

@@ -14,7 +14,7 @@ import net.minecraft.registry.Registry;
 import nl.enjarai.omnihopper.blocks.ModBlocks;
 
 public class ModItems {
-    public static final List<BlockItem> ALL = new ArrayList<>();
+    public static final List<Item> ALL = new ArrayList<>();
     public static final List<BlockItem> HOPPERS = ModBlocks.ALL.stream().map(ModItems::registerBlockItem).toList();
 
     public static void register() {}

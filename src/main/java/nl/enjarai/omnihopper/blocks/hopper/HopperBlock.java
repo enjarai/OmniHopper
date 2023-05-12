@@ -8,12 +8,11 @@ import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.Model;
-import net.minecraft.data.client.TextureKey;
+import net.minecraft.data.client.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.BlockTags;
@@ -250,5 +249,10 @@ public abstract class HopperBlock extends BlockWithEntity implements DatagenBloc
     @Override
     public Set<TagKey<Block>> getConfiguredTags() {
         return Set.of(BlockTags.PICKAXE_MINEABLE);
+    }
+
+    @Override
+    public void generateItemModel(ItemModelGenerator itemModelGenerator, BlockItem item) {
+        itemModelGenerator.register(item, Models.GENERATED);
     }
 }
