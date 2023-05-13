@@ -36,6 +36,7 @@ import nl.enjarai.omnihopper.OmniHopper;
 import nl.enjarai.omnihopper.blocks.entity.hopper.HopperBlockEntity;
 import nl.enjarai.omnihopper.blocks.entity.hopper.behaviour.ItemHopperBehaviour;
 import nl.enjarai.omnihopper.util.DatagenBlock;
+import nl.enjarai.omnihopper.util.HasTooltip;
 import nl.enjarai.omnihopper.util.TextureMapProvider;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,7 +44,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @SuppressWarnings({"UnstableApiUsage", "deprecation"})
-public abstract class HopperBlock extends BlockWithEntity implements DatagenBlock, TextureMapProvider {
+public abstract class HopperBlock extends BlockWithEntity implements DatagenBlock, TextureMapProvider, HasTooltip {
     public static final BooleanProperty ENABLED;
     public static final VoxelShape[] SUCKY_AREA;
     private static final VoxelShape MIDDLE_SHAPE;

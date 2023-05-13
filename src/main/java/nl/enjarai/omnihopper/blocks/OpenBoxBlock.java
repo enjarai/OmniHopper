@@ -17,10 +17,11 @@ import net.minecraft.world.BlockView;
 import nl.enjarai.omnihopper.blocks.entity.OpenBoxBlockEntity;
 import nl.enjarai.omnihopper.util.DatagenBlock;
 
+import nl.enjarai.omnihopper.util.HasTooltip;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class OpenBoxBlock extends BlockWithEntity implements DatagenBlock {
+public class OpenBoxBlock extends BlockWithEntity implements DatagenBlock, HasTooltip {
     public static final DirectionProperty FACING = Properties.FACING;
     public static final VoxelShape[] SHAPES = new VoxelShape[6];
 

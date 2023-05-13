@@ -1,5 +1,7 @@
 package nl.enjarai.omnihopper.blocks.hopper;
 
+import net.minecraft.util.Identifier;
+import nl.enjarai.omnihopper.OmniHopper;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
@@ -38,5 +40,10 @@ public class FluidOmniHopperBlock extends OmniHopperBlock {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         return ActionResult.PASS;
+    }
+
+    @Override
+    public Identifier modifyTooltipId(Identifier id) {
+        return OmniHopper.id("fluid_omnihopper");
     }
 }
