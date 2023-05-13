@@ -24,7 +24,7 @@ public class WoodenHopperBehaviour extends ItemHopperBehaviour {
 
     @Override
     public int getCooldown() {
-        return 32;
+        return 16;
     }
 
     @Override

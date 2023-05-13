@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-12T12:56:56.747908	Omni-Hopper/Block Loot Tables
+// 1.19.4	2023-05-13T15:45:29.3475642	Omni-Hopper/Block Loot Tables
 5e1b7414e97ffd18526b521b2f668f2ff33a0081 data\omnihopper\loot_tables\blocks\weathered_fluid_omnihopper.json
 4699e00ce71ee93c705d090c8214db233522dbd3 data\omnihopper\loot_tables\blocks\waxed_weathered_fluid_hopper.json
 5309be1241244c97d8cbe053a55a08e8344e870d data\omnihopper\loot_tables\blocks\oxidized_fluid_omnihopper.json
@@ -12,8 +12,8 @@ ce8250bce00f7d67677acb9d791d49e70f718dc5 data\omnihopper\loot_tables\blocks\waxe
 72943de07ec3981059e2c5b1260a045b8803c7ed data\omnihopper\loot_tables\blocks\wooden_hopper.json
 ec2b08bfbeef21b6d6badc7d3d10666ecb270b69 data\omnihopper\loot_tables\blocks\fluid_omnihopper.json
 c6cf591117007d2f45b7d2e92f6c9a6a1de457d9 data\omnihopper\loot_tables\blocks\wooden_omnihopper.json
-50edaef16d70ae3d76ac7f0b89e0dcdf163a5699 data\omnihopper\loot_tables\blocks\waxed_weathered_fluid_omnihopper.json
 12a451e76494d88f7319518d985b82e3205915c4 data\omnihopper\loot_tables\blocks\fluid_hopper.json
+50edaef16d70ae3d76ac7f0b89e0dcdf163a5699 data\omnihopper\loot_tables\blocks\waxed_weathered_fluid_omnihopper.json
 325289d7835add3651e8c2f684d0dee8bbc0e099 data\omnihopper\loot_tables\blocks\open_box.json
 9d3834381270a159809226214f72cecc2c57aae2 data\omnihopper\loot_tables\blocks\exposed_fluid_omnihopper.json
 0a3df091eb6c4de43fa28e23d98715deecd040c7 data\omnihopper\loot_tables\blocks\oxidized_fluid_hopper.json

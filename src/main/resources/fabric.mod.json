@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Omni-Hopper",
-  "description": "Break free from the constraints of normal hoppers. Experience true item transportation freedom.",
+  "description": "Break free from the constraints of normal hoppers. Experience true item and fluid transportation freedom.",
   "authors": [
     "enjarai"
   ],
@@ -33,11 +33,17 @@
   "accessWidener" : "omnihopper.accesswidener",
   "depends": {
     "cooldown-coordinator": "^0.4.3",
+    "cicada": "*",
     "fabric": "*",
-    "minecraft": ">=1.19.3- <1.19.5-",
+    "minecraft": ">=1.19.4- <1.19.5-",
     "java": ">=17"
   },
   "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/WcYsDDQtyR"
+      }
+    },
     "projects": {
       "modrinth": "i2u9r3li",
       "curseforge": 610606

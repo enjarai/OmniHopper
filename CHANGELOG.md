@@ -1,1 +1,4 @@
-- Updated to 1.19.4.
+- Added Whoppers, a wooden hopper variant that's way slower and more limited, but also way cheaper to craft. Includes an omni variant.
+- Overhauled Fluid Hoppers into Floppers, they can now oxidize like any other copper block.
+- Added Lidless Chests, a block that instantly drops any inserted items on the floor, can be placed in any direction.
+- Majorly overhauled internals to be mildly less cursed.
