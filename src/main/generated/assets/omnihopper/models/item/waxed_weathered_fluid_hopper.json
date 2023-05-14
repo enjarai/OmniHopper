@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "omnihopper:item/waxed_weathered_fluid_hopper"
+  }
+}

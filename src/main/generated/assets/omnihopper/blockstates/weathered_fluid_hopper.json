@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "pointy_bit=down": {
+      "model": "omnihopper:block/weathered_fluid_hopper_down"
+    },
+    "pointy_bit=east": {
+      "model": "omnihopper:block/weathered_fluid_hopper_east"
+    },
+    "pointy_bit=north": {
+      "model": "omnihopper:block/weathered_fluid_hopper_north"
+    },
+    "pointy_bit=south": {
+      "model": "omnihopper:block/weathered_fluid_hopper_south"
+    },
+    "pointy_bit=up": {
+      "model": "omnihopper:block/weathered_fluid_hopper_up"
+    },
+    "pointy_bit=west": {
+      "model": "omnihopper:block/weathered_fluid_hopper_west"
+    }
+  }
+}

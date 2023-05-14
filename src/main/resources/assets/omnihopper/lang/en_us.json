@@ -1,8 +1,37 @@
 {
   "block.omnihopper.omnihopper": "Omni-Hopper",
-  "block.omnihopper.fluid_omnihopper": "Fluid Omni-Hopper",
-  "block.omnihopper.fluid_hopper": "Fluid Hopper",
+  "block.omnihopper.fluid_omnihopper": "Omni-Flopper",
+  "block.omnihopper.exposed_fluid_omnihopper": "Exposed Omni-Flopper",
+  "block.omnihopper.weathered_fluid_omnihopper": "Weathered Omni-Flopper",
+  "block.omnihopper.oxidized_fluid_omnihopper": "Oxidized Omni-Flopper",
+  "block.omnihopper.waxed_fluid_omnihopper": "Waxed Omni-Flopper",
+  "block.omnihopper.waxed_exposed_fluid_omnihopper": "Waxed Exposed Omni-Flopper",
+  "block.omnihopper.waxed_weathered_fluid_omnihopper": "Waxed Weathered Omni-Flopper",
+  "block.omnihopper.waxed_oxidized_fluid_omnihopper": "Waxed Oxidized Omni-Flopper",
+  "block.omnihopper.fluid_hopper": "Flopper",
+  "block.omnihopper.exposed_fluid_hopper": "Exposed Flopper",
+  "block.omnihopper.weathered_fluid_hopper": "Weathered Flopper",
+  "block.omnihopper.oxidized_fluid_hopper": "Oxidized Flopper",
+  "block.omnihopper.waxed_fluid_hopper": "Waxed Flopper",
+  "block.omnihopper.waxed_exposed_fluid_hopper": "Waxed Exposed Flopper",
+  "block.omnihopper.waxed_weathered_fluid_hopper": "Waxed Weathered Flopper",
+  "block.omnihopper.waxed_oxidized_fluid_hopper": "Waxed Oxidized Flopper",
+  "block.omnihopper.wooden_omnihopper": "Omni-Whopper",
+  "block.omnihopper.wooden_hopper": "Whopper",
+
+  "block.omnihopper.open_box": "Lidless Chest",
+
+  "item.omnihopper.omnihopper.tooltip": "Can be placed in any orientation",
+  "item.omnihopper.fluid_omnihopper.tooltip": "Transfers fluids instead of items, omnidirectional",
+  "item.omnihopper.fluid_hopper.tooltip": "Transfers fluids instead of items",
+  "item.omnihopper.wooden_omnihopper.tooltip": "A cheaper and slower hopper variant, omnidirectional",
+  "item.omnihopper.wooden_hopper.tooltip": "A cheaper and slower hopper variant",
+
+  "item.omnihopper.open_box.tooltip": "Drops any inserted items on the ground",
+
   "container.omnihopper": "Omni-Hopper",
-  "container.fluid_omnihopper": "Fluid Omni-Hopper",
-  "container.fluid_hopper": "Fluid Hopper"
+  "container.fluid_omnihopper": "Omni-Flopper",
+  "container.fluid_hopper": "Flopper",
+  "container.wooden_omnihopper": "Omni-Whopper",
+  "container.wooden_hopper": "Whopper"
 }

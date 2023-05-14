@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "w w",
+    "wCw",
+    " w "
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:chest"
+    },
+    "w": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "omnihopper:wooden_hopper"
+  }
+}

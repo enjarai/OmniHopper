@@ -1,0 +1,10 @@
+{
+  "parent": "omnihopper:block/hopper_west",
+  "textures": {
+    "bottom": "minecraft:block/hopper_outside",
+    "inside": "minecraft:block/hopper_inside",
+    "particle": "minecraft:block/hopper_outside",
+    "side": "minecraft:block/hopper_outside",
+    "top": "minecraft:block/hopper_top"
+  }
+}

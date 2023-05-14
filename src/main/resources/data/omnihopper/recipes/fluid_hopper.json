@@ -2,12 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "c c",
-    "cCc",
+    "cBc",
     " c "
   ],
   "key": {
-    "C": {
-      "item": "minecraft:cauldron"
+    "B": {
+      "item": "minecraft:bucket"
     },
     "c": {
       "item": "minecraft:copper_ingot"
