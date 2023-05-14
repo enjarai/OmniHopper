@@ -1,26 +1,22 @@
 package nl.enjarai.omnihopper.items;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.text.TextColor;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import nl.enjarai.omnihopper.blocks.ModBlocks;
 import nl.enjarai.omnihopper.util.HasTooltip;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ModItems {
     public static final List<Item> ALL = new ArrayList<>();
@@ -30,7 +26,7 @@ public class ModItems {
 
     private static BlockItem registerBlockItem(Block block) {
         Identifier id = Registry.BLOCK.getId(block);
-        var item = Registry.register(Registry.ITEM, id, new BlockItem(block, new FabricItemSettings()) {
+        var item = Registry.register(Registry.ITEM, id, new BlockItem(block, new FabricItemSettings().group(ItemGroup.REDSTONE)) {
             @Override
             public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
                 if (block instanceof HasTooltip hasTooltip) {
@@ -42,7 +38,6 @@ public class ModItems {
         });
 
         ALL.add(item);
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register((entries) -> entries.add(item));
 
         return item;
     }

@@ -12,7 +12,6 @@ import net.minecraft.block.MapColor;
 import net.minecraft.block.Material;
 import net.minecraft.block.Oxidizable;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.registry.Registry;
 import nl.enjarai.omnihopper.OmniHopper;

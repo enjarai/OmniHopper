@@ -1,20 +1,17 @@
 package nl.enjarai.omnihopper.blocks;
 
-import java.util.Set;
-
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.enums.SlabType;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.tag.BlockTags;
+import net.minecraft.tag.TagKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -22,9 +19,10 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import nl.enjarai.omnihopper.blocks.entity.OpenBoxBlockEntity;
 import nl.enjarai.omnihopper.util.DatagenBlock;
-
 import nl.enjarai.omnihopper.util.HasTooltip;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Set;
 
 @SuppressWarnings("deprecation")
 public class OpenBoxBlock extends BlockWithEntity implements DatagenBlock, HasTooltip, Waterloggable {
@@ -110,7 +108,7 @@ public class OpenBoxBlock extends BlockWithEntity implements DatagenBlock, HasTo
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (state.get(WATERLOGGED)) {
-            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+            world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }

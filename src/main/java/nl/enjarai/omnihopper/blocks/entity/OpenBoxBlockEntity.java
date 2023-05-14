@@ -23,8 +23,8 @@ public class OpenBoxBlockEntity extends BlockEntity {
 
             var direction = state.get(OpenBoxBlock.FACING);
             var vOffset = new Vec3d(0, -0.125, 0);
-            var dOffset = new Vec3d(direction.getUnitVector().mul(0.25f));
-            var pos = getPos().toCenterPos().add(dOffset).add(vOffset);
+            var dOffset = new Vec3d(direction.getUnitVector()).multiply(0.25f);
+            var pos = Vec3d.of(getPos()).add(0.5, 0.5, 0.5).add(dOffset).add(vOffset);
 
             while (amount > 0) {
                 var stackSize = Math.min(amount, resource.getItem().getMaxCount());

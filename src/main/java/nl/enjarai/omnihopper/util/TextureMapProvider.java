@@ -24,7 +24,7 @@ public interface TextureMapProvider {
             case WEATHERED -> "weathered_";
             case OXIDIZED -> "oxidized_";
         };
-        return forHopperType(id.withPath(path -> prefix + path));
+        return forHopperType(new Identifier(id.getNamespace(), prefix + id.getPath()));
     }
 
     static TextureMap forVanillaHopper() {
@@ -37,6 +37,6 @@ public interface TextureMapProvider {
     }
 
     static Identifier getSubId(Identifier id, String suffix) {
-        return id.withPath(path -> "block/" + path + suffix);
+        return new Identifier(id.getNamespace(), "block/" + id.getPath() + suffix);
     }
 }

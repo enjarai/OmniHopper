@@ -1,10 +1,13 @@
 package nl.enjarai.omnihopper.util;
 
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.InsertionOnlyStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.fabricmc.fabric.api.transfer.v1.transaction.base.SnapshotParticipant;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -62,5 +65,10 @@ public abstract class ExecutingInsertionStorage<T> implements InsertionOnlyStora
                 this.amount = amount;
             }
         }
+    }
+
+    @Override
+    public Iterator<StorageView<T>> iterator() {
+        return Collections.emptyIterator();
     }
 }
