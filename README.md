@@ -36,19 +36,60 @@ Freedom is within our grasp!
 
 ## Features
 
-- Omni-Hoppers that can be placed in any orientation, sucking from and inserting into any side.
-  ![](img/omnihopper.png)
-- Fluid Hoppers (Floppers) to transport fluids instead of items. They oxidize!
-  ![](img/flopper.png)
-- Wooden Hoppers (Whoppers) as a cheaper, slower and more limited alternative to regular hoppers.
-  ![](img/whopper.png)
-- Omni variants of the above.
-  ![](img/variants.png)
-- Lidless Chests that instantly drop any inserted items on the ground.
-  ![](img/lidless.png)
+### Omni-Hoppers
+
+This is a variant of vanilla hoppers that can be placed in any orientation, sucking from and inserting into any side.
+It can be crafted by combining a regular hopper with a copper ingot.
+
+Placing an omni-hopper can be confusing at first, but it's actually quite simple.
+The "sucky bit" (input) will always face *towards* the player that placed it,
+meanwhile the "pointy bit" (output) will face *into the block* the player placed it on.
+Think of it like the input following the same placement logic as a piston, 
+while the output uses the logic of a log or pillar block.
+
+![](img/omnihopper.png)
+
+### Floppers
+
+Floppers are another hopper variant that transports fluids instead of items.
+Whenever possible they will pick up fluids from the world using their sucky side.
+
+They can be crafted using the same recipe as a regular hopper, 
+but replacing iron with copper and the chest with a bucket.
+
+Since they're made of copper, they can oxidize and be waxed like any other copper block.
+
+![](img/flopper.png)
+
+### Whoppers
+
+A basic alternative to vanilla hoppers. They operate at half the speed of a regular hopper,
+and contain only one inventory slot.
+But they're also very cheap to craft, only requiring 5 planks and a chest.
+
+They also don't respond to redstone, which can be a curse or a blessing depending on your needs.
+
+![](img/whopper.png)
+
+### Omni variants for all
+
+All custom hopper types come with their own omnidirectional variant, 
+again crafted by combining it with a single copper ingot.
+
+![](img/variants.png)
+
+### Lidless Chests
+
+These simple blocks will instantly drop any inserted items onto the ground.
+They can face in any direction.
+
+![](img/lidless.png)
 
 ## Examples
 
 ### Basic upside-down sorter
+
+An unconventional sorter that uses Omni-Whoppers to pull items out of a water stream from above.
+The items are dropped into the stream using a Lidless Chest.
 
 ![](img/sorter.png)
