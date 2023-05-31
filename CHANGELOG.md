@@ -1,1 +1,1 @@
-- Tweaked the Lidless Chest recipe to not override vanilla boats. :skull:
+- Ported to 1.20

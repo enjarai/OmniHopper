@@ -9,7 +9,6 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
-import net.minecraft.block.Material;
 import net.minecraft.block.Oxidizable;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
@@ -23,13 +22,15 @@ import nl.enjarai.omnihopper.blocks.hopper.*;
 @SuppressWarnings("UnstableApiUsage")
 public class ModBlocks {
     public static final FabricBlockSettings HOPPER_SETTINGS = FabricBlockSettings
-            .of(Material.METAL, MapColor.STONE_GRAY)
+            .create()
+            .mapColor(MapColor.STONE_GRAY)
             .requiresTool()
             .strength(3.0F, 4.8F)
             .sounds(BlockSoundGroup.METAL)
             .nonOpaque();
     public static final FabricBlockSettings WOODEN_HOPPER_SETTINGS = FabricBlockSettings
-            .of(Material.WOOD, MapColor.BROWN)
+            .create()
+            .mapColor(MapColor.BROWN)
             .requiresTool()
             .strength(2.0f, 3.0f)
             .sounds(BlockSoundGroup.WOOD)
