@@ -1,1 +1,1 @@
-- Marked compatible with 1.20.1
+- Fixed missed compatibility issues with 1.20.1
