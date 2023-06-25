@@ -1,0 +1,37 @@
+{
+  "block.omnihopper.omnihopper": "Funil de ferro multidirecional",
+  "block.omnihopper.fluid_omnihopper": "Funil de cobre multidirecional",
+  "block.omnihopper.exposed_fluid_omnihopper": "Funil de cobre exposto multidirecional",
+  "block.omnihopper.weathered_fluid_omnihopper": "Funil de cobre desgastado multidirecional",
+  "block.omnihopper.oxidized_fluid_omnihopper": "Funil de cobre oxidado multidirecional",
+  "block.omnihopper.waxed_fluid_omnihopper": "Funil de cobre encerado multidirecional",
+  "block.omnihopper.waxed_exposed_fluid_omnihopper": "Funil de cobre exposto encerado multidirecional",
+  "block.omnihopper.waxed_weathered_fluid_omnihopper": "Funil de cobre desgastado encerado multidirecional",
+  "block.omnihopper.waxed_oxidized_fluid_omnihopper": "Funil de cobre oxidado encerado multidirecional",
+  "block.omnihopper.fluid_hopper": "Funil de cobre",
+  "block.omnihopper.exposed_fluid_hopper": "Funil de cobre exposto",
+  "block.omnihopper.weathered_fluid_hopper": "Funil de cobre desgastado",
+  "block.omnihopper.oxidized_fluid_hopper": "Funil de cobre oxidado",
+  "block.omnihopper.waxed_fluid_hopper": "Funil de cobre encerado",
+  "block.omnihopper.waxed_exposed_fluid_hopper": "Funil de cobre exposto encerado",
+  "block.omnihopper.waxed_weathered_fluid_hopper": "Funil de cobre desgastado encerado",
+  "block.omnihopper.waxed_oxidized_fluid_hopper": "Funil de cobre oxidado encerado",
+  "block.omnihopper.wooden_omnihopper": "Funil de madeira multidirecional",
+  "block.omnihopper.wooden_hopper": "Funil de madeira",
+
+  "block.omnihopper.open_box": "Baú sem tampa",
+
+  "item.omnihopper.omnihopper.tooltip": "Pode ser colocado em qualquer orientação",
+  "item.omnihopper.fluid_omnihopper.tooltip": "Transfere fluidos em vez de itens, pode ser colocado em qualquer orientação",
+  "item.omnihopper.fluid_hopper.tooltip": "Transfere fluidos em vez de itens",
+  "item.omnihopper.wooden_omnihopper.tooltip": "Uma variante de funil mais barata e mais lenta, pode ser colocado em qualquer orientação",
+  "item.omnihopper.wooden_hopper.tooltip": "Uma variante de funil mais barata e mais lenta",
+
+  "item.omnihopper.open_box.tooltip": "Qualquer item adicionado é imediatamente largado no chão",
+
+  "container.omnihopper": "Funil de ferro multidirecional",
+  "container.fluid_omnihopper": "Funil de cobre multidirecional",
+  "container.fluid_hopper": "Funil de cobre",
+  "container.wooden_omnihopper": "Funil de madeira multidirecional",
+  "container.wooden_hopper": "Funil de madeira"
+}
