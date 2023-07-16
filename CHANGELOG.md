@@ -1,1 +1,1 @@
-- Fixed missed compatibility issues with 1.20.1
+- Fixed compatibility with Lithium hopper optimisations (by yeeting them :skull:)
