@@ -1,7 +1,5 @@
 package nl.enjarai.omnihopper.blocks;
 
-import java.util.List;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.registry.OxidizableBlocksRegistry;
@@ -18,6 +16,8 @@ import nl.enjarai.omnihopper.OmniHopper;
 import nl.enjarai.omnihopper.blocks.entity.OpenBoxBlockEntity;
 import nl.enjarai.omnihopper.blocks.entity.hopper.*;
 import nl.enjarai.omnihopper.blocks.hopper.*;
+
+import java.util.List;
 
 @SuppressWarnings("UnstableApiUsage")
 public class ModBlocks {

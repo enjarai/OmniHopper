@@ -61,7 +61,7 @@ public class FluidHopperBehaviour extends HopperBehaviour<FluidVariant> {
 
 	@Override
 	public long getAmountPerActivation(BlockState targetState) {
-		return FluidConstants.BUCKET / (targetState.isIn(BlockTags.CAULDRONS) ? 1 : 4);
+		return FluidConstants.BUCKET;
 	}
 
 	@Override

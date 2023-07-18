@@ -1,1 +1,4 @@
-- Fixed compatibility with Lithium hopper optimisations (by yeeting them :skull:)
+- Added functionality to let Floppers insert and extract fluids from buckets in the fuel slot of Furnaces.
+  - This opens up options for super smelter automation.
+  - This is also a vanilla-friendly way to automate the bucketing and unbucketing of fluids.
+- Buffed Flopper insertion and extraction speed slightly.
