@@ -1,7 +1,5 @@
 package nl.enjarai.omnihopper.blocks.entity.hopper;
 
-import org.jetbrains.annotations.Nullable;
-
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
 import net.gnomecraft.cooldowncoordinator.CooldownCoordinator;
@@ -16,11 +14,15 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Nameable;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import nl.enjarai.omnihopper.blocks.entity.hopper.behaviour.HopperBehaviour;
+import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("UnstableApiUsage")
 public abstract class HopperBlockEntity<T> extends BlockEntity implements CoordinatedCooldown, NamedScreenHandlerFactory, Nameable {
@@ -179,5 +181,9 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
         return behaviour.createMenu(syncId, playerInventory, player);
+    }
+
+    public ActionResult onUse(PlayerEntity player, Hand hand, BlockHitResult hit) {
+        return behaviour.onUse(player, hand, hit);
     }
 }

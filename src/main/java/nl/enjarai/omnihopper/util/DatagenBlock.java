@@ -1,16 +1,15 @@
 package nl.enjarai.omnihopper.util;
 
-import java.util.Optional;
-import java.util.Set;
-
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Model;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.TagKey;
+
+import java.util.Optional;
+import java.util.Set;
 
 public interface DatagenBlock {
     default void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {

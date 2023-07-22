@@ -1,10 +1,7 @@
 package nl.enjarai.omnihopper.blocks;
 
-import java.util.Set;
-
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.enums.SlabType;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -22,9 +19,10 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import nl.enjarai.omnihopper.blocks.entity.OpenBoxBlockEntity;
 import nl.enjarai.omnihopper.util.DatagenBlock;
-
 import nl.enjarai.omnihopper.util.HasTooltip;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Set;
 
 @SuppressWarnings("deprecation")
 public class OpenBoxBlock extends BlockWithEntity implements DatagenBlock, HasTooltip, Waterloggable {

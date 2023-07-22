@@ -1,7 +1,5 @@
 package nl.enjarai.omnihopper.blocks.entity.hopper.behaviour;
 
-import org.jetbrains.annotations.Nullable;
-
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.minecraft.block.BlockState;
@@ -9,11 +7,15 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import nl.enjarai.omnihopper.blocks.entity.hopper.HopperBlockEntity;
+import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("UnstableApiUsage")
 public abstract class HopperBehaviour<T> {
@@ -56,5 +58,9 @@ public abstract class HopperBehaviour<T> {
 	@Nullable
 	public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
 		return null;
+	}
+
+	public ActionResult onUse(PlayerEntity player, Hand hand, BlockHitResult hit) {
+		return ActionResult.PASS;
 	}
 }

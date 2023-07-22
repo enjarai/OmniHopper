@@ -13,8 +13,14 @@ public abstract class ExecutingInsertionStorage<T> implements InsertionOnlyStora
 
     @Override
     public long insert(T resource, long maxAmount, TransactionContext transaction) {
-        droppedItems.addDrop(resource, maxAmount, transaction);
+        var amount = canInsert(resource, maxAmount);
+        if (amount <= 0) return 0;
 
+        droppedItems.addDrop(resource, amount, transaction);
+        return amount;
+    }
+
+    protected long canInsert(T resource, long maxAmount) {
         return maxAmount;
     }
 

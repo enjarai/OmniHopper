@@ -170,11 +170,16 @@ public abstract class HopperBlock extends BlockWithEntity implements DatagenBloc
         } else {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof HopperBlockEntity<?> hopperBlockEntity) {
+                var entityResult = hopperBlockEntity.onUse(player, hand, hit);
+                if (entityResult.isAccepted()) {
+                    return entityResult;
+                }
+
                 player.openHandledScreen(hopperBlockEntity);
                 player.incrementStat(Stats.INSPECT_HOPPER);
             }
 
-            return ActionResult.CONSUME;
+            return ActionResult.PASS;
         }
     }
 

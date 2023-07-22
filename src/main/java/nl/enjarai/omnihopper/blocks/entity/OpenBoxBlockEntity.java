@@ -1,5 +1,7 @@
 package nl.enjarai.omnihopper.blocks.entity;
 
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.minecraft.block.BlockState;
@@ -36,6 +38,29 @@ public class OpenBoxBlockEntity extends BlockEntity {
 
                 amount -= stackSize;
             }
+        }
+    };
+    private final ExecutingInsertionStorage<FluidVariant> fluidStorage = new ExecutingInsertionStorage<>() {
+        private BlockPos getPlacePos() {
+            var world = getWorld();
+            var state = getCachedState();
+            if (world == null) throw new IllegalStateException("Can't place fluids in a world that doesn't exist!");
+
+            var direction = state.get(OpenBoxBlock.FACING);
+            return getPos().offset(direction);
+        }
+
+        @Override
+        protected long canInsert(FluidVariant resource, long maxAmount) {
+            var pos = getPlacePos();
+            //noinspection DataFlowIssue
+            var blockState = getWorld().getBlockState(pos);
+            return maxAmount >= FluidConstants.BLOCK && blockState.canBucketPlace(resource.getFluid()) ? 1000 : 0;
+        }
+
+        @Override
+        protected void handleEntry(FluidVariant resource, long amount) {
+
         }
     };
 

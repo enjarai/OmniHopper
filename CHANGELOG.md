@@ -1,4 +1,3 @@
-- Added functionality to let Floppers insert and extract fluids from buckets in the fuel slot of Furnaces.
-  - This opens up options for super smelter automation.
-  - This is also a vanilla-friendly way to automate the bucketing and unbucketing of fluids.
-- Buffed Flopper insertion and extraction speed slightly.
+- Added the ability to insert and extract fluids from Floppers manually using buckets.
+- Nerfed Flopper capacity to only 1 bucket.
+- Removed a vanilla feature allowing buckets to be pulled from the bottom of furnaces, this makes Flopper-based super smelters more viable.

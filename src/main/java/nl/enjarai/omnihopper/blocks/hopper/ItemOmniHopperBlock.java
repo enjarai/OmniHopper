@@ -1,13 +1,12 @@
 package nl.enjarai.omnihopper.blocks.hopper;
 
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.data.client.TextureMap;
 import net.minecraft.util.math.BlockPos;
 import nl.enjarai.omnihopper.blocks.entity.hopper.ItemOmniHopperBlockEntity;
 import nl.enjarai.omnihopper.util.TextureMapProvider;
+import org.jetbrains.annotations.Nullable;
 
 public class ItemOmniHopperBlock extends OmniHopperBlock {
     public ItemOmniHopperBlock(Settings settings) {

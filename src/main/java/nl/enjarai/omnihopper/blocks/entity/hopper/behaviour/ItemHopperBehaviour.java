@@ -1,11 +1,5 @@
 package nl.enjarai.omnihopper.blocks.entity.hopper.behaviour;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
@@ -27,8 +21,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
-import nl.enjarai.omnihopper.blocks.hopper.ItemOmniHopperBlock;
 import nl.enjarai.omnihopper.blocks.entity.hopper.HopperBlockEntity;
+import nl.enjarai.omnihopper.blocks.hopper.ItemOmniHopperBlock;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("UnstableApiUsage")
 public abstract class ItemHopperBehaviour extends HopperBehaviour<ItemVariant> {
