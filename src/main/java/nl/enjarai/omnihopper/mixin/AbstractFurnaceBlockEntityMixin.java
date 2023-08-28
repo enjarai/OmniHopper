@@ -35,7 +35,7 @@ public abstract class AbstractFurnaceBlockEntityMixin implements SidedStorageBlo
 
     @Override
     public @Nullable Storage<FluidVariant> getFluidStorage(Direction side) {
-        if (side.getAxis().isHorizontal()) {
+        if (side == null || side.getAxis().isHorizontal()) {
             return fluidStorage;
         }
         return null;

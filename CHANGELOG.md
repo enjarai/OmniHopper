@@ -1,3 +1,1 @@
-- Added the ability to insert and extract fluids from Floppers manually using buckets.
-- Nerfed Flopper capacity to only 1 bucket.
-- Removed a vanilla feature allowing buckets to be pulled from the bottom of furnaces, this makes Flopper-based super smelters more viable.
+- Fixed a minor issue when other mods try to sidelessly interact with furnaces.
