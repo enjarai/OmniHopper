@@ -36,7 +36,7 @@
     "cooldown-coordinator": "^0.4.3",
     "cicada": "*",
     "fabric": "*",
-    "minecraft": ">=1.20- <1.20.2-",
+    "minecraft": ">=1.20- <1.20.3-",
     "java": ">=17"
   },
   "custom": {

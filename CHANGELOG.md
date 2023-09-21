@@ -1,1 +1,2 @@
-- Fixed a minor issue when other mods try to sidelessly interact with furnaces.
+- Updated to support 1.20.2
+- Fixed a bug causing the player to place blocks against an omnihopper while interacting with it and holding a block.

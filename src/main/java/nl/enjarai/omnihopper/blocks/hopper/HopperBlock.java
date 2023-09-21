@@ -165,9 +165,7 @@ public abstract class HopperBlock extends BlockWithEntity implements DatagenBloc
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (world.isClient) {
-            return ActionResult.SUCCESS;
-        } else {
+        if (!world.isClient) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof HopperBlockEntity<?> hopperBlockEntity) {
                 var entityResult = hopperBlockEntity.onUse(player, hand, hit);
@@ -179,8 +177,8 @@ public abstract class HopperBlock extends BlockWithEntity implements DatagenBloc
                 player.incrementStat(Stats.INSPECT_HOPPER);
             }
 
-            return ActionResult.PASS;
         }
+        return ActionResult.success(world.isClient);
     }
 
     @Override
