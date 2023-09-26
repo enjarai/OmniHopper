@@ -88,7 +88,7 @@ public class FluidHopperBehaviour extends HopperBehaviour<FluidVariant> {
 						transaction
 				);
 
-				if (inserted == FluidConstants.BUCKET && !drainable.tryDrainFluid(world, fluidPos, state).isEmpty()) {
+				if (inserted == FluidConstants.BUCKET && !drainable.tryDrainFluid(null, world, fluidPos, state).isEmpty()) {
 					transaction.commit();
 
 					return true;

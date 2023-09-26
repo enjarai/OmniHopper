@@ -2,6 +2,7 @@ package nl.enjarai.omnihopper.blocks;
 
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -101,8 +102,8 @@ public class OpenBoxBlock extends BlockWithEntity implements DatagenBlock, HasTo
     }
 
     @Override
-    public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
-        return Waterloggable.super.canFillWithFluid(world, pos, state, fluid);
+    public boolean canFillWithFluid(@Nullable PlayerEntity player, BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
+        return Waterloggable.super.canFillWithFluid(player, world, pos, state, fluid);
     }
 
     @Override
