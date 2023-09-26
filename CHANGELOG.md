@@ -1,2 +1,1 @@
-- Updated to support 1.20.2
-- Fixed a bug causing the player to place blocks against an omnihopper while interacting with it and holding a block.
+- Fixed 1.20.2 support, by splitting 1.20.1 and 1.20.2 into separate branches.
