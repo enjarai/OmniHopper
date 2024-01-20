@@ -1,0 +1,55 @@
+{
+  "mod_id": "omnihopper",
+
+  "conversations": {
+    "cicada:greetings": {
+      "lines": [
+        {
+          "order": 50,
+          "text": "Hey there peeps!"
+        },
+        {
+          "condition": {
+            "type": "cicada:mod_participates",
+            "mod_id": "projectv"
+          },
+          "order": 61,
+          "text": "First time?"
+        },
+        {
+          "condition": {
+            "type": "cicada:mod_participates",
+            "mod_id": "projectv"
+          },
+          "order": 63,
+          "text": "Yea pretty much, have you *seen* how many blockstates a hopper has?"
+        }
+      ]
+    },
+    "cicada:good_old_days": {
+      "lines": [
+        {
+          "order": 20,
+          "text": "I mean we could..."
+        }
+      ]
+    },
+
+    "cicada:christmas": {
+      "lines": [
+        {
+          "order": 20,
+          "text": "Merry christmas everyone!"
+        }
+      ]
+    },
+    "cicada:new_year": {
+      "lines": [
+        {
+          "order": 20,
+          "text": "Happy new year people!"
+        }
+      ]
+    }
+  }
+}
