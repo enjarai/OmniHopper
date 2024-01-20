@@ -1,1 +1,1 @@
-- Fixed 1.20.2 support, by splitting 1.20.1 and 1.20.2 into separate branches.
+- Added Cicada integration.
