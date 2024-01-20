@@ -78,6 +78,8 @@ jobs:
             18
           modrinth-featured: false
 
+          curseforge-id: 610606
+
           changelog-file: CHANGELOG.md
           files: '${{ steps.download.outputs.download-path }}/!(*-@(dev|sources)).jar'
 
