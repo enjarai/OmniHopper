@@ -1,1 +1,1 @@
-- Added Cicada integration.
+- Updated to 1.20.4.
