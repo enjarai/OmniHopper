@@ -1,6 +1,8 @@
 package nl.enjarai.omnihopper.blocks.hopper;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.Oxidizable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.data.client.TextureMap;

@@ -1,5 +1,6 @@
 package nl.enjarai.omnihopper.blocks.hopper;
 
+import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
@@ -43,7 +44,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.Set;
 
-@SuppressWarnings({"UnstableApiUsage", "deprecation"})
+@SuppressWarnings({"deprecation"})
 public abstract class HopperBlock extends BlockWithEntity implements DatagenBlock, TextureMapProvider, HasTooltip {
     public static final BooleanProperty ENABLED;
     public static final VoxelShape[] SUCKY_AREA;
@@ -258,5 +259,10 @@ public abstract class HopperBlock extends BlockWithEntity implements DatagenBloc
     @Override
     public void generateItemModel(ItemModelGenerator itemModelGenerator, BlockItem item) {
         itemModelGenerator.register(item, Models.GENERATED);
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return null;
     }
 }

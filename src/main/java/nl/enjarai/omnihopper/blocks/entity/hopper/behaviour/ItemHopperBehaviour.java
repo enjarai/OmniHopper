@@ -54,13 +54,13 @@ public abstract class ItemHopperBehaviour extends HopperBehaviour<ItemVariant> {
 
 	@Override
 	public void readNbt(NbtCompound nbt) {
-		inventory.stacks = DefaultedList.ofSize(inventory.size(), ItemStack.EMPTY);
-		Inventories.readNbt(nbt, inventory.stacks);
+		inventory.heldStacks = DefaultedList.ofSize(inventory.size(), ItemStack.EMPTY);
+		Inventories.readNbt(nbt, inventory.heldStacks);
 	}
 
 	@Override
 	public void writeNbt(NbtCompound nbt) {
-		Inventories.writeNbt(nbt, inventory.stacks);
+		Inventories.writeNbt(nbt, inventory.heldStacks);
 	}
 
 	@Override

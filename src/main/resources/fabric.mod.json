@@ -40,7 +40,7 @@
     "cicada": "*",
     "fabric": "*",
     "fabricloader": ">=0.15",
-    "minecraft": ">=1.20.2- <1.20.3-",
+    "minecraft": ">=1.20.3- <=1.20.4",
     "java": ">=17"
   },
   "custom": {

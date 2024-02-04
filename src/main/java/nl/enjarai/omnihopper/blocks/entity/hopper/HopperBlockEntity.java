@@ -44,7 +44,7 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
         super.readNbt(nbt);
 
         if (nbt.contains("CustomName", 8)) {
-            customName = Text.Serializer.fromJson(nbt.getString("CustomName"));
+            customName = Text.Serialization.fromJson(nbt.getString("CustomName"));
         }
         transferCooldown = nbt.getInt("TransferCooldown");
 
@@ -55,7 +55,7 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
         super.writeNbt(nbt);
 
         if (customName != null) {
-            nbt.putString("CustomName", Text.Serializer.toJson(customName));
+            nbt.putString("CustomName", Text.Serialization.toJsonString(customName));
         }
         nbt.putInt("TransferCooldown", transferCooldown);
 
