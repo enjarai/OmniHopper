@@ -71,7 +71,8 @@ jobs:
         uses: Kir-Antipov/mc-publish@v3.3.0
         with:
           game-versions: |
-            1.20.2
+            1.20.3
+            1.20.4
           java: |
             17
             18
