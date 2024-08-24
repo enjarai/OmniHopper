@@ -11,6 +11,22 @@
         {
           "condition": {
             "type": "cicada:mod_participates",
+            "mod_id": "trickster"
+          },
+          "order": 52,
+          "text": "Hey now, no need to be so rude, I'm sure there are plenty of other great mods in this pack."
+        },
+        {
+          "condition": {
+            "type": "cicada:mod_participates",
+            "mod_id": "trickster"
+          },
+          "order": 54,
+          "text": "Just because you don't know them, doesn't mean they're bad. You should give them a chance."
+        },
+        {
+          "condition": {
+            "type": "cicada:mod_participates",
             "mod_id": "projectv"
           },
           "order": 61,
