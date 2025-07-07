@@ -1,0 +1,39 @@
+{
+  "block.omnihopper.omnihopper": "Omni-entonnoir",
+  "block.omnihopper.fluid_omnihopper": "Omni-fluitonnoir",
+  "block.omnihopper.exposed_fluid_omnihopper": "Omni-fluitonnoir exposé",
+  "block.omnihopper.weathered_fluid_omnihopper": "Omni-fluitonnoir érodé",
+  "block.omnihopper.oxidized_fluid_omnihopper": "Omni-fluitonnoir oxydé",
+  "block.omnihopper.waxed_fluid_omnihopper": "Omni-fluitonnoir ciré",
+  "block.omnihopper.waxed_exposed_fluid_omnihopper": "Omni-fluitonnoir exposé ciré",
+  "block.omnihopper.waxed_weathered_fluid_omnihopper": "Omni-fluitonnoir érodé ciré",
+  "block.omnihopper.waxed_oxidized_fluid_omnihopper": "Omni-fluitonnoir oxydé ciré",
+  "block.omnihopper.fluid_hopper": "Fluitonnoir",
+  "block.omnihopper.exposed_fluid_hopper": "Fluitonnoir exposé",
+  "block.omnihopper.weathered_fluid_hopper": "Fluitonnoir érodé",
+  "block.omnihopper.oxidized_fluid_hopper": "Fluitonnoir oxydé",
+  "block.omnihopper.waxed_fluid_hopper": "Fluitonnoir ciré",
+  "block.omnihopper.waxed_exposed_fluid_hopper": "Fluitonnoir exposé ciré",
+  "block.omnihopper.waxed_weathered_fluid_hopper": "Fluitonnoir érodé ciré",
+  "block.omnihopper.waxed_oxidized_fluid_hopper": "Fluitonnoir oxydé ciré",
+  "block.omnihopper.wooden_omnihopper": "Omni-boitonnoir",
+  "block.omnihopper.wooden_hopper": "Boitonnoir",
+
+  "block.omnihopper.open_box": "Coffre sans couvercle",
+
+  "item.omnihopper.omnihopper.tooltip": "Peut être placé dans toutes les directions",
+  "item.omnihopper.fluid_omnihopper.tooltip": "Transfert les fluides au lieu des objets, omnidirectionnel",
+  "item.omnihopper.fluid_hopper.tooltip": "Transfert les fluides au lieu des objets",
+  "item.omnihopper.wooden_omnihopper.tooltip": "Un entonnoir moins cher et plus lent, omnidirectionnel",
+  "item.omnihopper.wooden_hopper.tooltip": "Un entonnoir moins cher et plus lent",
+
+  "item.omnihopper.open_box.tooltip": "Lache par terre les objets insérés",
+
+  "container.omnihopper": "Omni-entonnoir",
+  "container.fluid_omnihopper": "Omni-fluitonnoir",
+  "container.fluid_hopper": "Fluitonnoir",
+  "container.wooden_omnihopper": "Omni-boitonnoir",
+  "container.wooden_hopper": "Boitonnoir",
+
+  "gamerule.omnihopper:removeFurnaceExtractionExceptions": "[OmniHopper] Enlève les exceptions d'extraction du combustible des fours"
+}
