@@ -58,17 +58,17 @@ public class FluidHopperBehaviour extends HopperBehaviour<FluidVariant> {
 		return fluidStorage;
 	}
 
-    @Override
-    public void writeData(WriteView view) {
-        view.put("fluidVariant", FluidVariant.CODEC, fluidStorage.variant);
-        view.putLong("amount", fluidStorage.amount);
-    }
+	@Override
+	public void writeData(WriteView view) {
+		view.put("fluidVariant", FluidVariant.CODEC, fluidStorage.variant);
+		view.putLong("amount", fluidStorage.amount);
+	}
 
-    @Override
-    public void readData(ReadView view) {
-        fluidStorage.variant = view.read("fluidVariant", FluidVariant.CODEC).orElseThrow();
-        fluidStorage.amount = view.getOptionalLong("amount").orElseThrow();
-    }
+	@Override
+	public void readData(ReadView view) {
+		fluidStorage.variant = view.read("fluidVariant", FluidVariant.CODEC).orElseThrow();
+		fluidStorage.amount = view.getOptionalLong("amount").orElseThrow();
+	}
 
 	@Override
 	public long getAmountPerActivation(BlockState targetState) {

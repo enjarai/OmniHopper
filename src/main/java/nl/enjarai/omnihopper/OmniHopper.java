@@ -27,11 +27,11 @@ import java.util.function.ToIntFunction;
 public class OmniHopper implements ModInitializer, CicadaEntrypoint {
 	public static final String MODID = "omnihopper";
 	public static final Logger LOGGER = ProperLogger.getLogger(MODID);
-    public static final GameRule<Boolean> REMOVE_FURNACE_EXCEPTIONS = registerBooleanRule(
-            "remove_furnace_extraction_exceptions",
-            GameRuleCategory.MISC,
-            true
-    );
+	public static final GameRule<Boolean> REMOVE_FURNACE_EXCEPTIONS = registerBooleanRule(
+			"remove_furnace_extraction_exceptions",
+			GameRuleCategory.MISC,
+			true
+	);
 
 	@Override
 	public void onInitialize() {
@@ -53,11 +53,11 @@ public class OmniHopper implements ModInitializer, CicadaEntrypoint {
 		);
 	}
 
-    private static GameRule<Boolean> registerBooleanRule(String name, GameRuleCategory category, boolean defaultValue) {
-        return register(name, category, GameRuleType.BOOL, BoolArgumentType.bool(), Codec.BOOL, defaultValue, FeatureSet.empty(), GameRuleVisitor::visitBoolean, (value) -> value ? 1 : 0);
-    }
+	private static GameRule<Boolean> registerBooleanRule(String name, GameRuleCategory category, boolean defaultValue) {
+		return register(name, category, GameRuleType.BOOL, BoolArgumentType.bool(), Codec.BOOL, defaultValue, FeatureSet.empty(), GameRuleVisitor::visitBoolean, (value) -> value ? 1 : 0);
+	}
 
-    private static <T> GameRule<T> register(String name, GameRuleCategory category, GameRuleType type, ArgumentType<T> argumentType, Codec<T> codec, T defaultValue, FeatureSet requiredFeatures, Acceptor<T> acceptor, ToIntFunction<T> commandResultSupplier) {
-        return  Registry.register(Registries.GAME_RULE, id(name), new GameRule<>(category, type, argumentType, acceptor, codec, commandResultSupplier, defaultValue, requiredFeatures));
-    }
+	private static <T> GameRule<T> register(String name, GameRuleCategory category, GameRuleType type, ArgumentType<T> argumentType, Codec<T> codec, T defaultValue, FeatureSet requiredFeatures, Acceptor<T> acceptor, ToIntFunction<T> commandResultSupplier) {
+		return  Registry.register(Registries.GAME_RULE, id(name), new GameRule<>(category, type, argumentType, acceptor, codec, commandResultSupplier, defaultValue, requiredFeatures));
+	}
 }

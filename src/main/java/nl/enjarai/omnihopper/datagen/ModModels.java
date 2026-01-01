@@ -20,7 +20,6 @@ public class ModModels extends FabricModelProvider {
             if (block instanceof DatagenBlock datagenBlock) {
                 datagenBlock.generateBlockStateModels(blockStateModelGenerator);
             }
-
         }
     }
 

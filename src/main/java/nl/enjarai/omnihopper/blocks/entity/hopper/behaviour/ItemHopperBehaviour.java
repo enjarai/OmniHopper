@@ -52,15 +52,15 @@ public abstract class ItemHopperBehaviour extends HopperBehaviour<ItemVariant> {
 		return inventoryWrapper;
 	}
 
-    @Override
-    public void readData(ReadView view) {
-        inventory.heldStacks = DefaultedList.ofSize(inventory.size(), ItemStack.EMPTY);
-        Inventories.readData(view, inventory.heldStacks);
-    }
+	@Override
+	public void readData(ReadView view) {
+		inventory.heldStacks = DefaultedList.ofSize(inventory.size(), ItemStack.EMPTY);
+		Inventories.readData(view, inventory.heldStacks);
+	}
 
 	@Override
 	public void writeData(WriteView view) {
-        Inventories.writeData(view, inventory.heldStacks);
+		Inventories.writeData(view, inventory.heldStacks);
 	}
 
 	@Override
