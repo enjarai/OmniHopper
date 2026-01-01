@@ -9,11 +9,11 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public interface HasTooltip {
-    default void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type, Identifier id) {
-        tooltip.add(Text.translatable(Util.createTranslationKey("item", modifyTooltipId(id)) + ".tooltip")
+    default void appendTooltip(ItemStack stack, Item.TooltipContext context, Consumer<Text> tooltip, TooltipType type, Identifier id) {
+        tooltip.accept(Text.translatable(Util.createTranslationKey("item", modifyTooltipId(id)) + ".tooltip")
                 .setStyle(Style.EMPTY.withColor(Formatting.DARK_GRAY)));
     }
 

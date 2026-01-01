@@ -5,12 +5,12 @@ import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -39,9 +39,9 @@ public abstract class HopperBehaviour<T> {
 		return blockApiLookup;
 	}
 
-	public abstract void writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup);
+	public abstract void writeData(WriteView view);
 
-	public abstract void readNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup);
+	public abstract void readData(ReadView view);
 
 	public long getAmountPerActivation(BlockState targetState) {
 		return 1;
@@ -60,7 +60,7 @@ public abstract class HopperBehaviour<T> {
 		return null;
 	}
 
-	public ItemActionResult onUseWithItem(PlayerEntity player, Hand hand, BlockHitResult hit) {
-		return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+	public ActionResult onUseWithItem(PlayerEntity player, Hand hand, BlockHitResult hit) {
+		return ActionResult.PASS_TO_DEFAULT_BLOCK_ACTION;
 	}
 }

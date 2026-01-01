@@ -2,6 +2,7 @@ package nl.enjarai.omnihopper.client.screen;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
@@ -31,6 +32,6 @@ public class OneSlotHopperScreen extends HandledScreen<OneSlotHopperScreenHandle
 	protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
 		int i = (width - backgroundWidth) / 2;
 		int j = (height - backgroundHeight) / 2;
-		context.drawTexture(TEXTURE, i, j, 0, 0, backgroundWidth, backgroundHeight);
+		context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, i, j, 0, 0, backgroundWidth, backgroundHeight, 256, 256);
 	}
 }

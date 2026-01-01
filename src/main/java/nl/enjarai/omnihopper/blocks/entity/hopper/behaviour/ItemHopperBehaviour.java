@@ -11,11 +11,11 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.HopperScreenHandler;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -52,15 +52,15 @@ public abstract class ItemHopperBehaviour extends HopperBehaviour<ItemVariant> {
 		return inventoryWrapper;
 	}
 
-	@Override
-	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-		inventory.heldStacks = DefaultedList.ofSize(inventory.size(), ItemStack.EMPTY);
-		Inventories.readNbt(nbt, inventory.heldStacks, registryLookup);
-	}
+    @Override
+    public void readData(ReadView view) {
+        inventory.heldStacks = DefaultedList.ofSize(inventory.size(), ItemStack.EMPTY);
+        Inventories.readData(view, inventory.heldStacks);
+    }
 
 	@Override
-	public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-		Inventories.writeNbt(nbt, inventory.heldStacks, registryLookup);
+	public void writeData(WriteView view) {
+        Inventories.writeData(view, inventory.heldStacks);
 	}
 
 	@Override

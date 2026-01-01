@@ -3,7 +3,7 @@ package nl.enjarai.omnihopper.blocks.hopper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.data.client.TextureMap;
+import net.minecraft.client.data.TextureMap;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.math.BlockPos;

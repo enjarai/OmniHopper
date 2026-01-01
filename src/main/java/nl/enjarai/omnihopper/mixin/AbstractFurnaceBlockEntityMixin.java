@@ -9,6 +9,7 @@ import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import nl.enjarai.omnihopper.OmniHopper;
@@ -56,7 +57,7 @@ public abstract class AbstractFurnaceBlockEntityMixin extends LockableContainerB
             )
     )
     private boolean removeExtractionExceptions(boolean original) {
-        if (getWorld().getGameRules().getBoolean(OmniHopper.REMOVE_FURNACE_EXCEPTIONS)) {
+        if ((getWorld() instanceof ServerWorld serverWorld) && serverWorld.getGameRules().getValue(OmniHopper.REMOVE_FURNACE_EXCEPTIONS)) {
             return false;
         }
         return original;

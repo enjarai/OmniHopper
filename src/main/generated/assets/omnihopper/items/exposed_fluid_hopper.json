@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "omnihopper:item/exposed_fluid_hopper"
+  }
+}

@@ -1,13 +1,12 @@
 plugins {
-	id 'fabric-loom' version '1.7-SNAPSHOT'
+	id 'fabric-loom' version '1.14-SNAPSHOT'
 	id 'maven-publish'
 	id "me.modmuss50.mod-publish-plugin" version "0.5.1"
 }
 
-sourceCompatibility = JavaVersion.VERSION_21
-targetCompatibility = JavaVersion.VERSION_21
-
-archivesBaseName = project.archives_base_name
+base {
+    archivesName = project.properties["archives_base_name"] as String
+}
 version = project.mod_version
 group = project.maven_group
 
@@ -65,6 +64,8 @@ java {
 	// if it is present.
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 jar {
@@ -97,6 +98,7 @@ loom {
 fabricApi {
 	configureDataGeneration {
 		strictValidation = true
+        client = true
 	}
 }
 

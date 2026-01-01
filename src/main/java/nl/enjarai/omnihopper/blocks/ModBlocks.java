@@ -1,5 +1,6 @@
 package nl.enjarai.omnihopper.blocks;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.registry.OxidizableBlocksRegistry;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
@@ -10,6 +11,8 @@ import net.minecraft.block.Oxidizable;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
 import nl.enjarai.omnihopper.OmniHopper;
 import nl.enjarai.omnihopper.blocks.entity.OpenBoxBlockEntity;
@@ -17,16 +20,18 @@ import nl.enjarai.omnihopper.blocks.entity.hopper.*;
 import nl.enjarai.omnihopper.blocks.hopper.*;
 
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class ModBlocks {
-    public static final AbstractBlock.Settings HOPPER_SETTINGS = AbstractBlock.Settings
+    public static final Supplier<AbstractBlock.Settings> HOPPER_SETTINGS = () -> AbstractBlock.Settings
             .create()
             .mapColor(MapColor.STONE_GRAY)
             .requiresTool()
             .strength(3.0F, 4.8F)
             .sounds(BlockSoundGroup.METAL)
             .nonOpaque();
-    public static final AbstractBlock.Settings WOODEN_HOPPER_SETTINGS = AbstractBlock.Settings
+    public static final Supplier<AbstractBlock.Settings> WOODEN_HOPPER_SETTINGS = () -> AbstractBlock.Settings
             .create()
             .mapColor(MapColor.BROWN)
             .requiresTool()
@@ -35,54 +40,54 @@ public class ModBlocks {
             .nonOpaque();
 
     // Item Omnihopper
-    public static final Block OMNIHOPPER_BLOCK = register("omnihopper", new ItemOmniHopperBlock(HOPPER_SETTINGS));
+    public static final Block OMNIHOPPER_BLOCK = register("omnihopper", ItemOmniHopperBlock::new, HOPPER_SETTINGS);
     public static final BlockEntityType<ItemOmniHopperBlockEntity> OMNIHOPPER_BLOCK_ENTITY =
-            BlockEntityType.Builder.create(ItemOmniHopperBlockEntity::new, OMNIHOPPER_BLOCK).build(null);
+            FabricBlockEntityTypeBuilder.create(ItemOmniHopperBlockEntity::new, OMNIHOPPER_BLOCK).build();
 
     // Basic Fluid Hopper
-    public static final Block FLUID_HOPPER_BLOCK = register("fluid_hopper", new OxidizableFluidHopperBlock(Oxidizable.OxidationLevel.UNAFFECTED, HOPPER_SETTINGS));
-    public static final Block FLUID_HOPPER_BLOCK_EXPOSED = register("exposed_fluid_hopper", new OxidizableFluidHopperBlock(Oxidizable.OxidationLevel.EXPOSED, HOPPER_SETTINGS));
-    public static final Block FLUID_HOPPER_BLOCK_WEATHERED = register("weathered_fluid_hopper", new OxidizableFluidHopperBlock(Oxidizable.OxidationLevel.WEATHERED, HOPPER_SETTINGS));
-    public static final Block FLUID_HOPPER_BLOCK_OXIDIZED = register("oxidized_fluid_hopper", new OxidizableFluidHopperBlock(Oxidizable.OxidationLevel.OXIDIZED, HOPPER_SETTINGS));
-    public static final Block FLUID_HOPPER_BLOCK_WAXED = register("waxed_fluid_hopper", new FluidHopperBlock(Oxidizable.OxidationLevel.UNAFFECTED, HOPPER_SETTINGS));
-    public static final Block FLUID_HOPPER_BLOCK_WAXED_EXPOSED = register("waxed_exposed_fluid_hopper", new FluidHopperBlock(Oxidizable.OxidationLevel.EXPOSED, HOPPER_SETTINGS));
-    public static final Block FLUID_HOPPER_BLOCK_WAXED_WEATHERED = register("waxed_weathered_fluid_hopper", new FluidHopperBlock(Oxidizable.OxidationLevel.WEATHERED, HOPPER_SETTINGS));
-    public static final Block FLUID_HOPPER_BLOCK_WAXED_OXIDIZED = register("waxed_oxidized_fluid_hopper", new FluidHopperBlock(Oxidizable.OxidationLevel.OXIDIZED, HOPPER_SETTINGS));
+    public static final Block FLUID_HOPPER_BLOCK = register("fluid_hopper", settings -> new OxidizableFluidHopperBlock(Oxidizable.OxidationLevel.UNAFFECTED, settings), HOPPER_SETTINGS);
+    public static final Block FLUID_HOPPER_BLOCK_EXPOSED = register("exposed_fluid_hopper", settings -> new OxidizableFluidHopperBlock(Oxidizable.OxidationLevel.EXPOSED, settings), HOPPER_SETTINGS);
+    public static final Block FLUID_HOPPER_BLOCK_WEATHERED = register("weathered_fluid_hopper", settings -> new OxidizableFluidHopperBlock(Oxidizable.OxidationLevel.WEATHERED, settings), HOPPER_SETTINGS);
+    public static final Block FLUID_HOPPER_BLOCK_OXIDIZED = register("oxidized_fluid_hopper", settings -> new OxidizableFluidHopperBlock(Oxidizable.OxidationLevel.OXIDIZED, settings), HOPPER_SETTINGS);
+    public static final Block FLUID_HOPPER_BLOCK_WAXED = register("waxed_fluid_hopper", settings -> new FluidHopperBlock(Oxidizable.OxidationLevel.UNAFFECTED, settings), HOPPER_SETTINGS);
+    public static final Block FLUID_HOPPER_BLOCK_WAXED_EXPOSED = register("waxed_exposed_fluid_hopper", settings -> new FluidHopperBlock(Oxidizable.OxidationLevel.EXPOSED, settings), HOPPER_SETTINGS);
+    public static final Block FLUID_HOPPER_BLOCK_WAXED_WEATHERED = register("waxed_weathered_fluid_hopper", settings -> new FluidHopperBlock(Oxidizable.OxidationLevel.WEATHERED, settings), HOPPER_SETTINGS);
+    public static final Block FLUID_HOPPER_BLOCK_WAXED_OXIDIZED = register("waxed_oxidized_fluid_hopper", settings -> new FluidHopperBlock(Oxidizable.OxidationLevel.OXIDIZED, settings), HOPPER_SETTINGS);
     public static final BlockEntityType<FluidHopperBlockEntity> FLUID_HOPPER_BLOCK_ENTITY =
-            BlockEntityType.Builder.create(FluidHopperBlockEntity::new,
+            FabricBlockEntityTypeBuilder.create(FluidHopperBlockEntity::new,
                     FLUID_HOPPER_BLOCK, FLUID_HOPPER_BLOCK_EXPOSED, FLUID_HOPPER_BLOCK_WEATHERED, FLUID_HOPPER_BLOCK_OXIDIZED,
                     FLUID_HOPPER_BLOCK_WAXED, FLUID_HOPPER_BLOCK_WAXED_EXPOSED, FLUID_HOPPER_BLOCK_WAXED_WEATHERED, FLUID_HOPPER_BLOCK_WAXED_OXIDIZED
-            ).build(null);
+            ).build();
 
     // Fluid Omnihopper
-    public static final Block FLUID_OMNIHOPPER_BLOCK = register("fluid_omnihopper", new OxidizableFluidOmniHopperBlock(Oxidizable.OxidationLevel.UNAFFECTED, HOPPER_SETTINGS));
-    public static final Block FLUID_OMNIHOPPER_BLOCK_EXPOSED = register("exposed_fluid_omnihopper", new OxidizableFluidOmniHopperBlock(Oxidizable.OxidationLevel.EXPOSED, HOPPER_SETTINGS));
-    public static final Block FLUID_OMNIHOPPER_BLOCK_WEATHERED = register("weathered_fluid_omnihopper", new OxidizableFluidOmniHopperBlock(Oxidizable.OxidationLevel.WEATHERED, HOPPER_SETTINGS));
-    public static final Block FLUID_OMNIHOPPER_BLOCK_OXIDIZED = register("oxidized_fluid_omnihopper", new OxidizableFluidOmniHopperBlock(Oxidizable.OxidationLevel.OXIDIZED, HOPPER_SETTINGS));
-    public static final Block FLUID_OMNIHOPPER_BLOCK_WAXED = register("waxed_fluid_omnihopper", new FluidOmniHopperBlock(Oxidizable.OxidationLevel.UNAFFECTED, HOPPER_SETTINGS));
-    public static final Block FLUID_OMNIHOPPER_BLOCK_WAXED_EXPOSED = register("waxed_exposed_fluid_omnihopper", new FluidOmniHopperBlock(Oxidizable.OxidationLevel.EXPOSED, HOPPER_SETTINGS));
-    public static final Block FLUID_OMNIHOPPER_BLOCK_WAXED_WEATHERED = register("waxed_weathered_fluid_omnihopper", new FluidOmniHopperBlock(Oxidizable.OxidationLevel.WEATHERED, HOPPER_SETTINGS));
-    public static final Block FLUID_OMNIHOPPER_BLOCK_WAXED_OXIDIZED = register("waxed_oxidized_fluid_omnihopper", new FluidOmniHopperBlock(Oxidizable.OxidationLevel.OXIDIZED, HOPPER_SETTINGS));
+    public static final Block FLUID_OMNIHOPPER_BLOCK = register("fluid_omnihopper", settings -> new OxidizableFluidOmniHopperBlock(Oxidizable.OxidationLevel.UNAFFECTED, settings), HOPPER_SETTINGS);
+    public static final Block FLUID_OMNIHOPPER_BLOCK_EXPOSED = register("exposed_fluid_omnihopper", settings -> new OxidizableFluidOmniHopperBlock(Oxidizable.OxidationLevel.EXPOSED, settings), HOPPER_SETTINGS);
+    public static final Block FLUID_OMNIHOPPER_BLOCK_WEATHERED = register("weathered_fluid_omnihopper", settings -> new OxidizableFluidOmniHopperBlock(Oxidizable.OxidationLevel.WEATHERED, settings), HOPPER_SETTINGS);
+    public static final Block FLUID_OMNIHOPPER_BLOCK_OXIDIZED = register("oxidized_fluid_omnihopper", settings -> new OxidizableFluidOmniHopperBlock(Oxidizable.OxidationLevel.OXIDIZED, settings), HOPPER_SETTINGS);
+    public static final Block FLUID_OMNIHOPPER_BLOCK_WAXED = register("waxed_fluid_omnihopper", settings -> new FluidOmniHopperBlock(Oxidizable.OxidationLevel.UNAFFECTED, settings), HOPPER_SETTINGS);
+    public static final Block FLUID_OMNIHOPPER_BLOCK_WAXED_EXPOSED = register("waxed_exposed_fluid_omnihopper", settings -> new FluidOmniHopperBlock(Oxidizable.OxidationLevel.EXPOSED, settings), HOPPER_SETTINGS);
+    public static final Block FLUID_OMNIHOPPER_BLOCK_WAXED_WEATHERED = register("waxed_weathered_fluid_omnihopper", settings -> new FluidOmniHopperBlock(Oxidizable.OxidationLevel.WEATHERED, settings), HOPPER_SETTINGS);
+    public static final Block FLUID_OMNIHOPPER_BLOCK_WAXED_OXIDIZED = register("waxed_oxidized_fluid_omnihopper", settings -> new FluidOmniHopperBlock(Oxidizable.OxidationLevel.OXIDIZED, settings), HOPPER_SETTINGS);
     public static final BlockEntityType<FluidOmniHopperBlockEntity> FLUID_OMNIHOPPER_BLOCK_ENTITY =
-            BlockEntityType.Builder.create(FluidOmniHopperBlockEntity::new,
+            FabricBlockEntityTypeBuilder.create(FluidOmniHopperBlockEntity::new,
                     FLUID_OMNIHOPPER_BLOCK, FLUID_OMNIHOPPER_BLOCK_EXPOSED, FLUID_OMNIHOPPER_BLOCK_WEATHERED, FLUID_OMNIHOPPER_BLOCK_OXIDIZED,
                     FLUID_OMNIHOPPER_BLOCK_WAXED, FLUID_OMNIHOPPER_BLOCK_WAXED_EXPOSED, FLUID_OMNIHOPPER_BLOCK_WAXED_WEATHERED, FLUID_OMNIHOPPER_BLOCK_WAXED_OXIDIZED
-            ).build(null);
+            ).build();
 
     // Basic Wooden Hopper
-    public static final Block WOODEN_HOPPER_BLOCK = register("wooden_hopper", new WoodenHopperBlock(WOODEN_HOPPER_SETTINGS));
+    public static final Block WOODEN_HOPPER_BLOCK = register("wooden_hopper", WoodenHopperBlock::new, WOODEN_HOPPER_SETTINGS);
     public static final BlockEntityType<WoodenHopperBlockEntity> WOODEN_HOPPER_BLOCK_ENTITY =
-            BlockEntityType.Builder.create(WoodenHopperBlockEntity::new, WOODEN_HOPPER_BLOCK).build(null);
+            FabricBlockEntityTypeBuilder.create(WoodenHopperBlockEntity::new, WOODEN_HOPPER_BLOCK).build();
 
     // Wooden OmniHopper
-    public static final Block WOODEN_OMNIHOPPER_BLOCK = register("wooden_omnihopper", new WoodenOmniHopperBlock(WOODEN_HOPPER_SETTINGS));
+    public static final Block WOODEN_OMNIHOPPER_BLOCK = register("wooden_omnihopper", WoodenOmniHopperBlock::new, WOODEN_HOPPER_SETTINGS);
     public static final BlockEntityType<WoodenOmniHopperBlockEntity> WOODEN_OMNIHOPPER_BLOCK_ENTITY =
-            BlockEntityType.Builder.create(WoodenOmniHopperBlockEntity::new, WOODEN_OMNIHOPPER_BLOCK).build(null);
+            FabricBlockEntityTypeBuilder.create(WoodenOmniHopperBlockEntity::new, WOODEN_OMNIHOPPER_BLOCK).build();
 
     // Open Box Block
-    public static final Block OPEN_BOX_BLOCK = register("open_box", new OpenBoxBlock(WOODEN_HOPPER_SETTINGS));
+    public static final Block OPEN_BOX_BLOCK = register("open_box", OpenBoxBlock::new, WOODEN_HOPPER_SETTINGS);
     public static final BlockEntityType<OpenBoxBlockEntity> OPEN_BOX_BLOCK_ENTITY =
-            BlockEntityType.Builder.create(OpenBoxBlockEntity::new, OPEN_BOX_BLOCK).build(null);
+            FabricBlockEntityTypeBuilder.create(OpenBoxBlockEntity::new, OPEN_BOX_BLOCK).build();
 
     public static final List<Block> ALL = List.of(
             OMNIHOPPER_BLOCK,
@@ -96,8 +101,8 @@ public class ModBlocks {
             OPEN_BOX_BLOCK
     );
 
-    private static Block register(String name, Block block) {
-        return Registry.register(Registries.BLOCK, OmniHopper.id(name), block);
+    private static Block register(String name, Function<AbstractBlock.Settings, Block> block, Supplier<AbstractBlock.Settings> settings) {
+        return Registry.register(Registries.BLOCK, OmniHopper.id(name), block.apply(settings.get().registryKey(RegistryKey.of(RegistryKeys.BLOCK, OmniHopper.id(name)))));
     }
 
     public static void register() {

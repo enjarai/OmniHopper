@@ -1,8 +1,8 @@
 package nl.enjarai.omnihopper.util;
 
 import net.minecraft.block.Oxidizable;
-import net.minecraft.data.client.TextureKey;
-import net.minecraft.data.client.TextureMap;
+import net.minecraft.client.data.TextureKey;
+import net.minecraft.client.data.TextureMap;
 import net.minecraft.util.Identifier;
 
 public interface TextureMapProvider {

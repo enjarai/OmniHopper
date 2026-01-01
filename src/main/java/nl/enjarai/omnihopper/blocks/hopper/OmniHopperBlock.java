@@ -3,13 +3,17 @@ package nl.enjarai.omnihopper.blocks.hopper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
-import net.minecraft.data.client.*;
+import net.minecraft.client.data.BlockStateModelGenerator;
+import net.minecraft.client.data.BlockStateVariantMap;
+import net.minecraft.client.data.ModelIds;
+import net.minecraft.client.data.VariantsBlockModelDefinitionCreator;
+import net.minecraft.client.render.model.json.ModelVariant;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
+import net.minecraft.util.math.AxisRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -21,8 +25,8 @@ public abstract class OmniHopperBlock extends HopperBlock {
     public static final EnumProperty<Direction> SUCKY_BIT;
 
     static {
-        POINTY_BIT = DirectionProperty.of("pointy_bit", Direction.values());
-        SUCKY_BIT = DirectionProperty.of("sucky_bit", Direction.values());
+        POINTY_BIT = EnumProperty.of("pointy_bit",Direction.class, Direction.values());
+        SUCKY_BIT = EnumProperty.of("sucky_bit", Direction.class, Direction.values());
     }
 
     public OmniHopperBlock(Settings settings) {
@@ -67,21 +71,27 @@ public abstract class OmniHopperBlock extends HopperBlock {
 
     @Override
     protected void buildHopperBlockStateModel(BlockStateModelGenerator blockStateModelGenerator) {
-        var variants = BlockStateVariantMap.create(OmniHopperBlock.POINTY_BIT, OmniHopperBlock.SUCKY_BIT);
+        var variants = BlockStateVariantMap.DoubleProperty.models(OmniHopperBlock.POINTY_BIT, OmniHopperBlock.SUCKY_BIT);
 
-        variants.register(
+        variants.generate(
                 (pointy, sucky) -> {
                     var settings = HopperRotation.getFor(sucky, pointy);
-                    return BlockStateVariant.create().put(
-                                    VariantSettings.MODEL,
-                                    ModelIds.getBlockSubModelId(this, "_" + settings.modelDirection().getName())
+                    return BlockStateModelGenerator.createWeightedVariant(
+                            new ModelVariant(
+                                    ModelIds.getBlockSubModelId(this, "_" + settings.modelDirection().getId()),
+                                    new ModelVariant.ModelState(
+                                            AxisRotation.R0,
+                                            settings.rotX(),
+                                            settings.rotY(),
+                                            false
+                                    )
                             )
-                            .put(VariantSettings.X, settings.rotX())
-                            .put(VariantSettings.Y, settings.rotY());
+                    );
                 }
         );
 
         blockStateModelGenerator.blockStateCollector.accept(
-                VariantsBlockStateSupplier.create(this).coordinate(variants));
+                VariantsBlockModelDefinitionCreator.of(this).with(variants)
+        );
     }
 }
