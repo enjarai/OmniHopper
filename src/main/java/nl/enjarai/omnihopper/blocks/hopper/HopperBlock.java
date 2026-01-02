@@ -244,6 +244,7 @@ public abstract class HopperBlock extends BlockWithEntity implements DatagenBloc
     protected abstract void buildHopperBlockStateModel(BlockStateModelGenerator blockStateModelGenerator);
 
     @Override
+    @Environment(EnvType.CLIENT)
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         for (var direction : Direction.values()) {
             var suffix = "_" + direction.getId();

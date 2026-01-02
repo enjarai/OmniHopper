@@ -1,5 +1,7 @@
 package nl.enjarai.omnihopper.blocks.hopper;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -70,6 +72,7 @@ public abstract class OmniHopperBlock extends HopperBlock {
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
     protected void buildHopperBlockStateModel(BlockStateModelGenerator blockStateModelGenerator) {
         var variants = BlockStateVariantMap.DoubleProperty.models(OmniHopperBlock.POINTY_BIT, OmniHopperBlock.SUCKY_BIT);
 
@@ -80,9 +83,9 @@ public abstract class OmniHopperBlock extends HopperBlock {
                             new ModelVariant(
                                     ModelIds.getBlockSubModelId(this, "_" + settings.modelDirection().getId()),
                                     new ModelVariant.ModelState(
-                                            AxisRotation.R0,
                                             settings.rotX(),
                                             settings.rotY(),
+                                            AxisRotation.R0,
                                             false
                                     )
                             )

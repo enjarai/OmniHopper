@@ -2,153 +2,153 @@
   "variants": {
     "pointy_bit=down,sucky_bit=down": {
       "model": "omnihopper:block/wooden_omnihopper_up",
-      "y": 180
+      "x": 180
     },
     "pointy_bit=down,sucky_bit=east": {
       "model": "omnihopper:block/wooden_omnihopper_north",
-      "y": 90,
-      "z": 90
+      "x": 90,
+      "y": 90
     },
     "pointy_bit=down,sucky_bit=north": {
       "model": "omnihopper:block/wooden_omnihopper_north",
-      "y": 90
+      "x": 90
     },
     "pointy_bit=down,sucky_bit=south": {
       "model": "omnihopper:block/wooden_omnihopper_south",
-      "y": 270
+      "x": 270
     },
     "pointy_bit=down,sucky_bit=up": {
       "model": "omnihopper:block/wooden_omnihopper_down"
     },
     "pointy_bit=down,sucky_bit=west": {
       "model": "omnihopper:block/wooden_omnihopper_north",
-      "y": 90,
-      "z": 270
+      "x": 90,
+      "y": 270
     },
     "pointy_bit=east,sucky_bit=down": {
       "model": "omnihopper:block/wooden_omnihopper_east",
-      "y": 180
+      "x": 180
     },
     "pointy_bit=east,sucky_bit=east": {
       "model": "omnihopper:block/wooden_omnihopper_up",
-      "y": 90,
-      "z": 90
+      "x": 90,
+      "y": 90
     },
     "pointy_bit=east,sucky_bit=north": {
       "model": "omnihopper:block/wooden_omnihopper_east",
-      "y": 90
+      "x": 90
     },
     "pointy_bit=east,sucky_bit=south": {
       "model": "omnihopper:block/wooden_omnihopper_east",
-      "y": 270
+      "x": 270
     },
     "pointy_bit=east,sucky_bit=up": {
       "model": "omnihopper:block/wooden_omnihopper_east"
     },
     "pointy_bit=east,sucky_bit=west": {
       "model": "omnihopper:block/wooden_omnihopper_down",
-      "y": 90,
-      "z": 270
+      "x": 90,
+      "y": 270
     },
     "pointy_bit=north,sucky_bit=down": {
       "model": "omnihopper:block/wooden_omnihopper_south",
-      "y": 180
+      "x": 180
     },
     "pointy_bit=north,sucky_bit=east": {
       "model": "omnihopper:block/wooden_omnihopper_west",
-      "y": 90,
-      "z": 90
+      "x": 90,
+      "y": 90
     },
     "pointy_bit=north,sucky_bit=north": {
       "model": "omnihopper:block/wooden_omnihopper_up",
-      "y": 90
+      "x": 90
     },
     "pointy_bit=north,sucky_bit=south": {
       "model": "omnihopper:block/wooden_omnihopper_down",
-      "y": 270
+      "x": 270
     },
     "pointy_bit=north,sucky_bit=up": {
       "model": "omnihopper:block/wooden_omnihopper_north"
     },
     "pointy_bit=north,sucky_bit=west": {
       "model": "omnihopper:block/wooden_omnihopper_east",
-      "y": 90,
-      "z": 270
+      "x": 90,
+      "y": 270
     },
     "pointy_bit=south,sucky_bit=down": {
       "model": "omnihopper:block/wooden_omnihopper_north",
-      "y": 180
+      "x": 180
     },
     "pointy_bit=south,sucky_bit=east": {
       "model": "omnihopper:block/wooden_omnihopper_east",
-      "y": 90,
-      "z": 90
+      "x": 90,
+      "y": 90
     },
     "pointy_bit=south,sucky_bit=north": {
       "model": "omnihopper:block/wooden_omnihopper_down",
-      "y": 90
+      "x": 90
     },
     "pointy_bit=south,sucky_bit=south": {
       "model": "omnihopper:block/wooden_omnihopper_up",
-      "y": 270
+      "x": 270
     },
     "pointy_bit=south,sucky_bit=up": {
       "model": "omnihopper:block/wooden_omnihopper_south"
     },
     "pointy_bit=south,sucky_bit=west": {
       "model": "omnihopper:block/wooden_omnihopper_west",
-      "y": 90,
-      "z": 270
+      "x": 90,
+      "y": 270
     },
     "pointy_bit=up,sucky_bit=down": {
       "model": "omnihopper:block/wooden_omnihopper_down",
-      "y": 180
+      "x": 180
     },
     "pointy_bit=up,sucky_bit=east": {
       "model": "omnihopper:block/wooden_omnihopper_south",
-      "y": 90,
-      "z": 90
+      "x": 90,
+      "y": 90
     },
     "pointy_bit=up,sucky_bit=north": {
       "model": "omnihopper:block/wooden_omnihopper_south",
-      "y": 90
+      "x": 90
     },
     "pointy_bit=up,sucky_bit=south": {
       "model": "omnihopper:block/wooden_omnihopper_north",
-      "y": 270
+      "x": 270
     },
     "pointy_bit=up,sucky_bit=up": {
       "model": "omnihopper:block/wooden_omnihopper_up"
     },
     "pointy_bit=up,sucky_bit=west": {
       "model": "omnihopper:block/wooden_omnihopper_south",
-      "y": 90,
-      "z": 270
+      "x": 90,
+      "y": 270
     },
     "pointy_bit=west,sucky_bit=down": {
       "model": "omnihopper:block/wooden_omnihopper_west",
-      "y": 180
+      "x": 180
     },
     "pointy_bit=west,sucky_bit=east": {
       "model": "omnihopper:block/wooden_omnihopper_down",
-      "y": 90,
-      "z": 90
+      "x": 90,
+      "y": 90
     },
     "pointy_bit=west,sucky_bit=north": {
       "model": "omnihopper:block/wooden_omnihopper_west",
-      "y": 90
+      "x": 90
     },
     "pointy_bit=west,sucky_bit=south": {
       "model": "omnihopper:block/wooden_omnihopper_west",
-      "y": 270
+      "x": 270
     },
     "pointy_bit=west,sucky_bit=up": {
       "model": "omnihopper:block/wooden_omnihopper_west"
     },
     "pointy_bit=west,sucky_bit=west": {
       "model": "omnihopper:block/wooden_omnihopper_up",
-      "y": 90,
-      "z": 270
+      "x": 90,
+      "y": 270
     }
   }
 }
