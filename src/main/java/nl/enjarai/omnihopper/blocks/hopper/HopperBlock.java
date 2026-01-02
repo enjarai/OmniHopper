@@ -205,7 +205,7 @@ public abstract class HopperBlock extends BlockWithEntity implements DatagenBloc
     }
 
     @Override
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @org.jspecify.annotations.Nullable WireOrientation wireOrientation, boolean notify) {
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
         this.updateEnabled(world, pos, state);
         super.neighborUpdate(state, world, pos, sourceBlock, wireOrientation, notify);
     }
