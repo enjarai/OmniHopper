@@ -7,7 +7,6 @@
     "AbstractFurnaceBlockEntityMixin"
   ],
   "client": [
-    "ModelProvider$BlockStateSuppliers"
   ],
   "injectors": {
     "defaultRequire": 1

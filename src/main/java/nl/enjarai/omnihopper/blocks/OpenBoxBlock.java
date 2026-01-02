@@ -3,6 +3,11 @@ package nl.enjarai.omnihopper.blocks;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.data.BlockStateModelGenerator;
+import net.minecraft.client.data.BlockStateVariantMap;
+import net.minecraft.client.data.ModelIds;
+import net.minecraft.client.data.VariantsBlockModelDefinitionCreator;
+import net.minecraft.client.render.model.json.ModelVariant;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
@@ -14,6 +19,8 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.Pair;
+import net.minecraft.util.math.AxisRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
@@ -115,6 +122,44 @@ public class OpenBoxBlock extends BlockWithEntity implements DatagenBlock, HasTo
             tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
         return super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
+    }
+
+    @Override
+    public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+        var variants = BlockStateVariantMap.SingleProperty.models(OpenBoxBlock.FACING);
+
+        variants.generate(
+                direction -> {
+                    var rotations = rotationFromDirection(direction);
+                    return BlockStateModelGenerator.createWeightedVariant(
+                            new ModelVariant(
+                                    ModelIds.getBlockModelId(this),
+                                    new ModelVariant.ModelState(
+                                            rotations.getLeft(),
+                                            rotations.getRight(),
+                                            AxisRotation.R0,
+                                            false
+                                    )
+                            )
+
+                    );
+                }
+        );
+
+        blockStateModelGenerator.blockStateCollector.accept(
+                VariantsBlockModelDefinitionCreator.of(this).with(variants)
+        );
+    }
+
+    private static Pair<AxisRotation, AxisRotation> rotationFromDirection(Direction dir) {
+        return switch (dir) {
+            case DOWN -> new Pair<>(AxisRotation.R180, AxisRotation.R0);
+            case UP -> new Pair<>(AxisRotation.R0, AxisRotation.R0);
+            case NORTH -> new Pair<>(AxisRotation.R90, AxisRotation.R0);
+            case SOUTH -> new Pair<>(AxisRotation.R270, AxisRotation.R0);
+            case WEST -> new Pair<>(AxisRotation.R270, AxisRotation.R90);
+            case EAST -> new Pair<>(AxisRotation.R90, AxisRotation.R90);
+        };
     }
 
     @Override
