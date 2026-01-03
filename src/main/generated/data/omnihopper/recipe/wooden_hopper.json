@@ -1,19 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "C": "minecraft:chest",
+    "w": "#minecraft:planks"
+  },
   "pattern": [
     "w w",
     "wCw",
     " w "
   ],
-  "key": {
-    "C": {
-      "item": "minecraft:chest"
-    },
-    "w": {
-      "tag": "minecraft:planks"
-    }
-  },
   "result": {
+    "count": 1,
     "id": "omnihopper:wooden_hopper"
   }
 }

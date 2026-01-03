@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_copper_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:copper_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "omnihopper:wooden_omnihopper"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_wooden_hopper": {
+      "conditions": {
+        "items": [
+          {
+            "items": "omnihopper:wooden_hopper"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_wooden_hopper",
+      "has_copper_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "omnihopper:wooden_omnihopper"
+    ]
+  }
+}
