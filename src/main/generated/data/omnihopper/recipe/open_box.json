@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "w": "#minecraft:planks"
+  },
   "pattern": [
     "w w",
     "w w",
     "www"
   ],
-  "key": {
-    "w": {
-      "tag": "minecraft:planks"
-    }
-  },
   "result": {
+    "count": 1,
     "id": "omnihopper:open_box"
   }
 }
