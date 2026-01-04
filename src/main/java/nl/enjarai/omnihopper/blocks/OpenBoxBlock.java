@@ -1,6 +1,8 @@
 package nl.enjarai.omnihopper.blocks;
 
 import com.mojang.serialization.MapCodec;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.data.BlockStateModelGenerator;
@@ -112,7 +114,7 @@ public class OpenBoxBlock extends BlockWithEntity implements DatagenBlock, HasTo
     }
 
     @Override
-    public boolean canFillWithFluid(@org.jspecify.annotations.Nullable LivingEntity filler, BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
+    public boolean canFillWithFluid(@Nullable LivingEntity filler, BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
         return Waterloggable.super.canFillWithFluid(filler, world, pos, state, fluid);
     }
 
@@ -125,6 +127,7 @@ public class OpenBoxBlock extends BlockWithEntity implements DatagenBlock, HasTo
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         var variants = BlockStateVariantMap.SingleProperty.models(OpenBoxBlock.FACING);
 
