@@ -1,14 +1,12 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
   "ingredients": [
-    {
-      "item": "omnihopper:wooden_hopper"
-    },
-    {
-      "item": "minecraft:copper_ingot"
-    }
+    "omnihopper:wooden_hopper",
+    "minecraft:copper_ingot"
   ],
   "result": {
+    "count": 1,
     "id": "omnihopper:wooden_omnihopper"
   }
 }

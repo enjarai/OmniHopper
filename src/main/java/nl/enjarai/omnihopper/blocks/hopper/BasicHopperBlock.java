@@ -1,12 +1,17 @@
 package nl.enjarai.omnihopper.blocks.hopper;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
-import net.minecraft.data.client.*;
+import net.minecraft.client.data.BlockStateModelGenerator;
+import net.minecraft.client.data.BlockStateVariantMap;
+import net.minecraft.client.data.ModelIds;
+import net.minecraft.client.data.VariantsBlockModelDefinitionCreator;
+import net.minecraft.client.render.model.json.ModelVariant;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
@@ -16,62 +21,67 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 
 public abstract class BasicHopperBlock extends HopperBlock {
-	public static final EnumProperty<Direction> POINTY_BIT;
+    public static final EnumProperty<Direction> POINTY_BIT;
 
-	static {
-		POINTY_BIT = DirectionProperty.of("pointy_bit", Direction.values());
-	}
+    static {
+        POINTY_BIT = EnumProperty.of("pointy_bit", Direction.class, Direction.values());
+    }
 
-	public BasicHopperBlock(Settings settings) {
-		super(settings);
-		this.setDefaultState(this.stateManager.getDefaultState().with(POINTY_BIT, Direction.DOWN));
-	}
+    public BasicHopperBlock(Settings settings) {
+        super(settings);
+        this.setDefaultState(this.stateManager.getDefaultState().with(POINTY_BIT, Direction.DOWN));
+    }
 
-	@Override
-	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		BlockState state = super.getPlacementState(ctx);
-		return state == null ? null : state
-				.with(POINTY_BIT, ctx.getSide().getOpposite());
-	}
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        BlockState state = super.getPlacementState(ctx);
+        return state == null
+               ? null
+               : state
+                       .with(POINTY_BIT, ctx.getSide().getOpposite());
+    }
 
-	@Override
-	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-		return SHAPES[state.get(POINTY_BIT).ordinal()][Direction.UP.ordinal()];
-	}
+    @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return SHAPES[state.get(POINTY_BIT).ordinal()][Direction.UP.ordinal()];
+    }
 
-	@Override
-	public VoxelShape getRaycastShape(BlockState state, BlockView world, BlockPos pos) {
-		return SHAPES_RAYCAST[state.get(POINTY_BIT).ordinal()][Direction.UP.ordinal()];
-	}
+    @Override
+    public VoxelShape getRaycastShape(BlockState state, BlockView world, BlockPos pos) {
+        return SHAPES_RAYCAST[state.get(POINTY_BIT).ordinal()][Direction.UP.ordinal()];
+    }
 
-	@Override
-	public BlockState rotate(BlockState state, BlockRotation rotation) {
-		return state
-				.with(POINTY_BIT, rotation.rotate(state.get(POINTY_BIT)));
-	}
+    @Override
+    public BlockState rotate(BlockState state, BlockRotation rotation) {
+        return state
+                .with(POINTY_BIT, rotation.rotate(state.get(POINTY_BIT)));
+    }
 
-	@Override
-	public BlockState mirror(BlockState state, BlockMirror mirror) {
-		return state.rotate(mirror.getRotation(state.get(POINTY_BIT)));
-	}
+    @Override
+    public BlockState mirror(BlockState state, BlockMirror mirror) {
+        return state.rotate(mirror.getRotation(state.get(POINTY_BIT)));
+    }
 
-	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-		super.appendProperties(builder.add(POINTY_BIT));
-	}
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        super.appendProperties(builder.add(POINTY_BIT));
+    }
 
-	@Override
-	protected void buildHopperBlockStateModel(BlockStateModelGenerator blockStateModelGenerator) {
-		var variants = BlockStateVariantMap.create(BasicHopperBlock.POINTY_BIT);
+    @Override
+    @Environment(EnvType.CLIENT)
+    protected void buildHopperBlockStateModel(BlockStateModelGenerator blockStateModelGenerator) {
+        var variants = BlockStateVariantMap.SingleProperty.models(BasicHopperBlock.POINTY_BIT);
 
-		variants.register(
-				direction -> BlockStateVariant.create().put(
-						VariantSettings.MODEL,
-						ModelIds.getBlockSubModelId(this, "_" + direction.getName())
-				)
-		);
+        variants.generate(
+                direction -> BlockStateModelGenerator.createWeightedVariant(
+                        new ModelVariant(
+                                ModelIds.getBlockSubModelId(this, "_" + direction.getId())
+                        )
+                )
+        );
 
-		blockStateModelGenerator.blockStateCollector.accept(
-				VariantsBlockStateSupplier.create(this).coordinate(variants));
-	}
+        blockStateModelGenerator.blockStateCollector.accept(
+                VariantsBlockModelDefinitionCreator.of(this).with(variants)
+        );
+    }
 }

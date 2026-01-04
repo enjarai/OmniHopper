@@ -10,13 +10,14 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.text.Text;
+import net.minecraft.text.TextCodecs;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.Nameable;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -41,27 +42,21 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
     public abstract Direction getPointyDirection(BlockState state);
 
     @Override
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.readNbt(nbt, registryLookup);
-
-        if (nbt.contains("CustomName", 8)) {
-            customName = Text.Serialization.fromJson(nbt.getString("CustomName"), registryLookup);
-        }
-        transferCooldown = nbt.getInt("TransferCooldown");
-
-        behaviour.readNbt(nbt, registryLookup);
+    protected void readData(ReadView view) {
+        super.readData(view);
+        view.read("CustomName", TextCodecs.CODEC).ifPresent(name -> customName = name);
+        transferCooldown = view.getInt("TransferCooldown", 0);
+        behaviour.readData(view);
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.writeNbt(nbt, registryLookup);
-
+    protected void writeData(WriteView view) {
+        super.writeData(view);
         if (customName != null) {
-            nbt.putString("CustomName", Text.Serialization.toJsonString(customName, registryLookup));
+            view.put("CustomName", TextCodecs.CODEC, customName);
         }
-        nbt.putInt("TransferCooldown", transferCooldown);
-
-        behaviour.writeNbt(nbt, registryLookup);
+        view.putInt("TransferCooldown", transferCooldown);
+        behaviour.writeData(view);
     }
 
     public void tick(World world, BlockPos pos, BlockState state) {
@@ -74,7 +69,7 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
     }
 
     protected void insertAndExtract(World world, BlockPos pos, BlockState state) {
-        if (!world.isClient) {
+        if (!world.isClient()) {
             if (!needsCooldown() && state.get(HopperBlock.ENABLED)) {
                 boolean bl;
 
@@ -160,7 +155,9 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
 
     @Override
     public Text getDisplayName() {
-        return getCustomName() != null ? getCustomName() : getName();
+        return getCustomName() != null
+               ? getCustomName()
+               : getName();
     }
 
     protected void setTransferCooldown(int transferCooldown) {
@@ -185,7 +182,7 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
         return behaviour.createMenu(syncId, playerInventory, player);
     }
 
-    public ItemActionResult onUseWithItem(PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ActionResult onUseWithItem(PlayerEntity player, Hand hand, BlockHitResult hit) {
         return behaviour.onUseWithItem(player, hand, hit);
     }
 }

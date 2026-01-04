@@ -2,8 +2,7 @@
   "variants": {
     "pointy_bit=down,sucky_bit=down": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_up",
-      "x": 180,
-      "y": 0
+      "x": 180
     },
     "pointy_bit=down,sucky_bit=east": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_north",
@@ -12,18 +11,14 @@
     },
     "pointy_bit=down,sucky_bit=north": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_north",
-      "x": 90,
-      "y": 0
+      "x": 90
     },
     "pointy_bit=down,sucky_bit=south": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_south",
-      "x": 270,
-      "y": 0
+      "x": 270
     },
     "pointy_bit=down,sucky_bit=up": {
-      "model": "omnihopper:block/weathered_fluid_omnihopper_down",
-      "x": 0,
-      "y": 0
+      "model": "omnihopper:block/weathered_fluid_omnihopper_down"
     },
     "pointy_bit=down,sucky_bit=west": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_north",
@@ -32,8 +27,7 @@
     },
     "pointy_bit=east,sucky_bit=down": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_east",
-      "x": 180,
-      "y": 0
+      "x": 180
     },
     "pointy_bit=east,sucky_bit=east": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_up",
@@ -42,18 +36,14 @@
     },
     "pointy_bit=east,sucky_bit=north": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_east",
-      "x": 90,
-      "y": 0
+      "x": 90
     },
     "pointy_bit=east,sucky_bit=south": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_east",
-      "x": 270,
-      "y": 0
+      "x": 270
     },
     "pointy_bit=east,sucky_bit=up": {
-      "model": "omnihopper:block/weathered_fluid_omnihopper_east",
-      "x": 0,
-      "y": 0
+      "model": "omnihopper:block/weathered_fluid_omnihopper_east"
     },
     "pointy_bit=east,sucky_bit=west": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_down",
@@ -62,8 +52,7 @@
     },
     "pointy_bit=north,sucky_bit=down": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_south",
-      "x": 180,
-      "y": 0
+      "x": 180
     },
     "pointy_bit=north,sucky_bit=east": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_west",
@@ -72,18 +61,14 @@
     },
     "pointy_bit=north,sucky_bit=north": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_up",
-      "x": 90,
-      "y": 0
+      "x": 90
     },
     "pointy_bit=north,sucky_bit=south": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_down",
-      "x": 270,
-      "y": 0
+      "x": 270
     },
     "pointy_bit=north,sucky_bit=up": {
-      "model": "omnihopper:block/weathered_fluid_omnihopper_north",
-      "x": 0,
-      "y": 0
+      "model": "omnihopper:block/weathered_fluid_omnihopper_north"
     },
     "pointy_bit=north,sucky_bit=west": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_east",
@@ -92,8 +77,7 @@
     },
     "pointy_bit=south,sucky_bit=down": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_north",
-      "x": 180,
-      "y": 0
+      "x": 180
     },
     "pointy_bit=south,sucky_bit=east": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_east",
@@ -102,18 +86,14 @@
     },
     "pointy_bit=south,sucky_bit=north": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_down",
-      "x": 90,
-      "y": 0
+      "x": 90
     },
     "pointy_bit=south,sucky_bit=south": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_up",
-      "x": 270,
-      "y": 0
+      "x": 270
     },
     "pointy_bit=south,sucky_bit=up": {
-      "model": "omnihopper:block/weathered_fluid_omnihopper_south",
-      "x": 0,
-      "y": 0
+      "model": "omnihopper:block/weathered_fluid_omnihopper_south"
     },
     "pointy_bit=south,sucky_bit=west": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_west",
@@ -122,8 +102,7 @@
     },
     "pointy_bit=up,sucky_bit=down": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_down",
-      "x": 180,
-      "y": 0
+      "x": 180
     },
     "pointy_bit=up,sucky_bit=east": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_south",
@@ -132,18 +111,14 @@
     },
     "pointy_bit=up,sucky_bit=north": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_south",
-      "x": 90,
-      "y": 0
+      "x": 90
     },
     "pointy_bit=up,sucky_bit=south": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_north",
-      "x": 270,
-      "y": 0
+      "x": 270
     },
     "pointy_bit=up,sucky_bit=up": {
-      "model": "omnihopper:block/weathered_fluid_omnihopper_up",
-      "x": 0,
-      "y": 0
+      "model": "omnihopper:block/weathered_fluid_omnihopper_up"
     },
     "pointy_bit=up,sucky_bit=west": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_south",
@@ -152,8 +127,7 @@
     },
     "pointy_bit=west,sucky_bit=down": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_west",
-      "x": 180,
-      "y": 0
+      "x": 180
     },
     "pointy_bit=west,sucky_bit=east": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_down",
@@ -162,18 +136,14 @@
     },
     "pointy_bit=west,sucky_bit=north": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_west",
-      "x": 90,
-      "y": 0
+      "x": 90
     },
     "pointy_bit=west,sucky_bit=south": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_west",
-      "x": 270,
-      "y": 0
+      "x": 270
     },
     "pointy_bit=west,sucky_bit=up": {
-      "model": "omnihopper:block/weathered_fluid_omnihopper_west",
-      "x": 0,
-      "y": 0
+      "model": "omnihopper:block/weathered_fluid_omnihopper_west"
     },
     "pointy_bit=west,sucky_bit=west": {
       "model": "omnihopper:block/weathered_fluid_omnihopper_up",
