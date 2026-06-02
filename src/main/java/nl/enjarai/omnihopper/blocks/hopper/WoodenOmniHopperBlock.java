@@ -1,42 +1,42 @@
 package nl.enjarai.omnihopper.blocks.hopper;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.data.TextureMap;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import nl.enjarai.omnihopper.blocks.entity.hopper.WoodenOmniHopperBlockEntity;
 import nl.enjarai.omnihopper.blocks.entity.hopper.behaviour.WoodenHopperBehaviour;
 import nl.enjarai.omnihopper.util.TextureMapProvider;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class WoodenOmniHopperBlock extends OmniHopperBlock {
-    public WoodenOmniHopperBlock(Settings settings) {
+    public WoodenOmniHopperBlock(Properties settings) {
         super(settings);
     }
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new WoodenOmniHopperBlockEntity(pos, state);
     }
 
     @Override
-    protected void updateEnabled(World world, BlockPos pos, BlockState state) {
+    protected void updateEnabled(Level world, BlockPos pos, BlockState state) {
     }
 
     @Override
-    public TextureMap getTextureMap() {
+    public TextureMapping getTextureMap() {
         return TextureMapProvider.forHopperType(WoodenHopperBehaviour.TYPE_ID);
     }
 
     @Override
     public Set<TagKey<Block>> getConfiguredTags() {
-        return Set.of(BlockTags.AXE_MINEABLE);
+        return Set.of(BlockTags.MINEABLE_WITH_AXE);
     }
 }

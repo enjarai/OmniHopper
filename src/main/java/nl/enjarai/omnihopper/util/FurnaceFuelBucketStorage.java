@@ -7,9 +7,9 @@ import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.fabricmc.fabric.api.transfer.v1.transaction.base.SnapshotParticipant;
 import net.fabricmc.fabric.mixin.transfer.BucketItemAccessor;
-import net.minecraft.item.BucketItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 @SuppressWarnings("UnstableApiUsage")
 public abstract class FurnaceFuelBucketStorage extends SnapshotParticipant<ItemStack> implements SingleSlotStorage<FluidVariant> {
@@ -22,8 +22,8 @@ public abstract class FurnaceFuelBucketStorage extends SnapshotParticipant<ItemS
         StoragePreconditions.notBlankNotNegative(resource, maxAmount);
 
         ItemStack fuelStack = getFuelStack();
-        if (fuelStack.isOf(Items.BUCKET) && fuelStack.getCount() == 1 && maxAmount >= FluidConstants.BUCKET) {
-            ItemStack filledBucket = resource.getFluid().getBucketItem().getDefaultStack();
+        if (fuelStack.is(Items.BUCKET) && fuelStack.getCount() == 1 && maxAmount >= FluidConstants.BUCKET) {
+            ItemStack filledBucket = resource.getFluid().getBucket().getDefaultInstance();
             updateSnapshots(transaction);
             setFuelStack(filledBucket);
             return FluidConstants.BUCKET;
@@ -38,7 +38,7 @@ public abstract class FurnaceFuelBucketStorage extends SnapshotParticipant<ItemS
 
         ItemStack fuelStack = getFuelStack();
         if (getResource().equals(resource) && fuelStack.getCount() == 1 && maxAmount >= FluidConstants.BUCKET) {
-            ItemStack emptyBucket = Items.BUCKET.getDefaultStack();
+            ItemStack emptyBucket = Items.BUCKET.getDefaultInstance();
             updateSnapshots(transaction);
             setFuelStack(emptyBucket);
             return FluidConstants.BUCKET;

@@ -1,9 +1,9 @@
 package nl.enjarai.omnihopper.blocks.entity.hopper.behaviour;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import nl.enjarai.omnihopper.OmniHopper;
 import nl.enjarai.omnihopper.blocks.entity.hopper.HopperBlockEntity;
 import nl.enjarai.omnihopper.screen.OneSlotHopperScreenHandler;
@@ -27,7 +27,7 @@ public class WoodenHopperBehaviour extends ItemHopperBehaviour {
     }
 
     @Override
-    public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
+    public @Nullable AbstractContainerMenu createMenu(int syncId, Inventory inv, Player player) {
         return new OneSlotHopperScreenHandler(syncId, inv, inventory);
     }
 }

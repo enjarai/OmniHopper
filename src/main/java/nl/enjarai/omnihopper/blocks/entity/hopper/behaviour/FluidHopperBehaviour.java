@@ -8,23 +8,23 @@ import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleVariantStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.fabricmc.fabric.mixin.transfer.BucketItemAccessor;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FluidDrainable;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BucketItem;
-import net.minecraft.item.ItemUsage;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BucketPickup;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.BlockHitResult;
 import nl.enjarai.omnihopper.OmniHopper;
 import nl.enjarai.omnihopper.blocks.entity.hopper.HopperBlockEntity;
 
@@ -45,7 +45,7 @@ public class FluidHopperBehaviour extends HopperBehaviour<FluidVariant> {
 
 		@Override
 		protected void onFinalCommit() {
-			blockEntity.markDirty();
+			blockEntity.setChanged();
 		}
 	};
 
@@ -59,15 +59,15 @@ public class FluidHopperBehaviour extends HopperBehaviour<FluidVariant> {
 	}
 
 	@Override
-	public void writeData(WriteView view) {
-		view.put("fluidVariant", FluidVariant.CODEC, fluidStorage.variant);
+	public void writeData(ValueOutput view) {
+		view.store("fluidVariant", FluidVariant.CODEC, fluidStorage.variant);
 		view.putLong("amount", fluidStorage.amount);
 	}
 
 	@Override
-	public void readData(ReadView view) {
+	public void readData(ValueInput view) {
 		fluidStorage.variant = view.read("fluidVariant", FluidVariant.CODEC).orElseThrow();
-		fluidStorage.amount = view.getOptionalLong("amount").orElseThrow();
+		fluidStorage.amount = view.getLong("amount").orElseThrow();
 	}
 
 	@Override
@@ -76,20 +76,20 @@ public class FluidHopperBehaviour extends HopperBehaviour<FluidVariant> {
 	}
 
 	@Override
-	public boolean pickupInWorldObjects(World world, BlockPos pos, Direction suckyDirection) {
-		var fluidPos = pos.offset(suckyDirection);
+	public boolean pickupInWorldObjects(Level world, BlockPos pos, Direction suckyDirection) {
+		var fluidPos = pos.relative(suckyDirection);
 		var fluid = world.getFluidState(fluidPos);
 		var state = world.getBlockState(fluidPos);
 
-		if (fluid.isStill() && state.getBlock() instanceof FluidDrainable drainable) {
+		if (fluid.isSource() && state.getBlock() instanceof BucketPickup drainable) {
 			try (var transaction = Transaction.openOuter()) {
 				long inserted = getStorage().insert(
-						FluidVariant.of(fluid.getFluid()),
+						FluidVariant.of(fluid.getType()),
 						FluidConstants.BUCKET,
 						transaction
 				);
 
-				if (inserted == FluidConstants.BUCKET && !drainable.tryDrainFluid(null, world, fluidPos, state).isEmpty()) {
+				if (inserted == FluidConstants.BUCKET && !drainable.pickupBlock(null, world, fluidPos, state).isEmpty()) {
 					transaction.commit();
 
 					return true;
@@ -101,8 +101,8 @@ public class FluidHopperBehaviour extends HopperBehaviour<FluidVariant> {
 	}
 
 	@Override
-	public ActionResult onUseWithItem(PlayerEntity player, Hand hand, BlockHitResult hit) {
-		var stack = player.getStackInHand(hand);
+	public InteractionResult onUseWithItem(Player player, InteractionHand hand, BlockHitResult hit) {
+		var stack = player.getItemInHand(hand);
 
 		// If the player is holding a bucket, we can try to insert or extract fluid
 		if (stack.getItem() instanceof BucketItem bucketItem) {
@@ -124,18 +124,18 @@ public class FluidHopperBehaviour extends HopperBehaviour<FluidVariant> {
 						var containedFluid = resource.getFluid();
 
 						// Exchange the stack and commit if successful
-						player.setStackInHand(hand, ItemUsage.exchangeStack(
-								stack, player, containedFluid.getBucketItem().getDefaultStack()));
+						player.setItemInHand(hand, ItemUtils.createFilledResult(
+								stack, player, containedFluid.getBucket().getDefaultInstance()));
 						transaction.commit();
 
 						// We're done now, so play the sound and return success
-						player.getEntityWorld().playSound(
-								null, player.getBlockPos(),
+						player.level().playSound(
+								null, player.blockPosition(),
 								FluidVariantAttributes.getFillSound(resource),
-								SoundCategory.BLOCKS, 1.0f, 1.0f
+								SoundSource.BLOCKS, 1.0f, 1.0f
 						);
-						player.getEntityWorld().emitGameEvent(null, GameEvent.FLUID_PICKUP, player.getBlockPos());
-						return ActionResult.SUCCESS;
+						player.level().gameEvent(null, GameEvent.FLUID_PICKUP, player.blockPosition());
+						return InteractionResult.SUCCESS;
 					}
 				}
 			// If the bucket is not empty and the storage has room for one bucket of this fluid, we can try to insert
@@ -153,18 +153,18 @@ public class FluidHopperBehaviour extends HopperBehaviour<FluidVariant> {
 					if (inserted == FluidConstants.BUCKET) {
 
 						// Exchange the stack and commit if successful
-						player.setStackInHand(hand, ItemUsage.exchangeStack(
-								stack, player, BucketItem.getEmptiedStack(stack, player)));
+						player.setItemInHand(hand, ItemUtils.createFilledResult(
+								stack, player, BucketItem.getEmptySuccessItem(stack, player)));
 						transaction.commit();
 
 						// We're done, so play the sound and return success
-						player.getEntityWorld().playSound(
-								null, player.getBlockPos(),
+						player.level().playSound(
+								null, player.blockPosition(),
 								FluidVariantAttributes.getEmptySound(resource),
-								SoundCategory.BLOCKS, 1.0f, 1.0f
+								SoundSource.BLOCKS, 1.0f, 1.0f
 						);
-						player.getEntityWorld().emitGameEvent(null, GameEvent.FLUID_PLACE, player.getBlockPos());
-						return ActionResult.SUCCESS;
+						player.level().gameEvent(null, GameEvent.FLUID_PLACE, player.blockPosition());
+						return InteractionResult.SUCCESS;
 					}
 				}
 			}

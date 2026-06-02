@@ -5,23 +5,23 @@ import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.screen.HopperScreenHandler;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.HopperMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import nl.enjarai.omnihopper.blocks.entity.hopper.HopperBlockEntity;
 import nl.enjarai.omnihopper.blocks.hopper.ItemOmniHopperBlock;
 import org.jetbrains.annotations.Nullable;
@@ -31,10 +31,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class ItemHopperBehaviour extends HopperBehaviour<ItemVariant> {
-	public final SimpleInventory inventory = new SimpleInventory(getInventorySize()) {
+	public final SimpleContainer inventory = new SimpleContainer(getInventorySize()) {
 		@Override
-		public void markDirty() {
-			blockEntity.markDirty();
+		public void setChanged() {
+			blockEntity.setChanged();
 		}
 	};
 	private final InventoryStorage inventoryWrapper = InventoryStorage.of(inventory, null);
@@ -53,18 +53,18 @@ public abstract class ItemHopperBehaviour extends HopperBehaviour<ItemVariant> {
 	}
 
 	@Override
-	public void readData(ReadView view) {
-		inventory.heldStacks = DefaultedList.ofSize(inventory.size(), ItemStack.EMPTY);
-		Inventories.readData(view, inventory.heldStacks);
+	public void readData(ValueInput view) {
+		inventory.items = NonNullList.withSize(inventory.getContainerSize(), ItemStack.EMPTY);
+		ContainerHelper.loadAllItems(view, inventory.items);
 	}
 
 	@Override
-	public void writeData(WriteView view) {
-		Inventories.writeData(view, inventory.heldStacks);
+	public void writeData(ValueOutput view) {
+		ContainerHelper.saveAllItems(view, inventory.items);
 	}
 
 	@Override
-	public boolean pickupInWorldObjects(World world, BlockPos pos, Direction suckyDirection) {
+	public boolean pickupInWorldObjects(Level world, BlockPos pos, Direction suckyDirection) {
 		Iterator<ItemEntity> entities = getInputItemEntities(world, pos, suckyDirection).iterator();
 
 		ItemEntity itemEntity;
@@ -81,11 +81,11 @@ public abstract class ItemHopperBehaviour extends HopperBehaviour<ItemVariant> {
 
 	private boolean suckItem(ItemEntity itemEntity) {
 		boolean bl = false;
-		ItemStack itemStack = itemEntity.getStack();
+		ItemStack itemStack = itemEntity.getItem();
 
 		try (Transaction transaction = Transaction.openOuter()) {
 			long amountInserted = getStorage().insert(ItemVariant.of(itemStack), itemStack.getCount(), transaction);
-			itemStack.decrement((int) amountInserted);
+			itemStack.shrink((int) amountInserted);
 			transaction.commit();
 		}
 
@@ -97,9 +97,9 @@ public abstract class ItemHopperBehaviour extends HopperBehaviour<ItemVariant> {
 		return bl;
 	}
 
-	private static List<ItemEntity> getInputItemEntities(World world, BlockPos pos, Direction suckyDirection) {
-		return getInputAreaShape(suckyDirection).getBoundingBoxes().stream().flatMap((box) ->
-				world.getEntitiesByClass(ItemEntity.class, box.offset(pos), EntityPredicates.VALID_ENTITY).stream()
+	private static List<ItemEntity> getInputItemEntities(Level world, BlockPos pos, Direction suckyDirection) {
+		return getInputAreaShape(suckyDirection).toAabbs().stream().flatMap((box) ->
+				world.getEntitiesOfClass(ItemEntity.class, box.move(pos), EntitySelector.ENTITY_STILL_ALIVE).stream()
 		).collect(Collectors.toList());
 	}
 
@@ -109,7 +109,7 @@ public abstract class ItemHopperBehaviour extends HopperBehaviour<ItemVariant> {
 
 	@Nullable
 	@Override
-	public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-		return new HopperScreenHandler(syncId, inv, inventory);
+	public AbstractContainerMenu createMenu(int syncId, Inventory inv, Player player) {
+		return new HopperMenu(syncId, inv, inventory);
 	}
 }

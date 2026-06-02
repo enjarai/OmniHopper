@@ -1,25 +1,25 @@
 package nl.enjarai.omnihopper.blocks.hopper;
 
+import com.mojang.math.Quadrant;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.BlockStateVariantMap;
-import net.minecraft.client.data.ModelIds;
-import net.minecraft.client.data.VariantsBlockModelDefinitionCreator;
-import net.minecraft.client.render.model.json.ModelVariant;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.math.AxisRotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
+import net.minecraft.client.renderer.block.model.Variant;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import nl.enjarai.omnihopper.datagen.HopperRotation;
 
 public abstract class OmniHopperBlock extends HopperBlock {
@@ -27,65 +27,65 @@ public abstract class OmniHopperBlock extends HopperBlock {
     public static final EnumProperty<Direction> SUCKY_BIT;
 
     static {
-        POINTY_BIT = EnumProperty.of("pointy_bit",Direction.class, Direction.values());
-        SUCKY_BIT = EnumProperty.of("sucky_bit", Direction.class, Direction.values());
+        POINTY_BIT = EnumProperty.create("pointy_bit",Direction.class, Direction.values());
+        SUCKY_BIT = EnumProperty.create("sucky_bit", Direction.class, Direction.values());
     }
 
-    public OmniHopperBlock(Settings settings) {
+    public OmniHopperBlock(Properties settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState().with(POINTY_BIT, Direction.DOWN).with(SUCKY_BIT, Direction.UP));
+        this.registerDefaultState(this.stateDefinition.any().setValue(POINTY_BIT, Direction.DOWN).setValue(SUCKY_BIT, Direction.UP));
     }
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        BlockState state = super.getPlacementState(ctx);
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        BlockState state = super.getStateForPlacement(ctx);
         return state == null ? null : state
-                .with(POINTY_BIT, ctx.getSide().getOpposite())
-                .with(SUCKY_BIT, ctx.getPlayerLookDirection().getOpposite());
+                .setValue(POINTY_BIT, ctx.getClickedFace().getOpposite())
+                .setValue(SUCKY_BIT, ctx.getNearestLookingDirection().getOpposite());
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return SHAPES[state.get(POINTY_BIT).ordinal()][state.get(SUCKY_BIT).ordinal()];
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return SHAPES[state.getValue(POINTY_BIT).ordinal()][state.getValue(SUCKY_BIT).ordinal()];
     }
 
     @Override
-    public VoxelShape getRaycastShape(BlockState state, BlockView world, BlockPos pos) {
-        return SHAPES_RAYCAST[state.get(POINTY_BIT).ordinal()][state.get(SUCKY_BIT).ordinal()];
+    public VoxelShape getInteractionShape(BlockState state, BlockGetter world, BlockPos pos) {
+        return SHAPES_RAYCAST[state.getValue(POINTY_BIT).ordinal()][state.getValue(SUCKY_BIT).ordinal()];
     }
 
     @Override
-    public BlockState rotate(BlockState state, BlockRotation rotation) {
+    public BlockState rotate(BlockState state, Rotation rotation) {
         return state
-                .with(POINTY_BIT, rotation.rotate(state.get(POINTY_BIT)))
-                .with(SUCKY_BIT, rotation.rotate(state.get(SUCKY_BIT)));
+                .setValue(POINTY_BIT, rotation.rotate(state.getValue(POINTY_BIT)))
+                .setValue(SUCKY_BIT, rotation.rotate(state.getValue(SUCKY_BIT)));
     }
 
     @Override
-    public BlockState mirror(BlockState state, BlockMirror mirror) {
-        return state.rotate(mirror.getRotation(state.get(POINTY_BIT)));
+    public BlockState mirror(BlockState state, Mirror mirror) {
+        return state.rotate(mirror.getRotation(state.getValue(POINTY_BIT)));
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        super.appendProperties(builder.add(POINTY_BIT).add(SUCKY_BIT));
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder.add(POINTY_BIT).add(SUCKY_BIT));
     }
 
     @Override
     @Environment(EnvType.CLIENT)
-    protected void buildHopperBlockStateModel(BlockStateModelGenerator blockStateModelGenerator) {
-        var variants = BlockStateVariantMap.DoubleProperty.models(OmniHopperBlock.POINTY_BIT, OmniHopperBlock.SUCKY_BIT);
+    protected void buildHopperBlockStateModel(BlockModelGenerators blockStateModelGenerator) {
+        var variants = PropertyDispatch.C2.initial(OmniHopperBlock.POINTY_BIT, OmniHopperBlock.SUCKY_BIT);
 
         variants.generate(
                 (pointy, sucky) -> {
                     var settings = HopperRotation.getFor(sucky, pointy);
-                    return BlockStateModelGenerator.createWeightedVariant(
-                            new ModelVariant(
-                                    ModelIds.getBlockSubModelId(this, "_" + settings.modelDirection().getId()),
-                                    new ModelVariant.ModelState(
+                    return BlockModelGenerators.variant(
+                            new Variant(
+                                    ModelLocationUtils.getModelLocation(this, "_" + settings.modelDirection().getName()),
+                                    new Variant.SimpleModelState(
                                             settings.rotX(),
                                             settings.rotY(),
-                                            AxisRotation.R0,
+                                            Quadrant.R0,
                                             false
                                     )
                             )
@@ -93,8 +93,8 @@ public abstract class OmniHopperBlock extends HopperBlock {
                 }
         );
 
-        blockStateModelGenerator.blockStateCollector.accept(
-                VariantsBlockModelDefinitionCreator.of(this).with(variants)
+        blockStateModelGenerator.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(this).with(variants)
         );
     }
 }

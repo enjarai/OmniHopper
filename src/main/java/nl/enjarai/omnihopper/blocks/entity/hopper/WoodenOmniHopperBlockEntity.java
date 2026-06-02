@@ -1,9 +1,9 @@
 package nl.enjarai.omnihopper.blocks.entity.hopper;
 
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
-import net.minecraft.block.BlockState;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.block.state.BlockState;
 import nl.enjarai.omnihopper.blocks.ModBlocks;
 import nl.enjarai.omnihopper.blocks.entity.hopper.behaviour.WoodenHopperBehaviour;
 
@@ -14,7 +14,7 @@ public class WoodenOmniHopperBlockEntity extends OmniHopperBlockEntity<ItemVaria
     }
 
     @Override
-    public Text getName() {
-        return Text.translatable("container.wooden_omnihopper");
+    public Component getName() {
+        return Component.translatable("container.wooden_omnihopper");
     }
 }

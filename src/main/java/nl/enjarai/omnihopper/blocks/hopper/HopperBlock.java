@@ -4,39 +4,44 @@ import com.mojang.serialization.MapCodec;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.data.*;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.pathing.NavigationType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.stat.Stats;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.function.BooleanBiFunction;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.World;
-import net.minecraft.world.block.WireOrientation;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.stats.Stats;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import nl.enjarai.omnihopper.OmniHopper;
 import nl.enjarai.omnihopper.blocks.entity.hopper.HopperBlockEntity;
 import nl.enjarai.omnihopper.blocks.entity.hopper.behaviour.ItemHopperBehaviour;
@@ -48,7 +53,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.Set;
 
-public abstract class HopperBlock extends BlockWithEntity implements DatagenBlock, TextureMapProvider, HasTooltip {
+public abstract class HopperBlock extends BaseEntityBlock implements DatagenBlock, TextureMapProvider, HasTooltip {
     public static final BooleanProperty ENABLED;
     public static final VoxelShape[] SUCKY_AREA;
     private static final VoxelShape MIDDLE_SHAPE;
@@ -57,31 +62,31 @@ public abstract class HopperBlock extends BlockWithEntity implements DatagenBloc
     protected static final VoxelShape[][] SHAPES_RAYCAST;
 
     static {
-        ENABLED = Properties.ENABLED;
+        ENABLED = BlockStateProperties.ENABLED;
 
         var defaultShapes = new VoxelShape[]{
-                Block.createCuboidShape(0, 0, 0, 16, 6, 16),
-                Block.createCuboidShape(0, 10, 0, 16, 16, 16),
+                Block.box(0, 0, 0, 16, 6, 16),
+                Block.box(0, 10, 0, 16, 16, 16),
 
-                Block.createCuboidShape(0, 0, 0, 16, 16, 6),
-                Block.createCuboidShape(0, 0, 10, 16, 16, 16),
+                Block.box(0, 0, 0, 16, 16, 6),
+                Block.box(0, 0, 10, 16, 16, 16),
 
-                Block.createCuboidShape(0, 0, 0, 6, 16, 16),
-                Block.createCuboidShape(10, 0, 0, 16, 16, 16),
+                Block.box(0, 0, 0, 6, 16, 16),
+                Block.box(10, 0, 0, 16, 16, 16),
         };
         var insideShapes = new VoxelShape[]{
-                Block.createCuboidShape(2, 0, 2, 14, 5, 14),
-                Block.createCuboidShape(2, 11, 2, 14, 16, 14),
+                Block.box(2, 0, 2, 14, 5, 14),
+                Block.box(2, 11, 2, 14, 16, 14),
 
-                Block.createCuboidShape(2, 2, 0, 14, 14, 5),
-                Block.createCuboidShape(2, 2, 11, 14, 14, 16),
+                Block.box(2, 2, 0, 14, 14, 5),
+                Block.box(2, 2, 11, 14, 14, 16),
 
-                Block.createCuboidShape(0, 2, 2, 5, 14, 14),
-                Block.createCuboidShape(11, 2, 2, 16, 14, 14),
+                Block.box(0, 2, 2, 5, 14, 14),
+                Block.box(11, 2, 2, 16, 14, 14),
         };
 
-        MIDDLE_SHAPE = Block.createCuboidShape(4.0D, 4.0D, 4.0D, 12.0D, 12.0D, 12.0D);
-        POINTY_SHAPE = Block.createCuboidShape(6.0D, 6.0D, 6.0D, 10.0D, 10.0D, 10.0D);
+        MIDDLE_SHAPE = Block.box(4.0D, 4.0D, 4.0D, 12.0D, 12.0D, 12.0D);
+        POINTY_SHAPE = Block.box(6.0D, 6.0D, 6.0D, 10.0D, 10.0D, 10.0D);
 
         SHAPES = new VoxelShape[6][6];
         SHAPES_RAYCAST = new VoxelShape[6][6];
@@ -91,63 +96,63 @@ public abstract class HopperBlock extends BlockWithEntity implements DatagenBloc
             var suckyI = suckyDirection.ordinal();
 
             var infrontSuckyArea =
-                    Block.createCuboidShape(0, 0, 0, 16, 16, 16)
-                            .offset(suckyDirection.getOffsetX(), suckyDirection.getOffsetY(), suckyDirection.getOffsetZ());
+                    Block.box(0, 0, 0, 16, 16, 16)
+                            .move(suckyDirection.getStepX(), suckyDirection.getStepY(), suckyDirection.getStepZ());
 
-            SUCKY_AREA[suckyI] = VoxelShapes.union(insideShapes[suckyI], infrontSuckyArea);
+            SUCKY_AREA[suckyI] = Shapes.or(insideShapes[suckyI], infrontSuckyArea);
 
-            var mainShapeRaycast = VoxelShapes.union(defaultShapes[suckyI], MIDDLE_SHAPE);
-            var mainShape = VoxelShapes.combineAndSimplify(
-                    mainShapeRaycast, insideShapes[suckyI], BooleanBiFunction.ONLY_FIRST);
+            var mainShapeRaycast = Shapes.or(defaultShapes[suckyI], MIDDLE_SHAPE);
+            var mainShape = Shapes.join(
+                    mainShapeRaycast, insideShapes[suckyI], BooleanOp.ONLY_FIRST);
 
             for (var pointyDirection : Direction.values()) {
 
-                var pX = pointyDirection.getOffsetX() * 0.375;
-                var pY = pointyDirection.getOffsetY() * 0.375;
-                var pZ = pointyDirection.getOffsetZ() * 0.375;
+                var pX = pointyDirection.getStepX() * 0.375;
+                var pY = pointyDirection.getStepY() * 0.375;
+                var pZ = pointyDirection.getStepZ() * 0.375;
                 if (!pointyDirection.getAxis().equals(suckyDirection.getAxis())) {
-                    pX += suckyDirection.getOffsetX() * -0.125;
-                    pY += suckyDirection.getOffsetY() * -0.125;
-                    pZ += suckyDirection.getOffsetZ() * -0.125;
+                    pX += suckyDirection.getStepX() * -0.125;
+                    pY += suckyDirection.getStepY() * -0.125;
+                    pZ += suckyDirection.getStepZ() * -0.125;
                 }
-                var pointyShape = POINTY_SHAPE.offset(pX, pY, pZ);
+                var pointyShape = POINTY_SHAPE.move(pX, pY, pZ);
 
-                SHAPES[pointyDirection.ordinal()][suckyI] = VoxelShapes.union(mainShape, pointyShape);
-                SHAPES_RAYCAST[pointyDirection.ordinal()][suckyI] = VoxelShapes.union(mainShapeRaycast, pointyShape);
+                SHAPES[pointyDirection.ordinal()][suckyI] = Shapes.or(mainShape, pointyShape);
+                SHAPES_RAYCAST[pointyDirection.ordinal()][suckyI] = Shapes.or(mainShapeRaycast, pointyShape);
             }
         }
     }
 
-    public HopperBlock(Settings settings) {
+    public HopperBlock(Properties settings) {
         super(settings);
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        super.appendProperties(builder.add(ENABLED));
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder.add(ENABLED));
     }
 
     @Nullable
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        BlockState state = super.getPlacementState(ctx);
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        BlockState state = super.getStateForPlacement(ctx);
         return state == null
                ? null
-               : state.with(ENABLED, true);
+               : state.setValue(ENABLED, true);
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
     @Override
-    public boolean hasComparatorOutput(BlockState state) {
+    public boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
     @Override
-    protected int getComparatorOutput(BlockState state, World world, BlockPos pos, Direction direction) {
+    protected int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos, Direction direction) {
         if (world.getBlockEntity(pos) instanceof HopperBlockEntity<?> hopperBlockEntity) {
             return StorageUtil.calculateComparatorOutput(hopperBlockEntity.getBehaviour().getStorage());
         }
@@ -156,8 +161,8 @@ public abstract class HopperBlock extends BlockWithEntity implements DatagenBloc
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return world.isClient()
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+        return world.isClientSide()
                ? null
                : (world1, pos, state1, blockEntity) -> {
                    if (blockEntity instanceof HopperBlockEntity<?> hopperBlockEntity) {
@@ -167,95 +172,95 @@ public abstract class HopperBlock extends BlockWithEntity implements DatagenBloc
     }
 
     @Override
-    public boolean canPathfindThrough(BlockState state, NavigationType type) {
+    public boolean isPathfindable(BlockState state, PathComputationType type) {
         return false;
     }
 
     @Override
-    protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!world.isClient() && world.getBlockEntity(pos) instanceof HopperBlockEntity<?> hopperBlockEntity) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (!world.isClientSide() && world.getBlockEntity(pos) instanceof HopperBlockEntity<?> hopperBlockEntity) {
             return hopperBlockEntity.onUseWithItem(player, hand, hit);
         }
-        return ActionResult.PASS_TO_DEFAULT_BLOCK_ACTION;
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
     @Override
-    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (!world.isClient()) {
+    protected InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        if (!world.isClientSide()) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof HopperBlockEntity<?> hopperBlockEntity) {
-                player.openHandledScreen(hopperBlockEntity);
-                player.incrementStat(Stats.INSPECT_HOPPER);
+                player.openMenu(hopperBlockEntity);
+                player.awardStat(Stats.INSPECT_HOPPER);
             }
 
         }
-        return world.isClient()
-               ? ActionResult.SUCCESS
-               : ActionResult.SUCCESS_SERVER;
+        return world.isClientSide()
+               ? InteractionResult.SUCCESS
+               : InteractionResult.SUCCESS_SERVER;
     }
 
     @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
-        if (itemStack.contains(DataComponentTypes.CUSTOM_NAME)) {
+    public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
+        if (itemStack.has(DataComponents.CUSTOM_NAME)) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof HopperBlockEntity<?> hopperBlockEntity) {
-                hopperBlockEntity.setCustomName(itemStack.getName());
+                hopperBlockEntity.setCustomName(itemStack.getHoverName());
             }
         }
     }
 
     @Override
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
+    protected void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, @Nullable Orientation wireOrientation, boolean notify) {
         this.updateEnabled(world, pos, state);
-        super.neighborUpdate(state, world, pos, sourceBlock, wireOrientation, notify);
+        super.neighborChanged(state, world, pos, sourceBlock, wireOrientation, notify);
     }
 
-    protected void updateEnabled(World world, BlockPos pos, BlockState state) {
-        boolean bl = !world.isReceivingRedstonePower(pos);
-        if (bl != state.get(ENABLED)) {
-            world.setBlockState(pos, state.with(ENABLED, bl), 4);
+    protected void updateEnabled(Level world, BlockPos pos, BlockState state) {
+        boolean bl = !world.hasNeighborSignal(pos);
+        if (bl != state.getValue(ENABLED)) {
+            world.setBlock(pos, state.setValue(ENABLED, bl), 4);
         }
     }
 
     @Override
-    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
-        if (!oldState.isOf(state.getBlock())) {
+    public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean notify) {
+        if (!oldState.is(state.getBlock())) {
             this.updateEnabled(world, pos, state);
         }
-        super.onBlockAdded(state, world, pos, oldState, notify);
+        super.onPlace(state, world, pos, oldState, notify);
     }
 
     @Override
-    protected void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
-        world.updateComparators(pos, this);
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel world, BlockPos pos, boolean moved) {
+        world.updateNeighbourForOutputSignal(pos, this);
 
-        if (!state.isOf(world.getBlockState(pos).getBlock())) {
+        if (!state.is(world.getBlockState(pos).getBlock())) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof HopperBlockEntity<?> hopperBlockEntity) {
                 if (hopperBlockEntity.getBehaviour() instanceof ItemHopperBehaviour itemBehaviour) {
-                    ItemScatterer.spawn(world, pos, itemBehaviour.inventory);
+                    Containers.dropContents(world, pos, itemBehaviour.inventory);
                 }
             }
         }
 
-        super.onStateReplaced(state, world, pos, moved);
+        super.affectNeighborsAfterRemoval(state, world, pos, moved);
     }
 
-    protected abstract void buildHopperBlockStateModel(BlockStateModelGenerator blockStateModelGenerator);
+    protected abstract void buildHopperBlockStateModel(BlockModelGenerators blockStateModelGenerator);
 
     @Override
     @Environment(EnvType.CLIENT)
-    public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+    public void generateBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         for (var direction : Direction.values()) {
-            var suffix = "_" + direction.getId();
+            var suffix = "_" + direction.getName();
 
-            blockStateModelGenerator.createSubModel(
+            blockStateModelGenerator.createSuffixedVariant(
                     this, suffix,
-                    new Model(
+                    new ModelTemplate(
                             Optional.of(OmniHopper.id("block/hopper" + suffix)),
                             Optional.empty(),
-                            TextureKey.PARTICLE, TextureKey.SIDE,
-                            TextureKey.TOP, TextureKey.INSIDE, TextureKey.BOTTOM
+                            TextureSlot.PARTICLE, TextureSlot.SIDE,
+                            TextureSlot.TOP, TextureSlot.INSIDE, TextureSlot.BOTTOM
                     ),
                     id -> getTextureMap()
             );
@@ -266,17 +271,17 @@ public abstract class HopperBlock extends BlockWithEntity implements DatagenBloc
 
     @Override
     public Set<TagKey<Block>> getConfiguredTags() {
-        return Set.of(BlockTags.PICKAXE_MINEABLE);
+        return Set.of(BlockTags.MINEABLE_WITH_PICKAXE);
     }
 
     @Override
     @Environment(EnvType.CLIENT)
-    public void generateItemModel(ItemModelGenerator itemModelGenerator, BlockItem item) {
-        itemModelGenerator.register(item, Models.GENERATED);
+    public void generateItemModel(ItemModelGenerators itemModelGenerator, BlockItem item) {
+        itemModelGenerator.generateFlatItem(item, ModelTemplates.FLAT_ITEM);
     }
 
     @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return null;
     }
 }
