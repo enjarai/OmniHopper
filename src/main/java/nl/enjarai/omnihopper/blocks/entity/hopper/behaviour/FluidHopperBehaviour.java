@@ -106,7 +106,7 @@ public class FluidHopperBehaviour extends HopperBehaviour<FluidVariant> {
 
 		// If the player is holding a bucket, we can try to insert or extract fluid
 		if (stack.getItem() instanceof BucketItem bucketItem) {
-			var bucketFluid = ((BucketItemAccessor) bucketItem).fabric_getFluid();
+			var bucketFluid = ((BucketItemAccessor) bucketItem).fabric_getContent();
 
 			// If the bucket is empty and the storage is not, try to extract a buckets worth of fluid
 			if (bucketFluid == Fluids.EMPTY && !fluidStorage.isResourceBlank()) {

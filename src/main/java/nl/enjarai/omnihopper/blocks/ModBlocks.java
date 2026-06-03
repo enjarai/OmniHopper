@@ -106,21 +106,21 @@ public class ModBlocks {
     }
 
     public static void register() {
-        OxidizableBlocksRegistry.registerOxidizableBlockPair(FLUID_HOPPER_BLOCK, FLUID_HOPPER_BLOCK_EXPOSED);
-        OxidizableBlocksRegistry.registerOxidizableBlockPair(FLUID_HOPPER_BLOCK_EXPOSED, FLUID_HOPPER_BLOCK_WEATHERED);
-        OxidizableBlocksRegistry.registerOxidizableBlockPair(FLUID_HOPPER_BLOCK_WEATHERED, FLUID_HOPPER_BLOCK_OXIDIZED);
-        OxidizableBlocksRegistry.registerOxidizableBlockPair(FLUID_OMNIHOPPER_BLOCK, FLUID_OMNIHOPPER_BLOCK_EXPOSED);
-        OxidizableBlocksRegistry.registerOxidizableBlockPair(FLUID_OMNIHOPPER_BLOCK_EXPOSED, FLUID_OMNIHOPPER_BLOCK_WEATHERED);
-        OxidizableBlocksRegistry.registerOxidizableBlockPair(FLUID_OMNIHOPPER_BLOCK_WEATHERED, FLUID_OMNIHOPPER_BLOCK_OXIDIZED);
+        OxidizableBlocksRegistry.registerNextStage(FLUID_HOPPER_BLOCK, FLUID_HOPPER_BLOCK_EXPOSED);
+        OxidizableBlocksRegistry.registerNextStage(FLUID_HOPPER_BLOCK_EXPOSED, FLUID_HOPPER_BLOCK_WEATHERED);
+        OxidizableBlocksRegistry.registerNextStage(FLUID_HOPPER_BLOCK_WEATHERED, FLUID_HOPPER_BLOCK_OXIDIZED);
+        OxidizableBlocksRegistry.registerNextStage(FLUID_OMNIHOPPER_BLOCK, FLUID_OMNIHOPPER_BLOCK_EXPOSED);
+        OxidizableBlocksRegistry.registerNextStage(FLUID_OMNIHOPPER_BLOCK_EXPOSED, FLUID_OMNIHOPPER_BLOCK_WEATHERED);
+        OxidizableBlocksRegistry.registerNextStage(FLUID_OMNIHOPPER_BLOCK_WEATHERED, FLUID_OMNIHOPPER_BLOCK_OXIDIZED);
 
-        OxidizableBlocksRegistry.registerWaxableBlockPair(FLUID_HOPPER_BLOCK, FLUID_HOPPER_BLOCK_WAXED);
-        OxidizableBlocksRegistry.registerWaxableBlockPair(FLUID_HOPPER_BLOCK_EXPOSED, FLUID_HOPPER_BLOCK_WAXED_EXPOSED);
-        OxidizableBlocksRegistry.registerWaxableBlockPair(FLUID_HOPPER_BLOCK_WEATHERED, FLUID_HOPPER_BLOCK_WAXED_WEATHERED);
-        OxidizableBlocksRegistry.registerWaxableBlockPair(FLUID_HOPPER_BLOCK_OXIDIZED, FLUID_HOPPER_BLOCK_WAXED_OXIDIZED);
-        OxidizableBlocksRegistry.registerWaxableBlockPair(FLUID_OMNIHOPPER_BLOCK, FLUID_OMNIHOPPER_BLOCK_WAXED);
-        OxidizableBlocksRegistry.registerWaxableBlockPair(FLUID_OMNIHOPPER_BLOCK_EXPOSED, FLUID_OMNIHOPPER_BLOCK_WAXED_EXPOSED);
-        OxidizableBlocksRegistry.registerWaxableBlockPair(FLUID_OMNIHOPPER_BLOCK_WEATHERED, FLUID_OMNIHOPPER_BLOCK_WAXED_WEATHERED);
-        OxidizableBlocksRegistry.registerWaxableBlockPair(FLUID_OMNIHOPPER_BLOCK_OXIDIZED, FLUID_OMNIHOPPER_BLOCK_WAXED_OXIDIZED);
+        OxidizableBlocksRegistry.registerWaxable(FLUID_HOPPER_BLOCK, FLUID_HOPPER_BLOCK_WAXED);
+        OxidizableBlocksRegistry.registerWaxable(FLUID_HOPPER_BLOCK_EXPOSED, FLUID_HOPPER_BLOCK_WAXED_EXPOSED);
+        OxidizableBlocksRegistry.registerWaxable(FLUID_HOPPER_BLOCK_WEATHERED, FLUID_HOPPER_BLOCK_WAXED_WEATHERED);
+        OxidizableBlocksRegistry.registerWaxable(FLUID_HOPPER_BLOCK_OXIDIZED, FLUID_HOPPER_BLOCK_WAXED_OXIDIZED);
+        OxidizableBlocksRegistry.registerWaxable(FLUID_OMNIHOPPER_BLOCK, FLUID_OMNIHOPPER_BLOCK_WAXED);
+        OxidizableBlocksRegistry.registerWaxable(FLUID_OMNIHOPPER_BLOCK_EXPOSED, FLUID_OMNIHOPPER_BLOCK_WAXED_EXPOSED);
+        OxidizableBlocksRegistry.registerWaxable(FLUID_OMNIHOPPER_BLOCK_WEATHERED, FLUID_OMNIHOPPER_BLOCK_WAXED_WEATHERED);
+        OxidizableBlocksRegistry.registerWaxable(FLUID_OMNIHOPPER_BLOCK_OXIDIZED, FLUID_OMNIHOPPER_BLOCK_WAXED_OXIDIZED);
 
         Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, OmniHopper.id("omnihopper"), OMNIHOPPER_BLOCK_ENTITY);
         Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, OmniHopper.id("fluid_omnihopper"), FLUID_OMNIHOPPER_BLOCK_ENTITY);

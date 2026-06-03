@@ -2,7 +2,7 @@ package nl.enjarai.omnihopper.blocks.entity.hopper;
 
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
-import net.gnomecraft.cooldowncoordinator.CooldownCoordinator;
+import net.gnomecraft.cooldowncoordinator   .CooldownCoordinator;
 import net.gnomecraft.cooldowncoordinator.CoordinatedCooldown;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

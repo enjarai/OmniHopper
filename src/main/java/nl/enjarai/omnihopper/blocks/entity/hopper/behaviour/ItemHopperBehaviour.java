@@ -1,6 +1,6 @@
 package nl.enjarai.omnihopper.blocks.entity.hopper.behaviour;
 
-import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
+import net.fabricmc.fabric.api.transfer.v1.item.ContainerStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
@@ -37,7 +37,7 @@ public abstract class ItemHopperBehaviour extends HopperBehaviour<ItemVariant> {
 			blockEntity.setChanged();
 		}
 	};
-	private final InventoryStorage inventoryWrapper = InventoryStorage.of(inventory, null);
+	private final ContainerStorage inventoryWrapper = ContainerStorage.of(inventory, null);
 
 	public ItemHopperBehaviour(Identifier typeId, HopperBlockEntity<?> blockEntity) {
 		super(typeId, ItemStorage.SIDED, blockEntity);

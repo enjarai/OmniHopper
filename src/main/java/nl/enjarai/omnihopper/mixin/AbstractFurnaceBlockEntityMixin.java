@@ -53,7 +53,7 @@ public abstract class AbstractFurnaceBlockEntityMixin extends BaseContainerBlock
             method = "canTakeItemThroughFace",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z"
+                    target = "Lnet/minecraft/world/item/ItemStack;is(Ljava/lang/Object;)Z"
             )
     )
     private boolean removeExtractionExceptions(boolean original) {

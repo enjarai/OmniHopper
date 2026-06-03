@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.14-SNAPSHOT'
+	id 'net.fabricmc.fabric-loom' version '1.16-SNAPSHOT'
 	id 'maven-publish'
 	id "me.modmuss50.mod-publish-plugin" version "0.5.1"
 }
@@ -30,16 +30,15 @@ repositories {
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings loom.officialMojangMappings()
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// Include Cooldown Coordinator
-	include(modImplementation("net.gnomecraft:cooldown-coordinator:${project.cooldowncoordinator_version}"))
+	include(implementation("net.gnomecraft:cooldown-coordinator:${project.cooldowncoordinator_version}"))
 
-	modImplementation("nl.enjarai:cicada-lib:${project.cicada_version}") {
+	implementation("nl.enjarai:cicada-lib:${project.cicada_version}") {
 		exclude group: "net.fabricmc.fabric-api"
 	}
 }
@@ -56,7 +55,7 @@ version = "$version+$minecraft_version"
 
 tasks.withType(JavaCompile).configureEach {
 	// Minecraft 1.20.5 upwards uses Java 21.
-	it.options.release = 21
+	it.options.release = 25
 }
 
 java {
@@ -64,8 +63,8 @@ java {
 	// if it is present.
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 jar {
@@ -103,7 +102,7 @@ fabricApi {
 }
 
 publishMods {
-	file = remapJar.archiveFile
+	file = jar.archiveFile
 	displayName = "${property('mod_version')} for ${property('minecraft_version')}"
 	version = project.version
 	changelog = getRootProject().file("CHANGELOG.md").text

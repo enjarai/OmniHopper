@@ -154,7 +154,7 @@ public abstract class HopperBlock extends BaseEntityBlock implements DatagenBloc
     @Override
     protected int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos, Direction direction) {
         if (world.getBlockEntity(pos) instanceof HopperBlockEntity<?> hopperBlockEntity) {
-            return StorageUtil.calculateComparatorOutput(hopperBlockEntity.getBehaviour().getStorage());
+            return StorageUtil.getRedstoneSignal(hopperBlockEntity.getBehaviour().getStorage());
         }
         return 0;
     }

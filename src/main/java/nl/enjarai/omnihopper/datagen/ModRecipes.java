@@ -1,6 +1,6 @@
 package nl.enjarai.omnihopper.datagen;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -16,7 +16,7 @@ import nl.enjarai.omnihopper.blocks.ModBlocks;
 import java.util.concurrent.CompletableFuture;
 
 public class ModRecipes extends FabricRecipeProvider {
-    public ModRecipes(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+    public ModRecipes(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 

@@ -56,7 +56,7 @@ public abstract class FurnaceFuelBucketStorage extends SnapshotParticipant<ItemS
     public FluidVariant getResource() {
         ItemStack fuelStack = getFuelStack();
         if (fuelStack.getItem() instanceof BucketItem bucketItem) {
-            return FluidVariant.of(((BucketItemAccessor) bucketItem).fabric_getFluid());
+            return FluidVariant.of(((BucketItemAccessor) bucketItem).fabric_getContent());
         }
         return FluidVariant.blank();
     }
