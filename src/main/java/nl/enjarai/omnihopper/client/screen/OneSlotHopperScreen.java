@@ -21,8 +21,8 @@ public class OneSlotHopperScreen extends AbstractContainerScreen<OneSlotHopperSc
 	}
 
 	@Override
-	protected void extractMenuBackground(GuiGraphicsExtractor graphics) {
-		super.extractMenuBackground(graphics);
+	public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+		super.extractBackground(graphics, mouseX, mouseY, a);
 		int i = (width - imageWidth) / 2;
 		int j = (height - imageHeight) / 2;
 		graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, i, j, 0, 0, imageWidth, imageHeight, 256, 256);
