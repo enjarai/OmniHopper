@@ -1,23 +1,24 @@
 package nl.enjarai.omnihopper.util;
 
-import net.minecraft.block.Oxidizable;
-import net.minecraft.client.data.TextureKey;
-import net.minecraft.client.data.TextureMap;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.client.resources.model.sprite.Material;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.level.block.WeatheringCopper;
 
 public interface TextureMapProvider {
-    TextureMap getTextureMap();
+    TextureMapping getTextureMap();
 
-    static TextureMap forHopperType(Identifier id) {
-        return new TextureMap()
-                .put(TextureKey.PARTICLE, getSubId(id, "_side"))
-                .put(TextureKey.SIDE, getSubId(id, "_side"))
-                .put(TextureKey.TOP, getSubId(id, "_top"))
-                .put(TextureKey.BOTTOM, getSubId(id, "_bottom"))
-                .put(TextureKey.INSIDE, getSubId(id, "_inside"));
+    static TextureMapping forHopperType(Identifier id) {
+        return new TextureMapping()
+                .put(TextureSlot.PARTICLE, mat(getSubId(id, "_side")))
+                .put(TextureSlot.SIDE, mat(getSubId(id, "_side")))
+                .put(TextureSlot.TOP, mat(getSubId(id, "_top")))
+                .put(TextureSlot.BOTTOM, mat(getSubId(id, "_bottom")))
+                .put(TextureSlot.INSIDE, mat(getSubId(id, "_inside")));
     }
 
-    static TextureMap forOxidizableHopperType(Identifier id, Oxidizable.OxidationLevel degradationLevel) {
+    static TextureMapping forOxidizableHopperType(Identifier id, WeatheringCopper.WeatherState degradationLevel) {
         var prefix = switch (degradationLevel) {
             case UNAFFECTED -> "";
             case EXPOSED -> "exposed_";
@@ -27,16 +28,20 @@ public interface TextureMapProvider {
         return forHopperType(id.withPath(path -> prefix + path));
     }
 
-    static TextureMap forVanillaHopper() {
-        return new TextureMap()
-                .put(TextureKey.PARTICLE, Identifier.ofVanilla("block/hopper_outside"))
-                .put(TextureKey.SIDE, Identifier.ofVanilla("block/hopper_outside"))
-                .put(TextureKey.TOP, Identifier.ofVanilla("block/hopper_top"))
-                .put(TextureKey.BOTTOM, Identifier.ofVanilla("block/hopper_outside"))
-                .put(TextureKey.INSIDE, Identifier.ofVanilla("block/hopper_inside"));
+    static TextureMapping forVanillaHopper() {
+        return new TextureMapping()
+                .put(TextureSlot.PARTICLE, mat(Identifier.withDefaultNamespace("block/hopper_outside")))
+                .put(TextureSlot.SIDE, mat(Identifier.withDefaultNamespace("block/hopper_outside")))
+                .put(TextureSlot.TOP, mat(Identifier.withDefaultNamespace("block/hopper_top")))
+                .put(TextureSlot.BOTTOM, mat(Identifier.withDefaultNamespace("block/hopper_outside")))
+                .put(TextureSlot.INSIDE, mat(Identifier.withDefaultNamespace("block/hopper_inside")));
     }
 
     static Identifier getSubId(Identifier id, String suffix) {
         return id.withPath(path -> "block/" + path + suffix);
+    }
+
+    private static Material mat(Identifier id) {
+        return new Material(id);
     }
 }

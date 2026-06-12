@@ -2,36 +2,29 @@ package nl.enjarai.omnihopper.client.screen;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.player.Inventory;
 import nl.enjarai.omnihopper.OmniHopper;
 import nl.enjarai.omnihopper.screen.OneSlotHopperScreenHandler;
 
 @Environment(EnvType.CLIENT)
-public class OneSlotHopperScreen extends HandledScreen<OneSlotHopperScreenHandler> {
+public class OneSlotHopperScreen extends AbstractContainerScreen<OneSlotHopperScreenHandler> {
 	private static final Identifier TEXTURE = OmniHopper.id("textures/gui/container/one_slot_hopper.png");
 
-	public OneSlotHopperScreen(OneSlotHopperScreenHandler handler, PlayerInventory inventory, Text title) {
-		super(handler, inventory, title);
-		backgroundHeight = 133;
-		playerInventoryTitleY = backgroundHeight - 94;
+	public OneSlotHopperScreen(OneSlotHopperScreenHandler handler, Inventory inventory, Component title) {
+		super(handler, inventory, title, 176, 133);
+		inventoryLabelY = imageHeight - 94;
 	}
 
 	@Override
-	public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-		renderBackground(context, mouseX, mouseY, delta);
-		super.render(context, mouseX, mouseY, delta);
-		drawMouseoverTooltip(context, mouseX, mouseY);
-	}
-
-	@Override
-	protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
-		int i = (width - backgroundWidth) / 2;
-		int j = (height - backgroundHeight) / 2;
-		context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, i, j, 0, 0, backgroundWidth, backgroundHeight, 256, 256);
+	public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+		super.extractBackground(graphics, mouseX, mouseY, a);
+		int i = (width - imageWidth) / 2;
+		int j = (height - imageHeight) / 2;
+		graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, i, j, 0, 0, imageWidth, imageHeight, 256, 256);
 	}
 }

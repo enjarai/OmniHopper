@@ -1,74 +1,74 @@
 package nl.enjarai.omnihopper.datagen;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.recipe.ShapedRecipeJsonBuilder;
-import net.minecraft.data.recipe.ShapelessRecipeJsonBuilder;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Items;
 import nl.enjarai.omnihopper.blocks.ModBlocks;
 
 import java.util.concurrent.CompletableFuture;
 
 public class ModRecipes extends FabricRecipeProvider {
-    public ModRecipes(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+    public ModRecipes(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 
     @Override
-    protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
-        return new RecipeGenerator(registryLookup, exporter) {
+    protected RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
+        return new RecipeProvider(registryLookup, exporter) {
             @Override
-            public void generate() {
-                var items = registryLookup.getOrThrow(RegistryKeys.ITEM);
-                ShapedRecipeJsonBuilder.create(items, RecipeCategory.REDSTONE, ModBlocks.FLUID_HOPPER_BLOCK)
+            public void buildRecipes() {
+                var items = registryLookup.lookupOrThrow(Registries.ITEM);
+                ShapedRecipeBuilder.shaped(items, RecipeCategory.REDSTONE, ModBlocks.FLUID_HOPPER_BLOCK)
                         .pattern("c c")
                         .pattern("cBc")
                         .pattern(" c ")
-                        .input('B', Items.BUCKET)
-                        .input('c', Items.COPPER_INGOT)
-                        .criterion("has_copper_ingot", conditionsFromItem(Items.COPPER_INGOT))
-                        .criterion("has_bucket", conditionsFromItem(Items.BUCKET))
-                        .offerTo(exporter);
-                ShapelessRecipeJsonBuilder.create(items, RecipeCategory.REDSTONE, ModBlocks.FLUID_OMNIHOPPER_BLOCK)
-                        .input(ModBlocks.FLUID_HOPPER_BLOCK.asItem())
-                        .input(Items.COPPER_INGOT)
-                        .criterion("has_fluid_hopper", conditionsFromItem(ModBlocks.FLUID_HOPPER_BLOCK.asItem()))
-                        .criterion("has_copper_ingot", conditionsFromItem(Items.COPPER_INGOT))
-                        .offerTo(exporter);
-                ShapedRecipeJsonBuilder.create(items, RecipeCategory.REDSTONE, ModBlocks.OPEN_BOX_BLOCK)
+                        .define('B', Items.BUCKET)
+                        .define('c', Items.COPPER_INGOT)
+                        .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
+                        .unlockedBy("has_bucket", has(Items.BUCKET))
+                        .save(output);
+                ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, ModBlocks.FLUID_OMNIHOPPER_BLOCK)
+                        .requires(ModBlocks.FLUID_HOPPER_BLOCK.asItem())
+                        .requires(Items.COPPER_INGOT)
+                        .unlockedBy("has_fluid_hopper", has(ModBlocks.FLUID_HOPPER_BLOCK.asItem()))
+                        .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
+                        .save(output);
+                ShapedRecipeBuilder.shaped(items, RecipeCategory.REDSTONE, ModBlocks.OPEN_BOX_BLOCK)
                         .pattern("w w")
                         .pattern("w w")
                         .pattern("www")
-                        .input('w', ItemTags.PLANKS)
-                        .criterion("has_planks", conditionsFromTag(ItemTags.PLANKS))
-                        .offerTo(exporter);
-                ShapelessRecipeJsonBuilder.create(items, RecipeCategory.REDSTONE, ModBlocks.OMNIHOPPER_BLOCK)
-                        .input(Items.HOPPER)
-                        .input(Items.COPPER_INGOT)
-                        .criterion("has_hopper", conditionsFromItem(Items.HOPPER))
-                        .criterion("has_copper_ingot", conditionsFromItem(Items.COPPER_INGOT))
-                        .offerTo(exporter);
-                ShapedRecipeJsonBuilder.create(items, RecipeCategory.REDSTONE, ModBlocks.WOODEN_HOPPER_BLOCK)
+                        .define('w', ItemTags.PLANKS)
+                        .unlockedBy("has_planks", has(ItemTags.PLANKS))
+                        .save(output);
+                ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, ModBlocks.OMNIHOPPER_BLOCK)
+                        .requires(Items.HOPPER)
+                        .requires(Items.COPPER_INGOT)
+                        .unlockedBy("has_hopper", has(Items.HOPPER))
+                        .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
+                        .save(output);
+                ShapedRecipeBuilder.shaped(items, RecipeCategory.REDSTONE, ModBlocks.WOODEN_HOPPER_BLOCK)
                         .pattern("w w")
                         .pattern("wCw")
                         .pattern(" w ")
-                        .input('C', Items.CHEST)
-                        .input('w', ItemTags.PLANKS)
-                        .criterion("has_chest", conditionsFromItem(Items.CHEST))
-                        .criterion("has_planks", conditionsFromTag(ItemTags.PLANKS))
-                        .offerTo(exporter);
-                ShapelessRecipeJsonBuilder.create(items, RecipeCategory.REDSTONE, ModBlocks.WOODEN_OMNIHOPPER_BLOCK)
-                        .input(ModBlocks.WOODEN_HOPPER_BLOCK.asItem())
-                        .input(Items.COPPER_INGOT)
-                        .criterion("has_wooden_hopper", conditionsFromItem(ModBlocks.WOODEN_HOPPER_BLOCK.asItem()))
-                        .criterion("has_copper_ingot", conditionsFromItem(Items.COPPER_INGOT))
-                        .offerTo(exporter);
+                        .define('C', Items.CHEST)
+                        .define('w', ItemTags.PLANKS)
+                        .unlockedBy("has_chest", has(Items.CHEST))
+                        .unlockedBy("has_planks", has(ItemTags.PLANKS))
+                        .save(output);
+                ShapelessRecipeBuilder.shapeless(items, RecipeCategory.REDSTONE, ModBlocks.WOODEN_OMNIHOPPER_BLOCK)
+                        .requires(ModBlocks.WOODEN_HOPPER_BLOCK.asItem())
+                        .requires(Items.COPPER_INGOT)
+                        .unlockedBy("has_wooden_hopper", has(ModBlocks.WOODEN_HOPPER_BLOCK.asItem()))
+                        .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
+                        .save(output);
             }
         };
     }

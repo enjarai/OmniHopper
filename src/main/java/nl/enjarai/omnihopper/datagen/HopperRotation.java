@@ -1,12 +1,13 @@
 package nl.enjarai.omnihopper.datagen;
 
-import net.minecraft.util.math.AxisRotation;
-import net.minecraft.util.math.Direction;
-
 import java.util.Map;
-import static net.minecraft.util.math.AxisRotation.*;
+import net.minecraft.core.Direction;
 
-public record HopperRotation(Direction modelDirection, AxisRotation rotX, AxisRotation rotY) {
+import static com.mojang.math.Quadrant.*;
+
+import com.mojang.math.Quadrant;
+
+public record HopperRotation(Direction modelDirection, Quadrant rotX, Quadrant rotY) {
     public static final Map<Direction, Map<Direction, HopperRotation>> ALL = Map.of(
             Direction.UP, Map.of(
                     Direction.UP, new HopperRotation(Direction.UP),
@@ -66,7 +67,7 @@ public record HopperRotation(Direction modelDirection, AxisRotation rotX, AxisRo
         this(modelDirection, R0, R0);
     }
 
-    public HopperRotation(Direction modelDirection, AxisRotation rotX) {
+    public HopperRotation(Direction modelDirection, Quadrant rotX) {
         this(modelDirection, rotX, R0);
     }
 }

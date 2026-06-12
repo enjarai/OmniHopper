@@ -1,36 +1,41 @@
 package nl.enjarai.omnihopper.blocks;
 
+import com.mojang.math.Quadrant;
 import com.mojang.serialization.MapCodec;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.BlockStateVariantMap;
-import net.minecraft.client.data.ModelIds;
-import net.minecraft.client.data.VariantsBlockModelDefinitionCreator;
-import net.minecraft.client.render.model.json.ModelVariant;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.Pair;
-import net.minecraft.util.math.AxisRotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.tick.ScheduledTickView;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
+import net.minecraft.client.renderer.block.dispatch.Variant;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.Tuple;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import nl.enjarai.omnihopper.blocks.entity.OpenBoxBlockEntity;
 import nl.enjarai.omnihopper.util.DatagenBlock;
 import nl.enjarai.omnihopper.util.HasTooltip;
@@ -38,18 +43,18 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 
-public class OpenBoxBlock extends BlockWithEntity implements DatagenBlock, HasTooltip, Waterloggable {
-    public static final EnumProperty<Direction> FACING = Properties.FACING;
-    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+public class OpenBoxBlock extends BaseEntityBlock implements DatagenBlock, HasTooltip, SimpleWaterloggedBlock {
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final VoxelShape[] SHAPES = new VoxelShape[6];
 
     static {
         for (var direction : Direction.values()) {
             var index = direction.ordinal();
 
-            var squish = direction.getVector().multiply(2);
-            var offset = direction.getVector().multiply(-3);
-            var shape = createCuboidShape(
+            var squish = direction.getUnitVec3i().multiply(2);
+            var offset = direction.getUnitVec3i().multiply(-3);
+            var shape = box(
                     1 + Math.abs(squish.getX()) + offset.getX(),
                     1 + Math.abs(squish.getY()) + offset.getY(),
                     1 + Math.abs(squish.getZ()) + offset.getZ(),
@@ -62,85 +67,85 @@ public class OpenBoxBlock extends BlockWithEntity implements DatagenBlock, HasTo
         }
     }
 
-    public OpenBoxBlock(Settings settings) {
+    public OpenBoxBlock(Properties settings) {
         super(settings);
-        setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.UP).with(WATERLOGGED, false));
+        registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.UP).setValue(WATERLOGGED, false));
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        super.appendProperties(builder.add(FACING, WATERLOGGED));
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder.add(FACING, WATERLOGGED));
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return SHAPES[state.get(FACING).ordinal()];
-    }
-
-    @Nullable
-    @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        var fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
-        return getDefaultState().with(FACING, ctx.getSide()).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
-    }
-
-    @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return SHAPES[state.getValue(FACING).ordinal()];
     }
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        var fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
+        return defaultBlockState().setValue(FACING, ctx.getClickedFace()).setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new OpenBoxBlockEntity(pos, state);
     }
 
     @Override
     public Set<TagKey<Block>> getConfiguredTags() {
-        return Set.of(BlockTags.AXE_MINEABLE);
+        return Set.of(BlockTags.MINEABLE_WITH_AXE);
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        if (state.get(WATERLOGGED)) {
-            return Fluids.WATER.getStill(false);
+        if (state.getValue(WATERLOGGED)) {
+            return Fluids.WATER.getSource(false);
         }
         return super.getFluidState(state);
     }
 
     @Override
-    public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
-        return Waterloggable.super.tryFillWithFluid(world, pos, state, fluidState);
+    public boolean placeLiquid(LevelAccessor world, BlockPos pos, BlockState state, FluidState fluidState) {
+        return SimpleWaterloggedBlock.super.placeLiquid(world, pos, state, fluidState);
     }
 
     @Override
-    public boolean canFillWithFluid(@Nullable LivingEntity filler, BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
-        return Waterloggable.super.canFillWithFluid(filler, world, pos, state, fluid);
+    public boolean canPlaceLiquid(@Nullable LivingEntity filler, BlockGetter world, BlockPos pos, BlockState state, Fluid fluid) {
+        return SimpleWaterloggedBlock.super.canPlaceLiquid(filler, world, pos, state, fluid);
     }
 
     @Override
-    protected BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
-        if (state.get(WATERLOGGED)) {
-            tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+    protected BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+        if (state.getValue(WATERLOGGED)) {
+            tickView.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
         }
-        return super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
+        return super.updateShape(state, world, tickView, pos, direction, neighborPos, neighborState, random);
     }
 
     @Override
     @Environment(EnvType.CLIENT)
-    public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        var variants = BlockStateVariantMap.SingleProperty.models(OpenBoxBlock.FACING);
+    public void generateBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
+        var variants = PropertyDispatch.C1.initial(OpenBoxBlock.FACING);
 
         variants.generate(
                 direction -> {
                     var rotations = rotationFromDirection(direction);
-                    return BlockStateModelGenerator.createWeightedVariant(
-                            new ModelVariant(
-                                    ModelIds.getBlockModelId(this),
-                                    new ModelVariant.ModelState(
-                                            rotations.getLeft(),
-                                            rotations.getRight(),
-                                            AxisRotation.R0,
+                    return BlockModelGenerators.variant(
+                            new Variant(
+                                    ModelLocationUtils.getModelLocation(this),
+                                    new Variant.SimpleModelState(
+                                            rotations.getA(),
+                                            rotations.getB(),
+                                            Quadrant.R0,
                                             false
                                     )
                             )
@@ -149,24 +154,24 @@ public class OpenBoxBlock extends BlockWithEntity implements DatagenBlock, HasTo
                 }
         );
 
-        blockStateModelGenerator.blockStateCollector.accept(
-                VariantsBlockModelDefinitionCreator.of(this).with(variants)
+        blockStateModelGenerator.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(this).with(variants)
         );
     }
 
-    private static Pair<AxisRotation, AxisRotation> rotationFromDirection(Direction dir) {
+    private static Tuple<Quadrant, Quadrant> rotationFromDirection(Direction dir) {
         return switch (dir) {
-            case DOWN -> new Pair<>(AxisRotation.R180, AxisRotation.R0);
-            case UP -> new Pair<>(AxisRotation.R0, AxisRotation.R0);
-            case NORTH -> new Pair<>(AxisRotation.R90, AxisRotation.R0);
-            case SOUTH -> new Pair<>(AxisRotation.R270, AxisRotation.R0);
-            case WEST -> new Pair<>(AxisRotation.R270, AxisRotation.R90);
-            case EAST -> new Pair<>(AxisRotation.R90, AxisRotation.R90);
+            case DOWN -> new Tuple<>(Quadrant.R180, Quadrant.R0);
+            case UP -> new Tuple<>(Quadrant.R0, Quadrant.R0);
+            case NORTH -> new Tuple<>(Quadrant.R90, Quadrant.R0);
+            case SOUTH -> new Tuple<>(Quadrant.R270, Quadrant.R0);
+            case WEST -> new Tuple<>(Quadrant.R270, Quadrant.R90);
+            case EAST -> new Tuple<>(Quadrant.R90, Quadrant.R90);
         };
     }
 
     @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return null;
     }
 }

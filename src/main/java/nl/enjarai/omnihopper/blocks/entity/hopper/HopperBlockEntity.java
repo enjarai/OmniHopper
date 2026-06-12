@@ -2,34 +2,34 @@ package nl.enjarai.omnihopper.blocks.entity.hopper;
 
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
-import net.gnomecraft.cooldowncoordinator.CooldownCoordinator;
+import net.gnomecraft.cooldowncoordinator   .CooldownCoordinator;
 import net.gnomecraft.cooldowncoordinator.CoordinatedCooldown;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HopperBlock;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.text.Text;
-import net.minecraft.text.TextCodecs;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Nameable;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentSerialization;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.Nameable;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.HopperBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.BlockHitResult;
 import nl.enjarai.omnihopper.blocks.entity.hopper.behaviour.HopperBehaviour;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class HopperBlockEntity<T> extends BlockEntity implements CoordinatedCooldown, NamedScreenHandlerFactory, Nameable {
+public abstract class HopperBlockEntity<T> extends BlockEntity implements CoordinatedCooldown, MenuProvider, Nameable {
     protected int transferCooldown;
     protected long lastTickTime;
-    private Text customName;
+    private Component customName;
     protected HopperBehaviour<T> behaviour;
 
     public HopperBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -42,35 +42,35 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
     public abstract Direction getPointyDirection(BlockState state);
 
     @Override
-    protected void readData(ReadView view) {
-        super.readData(view);
-        view.read("CustomName", TextCodecs.CODEC).ifPresent(name -> customName = name);
-        transferCooldown = view.getInt("TransferCooldown", 0);
+    protected void loadAdditional(ValueInput view) {
+        super.loadAdditional(view);
+        view.read("CustomName", ComponentSerialization.CODEC).ifPresent(name -> customName = name);
+        transferCooldown = view.getIntOr("TransferCooldown", 0);
         behaviour.readData(view);
     }
 
     @Override
-    protected void writeData(WriteView view) {
-        super.writeData(view);
+    protected void saveAdditional(ValueOutput view) {
+        super.saveAdditional(view);
         if (customName != null) {
-            view.put("CustomName", TextCodecs.CODEC, customName);
+            view.store("CustomName", ComponentSerialization.CODEC, customName);
         }
         view.putInt("TransferCooldown", transferCooldown);
         behaviour.writeData(view);
     }
 
-    public void tick(World world, BlockPos pos, BlockState state) {
+    public void tick(Level world, BlockPos pos, BlockState state) {
         --transferCooldown;
-        lastTickTime = world.getTime();
+        lastTickTime = world.getGameTime();
         if (!needsCooldown()) {
             setTransferCooldown(0);
             insertAndExtract(world, pos, state);
         }
     }
 
-    protected void insertAndExtract(World world, BlockPos pos, BlockState state) {
-        if (!world.isClient()) {
-            if (!needsCooldown() && state.get(HopperBlock.ENABLED)) {
+    protected void insertAndExtract(Level world, BlockPos pos, BlockState state) {
+        if (!world.isClientSide()) {
+            if (!needsCooldown() && state.getValue(HopperBlock.ENABLED)) {
                 boolean bl;
 
                 bl = insert(world, pos, state);
@@ -79,15 +79,15 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
 
                 if (bl) {
                     setTransferCooldown(behaviour.getCooldown());
-                    markDirty(world, pos, state);
+                    setChanged(world, pos, state);
                 }
             }
         }
     }
 
-    protected boolean insert(World world, BlockPos pos, BlockState state) {
+    protected boolean insert(Level world, BlockPos pos, BlockState state) {
         Direction direction = getPointyDirection(state);
-        BlockPos targetPos = pos.offset(direction);
+        BlockPos targetPos = pos.relative(direction);
         Storage<T> target = behaviour.getBlockApiLookup().find(world, targetPos, direction.getOpposite());
 
         if (target != null) {
@@ -109,9 +109,9 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
         return false;
     }
 
-    protected boolean extract(World world, BlockPos pos, BlockState state) {
+    protected boolean extract(Level world, BlockPos pos, BlockState state) {
         Direction suckyDirection = getSuckyDirection(state);
-        BlockPos sourcePos = pos.offset(suckyDirection);
+        BlockPos sourcePos = pos.relative(suckyDirection);
         Storage<T> source = behaviour.getBlockApiLookup().find(world, sourcePos, suckyDirection.getOpposite());
 
         if (source != null) {
@@ -130,17 +130,17 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
 
     @Override
     public void notifyCooldown() {
-        if (world == null || this.isDisabled()) {
+        if (level == null || this.isDisabled()) {
             return;
         }
 
-        if (this.lastTickTime >= world.getTime()) {
+        if (this.lastTickTime >= level.getGameTime()) {
             this.transferCooldown = behaviour.getCooldown() - 1;
         } else {
             this.transferCooldown = behaviour.getCooldown();
         }
 
-        this.markDirty();
+        this.setChanged();
     }
 
     public HopperBehaviour<T> getBehaviour() {
@@ -149,12 +149,12 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
 
     @Nullable
     @Override
-    public Text getCustomName() {
+    public Component getCustomName() {
         return customName;
     }
 
     @Override
-    public Text getDisplayName() {
+    public Component getDisplayName() {
         return getCustomName() != null
                ? getCustomName()
                : getName();
@@ -172,17 +172,17 @@ public abstract class HopperBlockEntity<T> extends BlockEntity implements Coordi
         return this.transferCooldown > behaviour.getCooldown();
     }
 
-    public void setCustomName(Text name) {
+    public void setCustomName(Component name) {
         customName = name;
     }
 
     @Nullable
     @Override
-    public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
+    public AbstractContainerMenu createMenu(int syncId, Inventory playerInventory, Player player) {
         return behaviour.createMenu(syncId, playerInventory, player);
     }
 
-    public ActionResult onUseWithItem(PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public InteractionResult onUseWithItem(Player player, InteractionHand hand, BlockHitResult hit) {
         return behaviour.onUseWithItem(player, hand, hit);
     }
 }

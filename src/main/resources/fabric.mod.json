@@ -36,12 +36,12 @@
   ],
   "accessWidener" : "omnihopper.accesswidener",
   "depends": {
-    "cooldown-coordinator": ">=0.7.2",
-    "cicada": ">=0.8.0 <1.0.0",
-    "fabric": "*",
-    "fabricloader": ">=0.15",
-    "minecraft": "1.21.x",
-    "java": ">=21"
+    "cooldown-coordinator": ">=0.10.0-",
+    "cicada": ">=0.15.1 <1.0.0",
+    "fabric-api": "*",
+    "fabricloader": ">=0.19.2",
+    "minecraft": "26.1.x",
+    "java": ">=25"
   },
   "custom": {
     "modmenu": {

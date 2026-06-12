@@ -1,29 +1,29 @@
 package nl.enjarai.omnihopper.blocks.hopper;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Oxidizable;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.WeatheringCopper;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class OxidizableFluidHopperBlock extends FluidHopperBlock implements Oxidizable {
+public class OxidizableFluidHopperBlock extends FluidHopperBlock implements WeatheringCopper {
 
-    public OxidizableFluidHopperBlock(OxidationLevel degradationLevel, Settings settings) {
+    public OxidizableFluidHopperBlock(WeatherState degradationLevel, Properties settings) {
         super(degradationLevel, settings);
     }
 
     @Override
-    public OxidationLevel getDegradationLevel() {
+    public WeatherState getAge() {
         return degradationLevel;
     }
 
     @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        tickDegradation(state, world, pos, random);
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+        changeOverTime(state, world, pos, random);
     }
 
     @Override
-    public boolean hasRandomTicks(BlockState state) {
-        return Oxidizable.getIncreasedOxidationBlock(state.getBlock()).isPresent();
+    public boolean isRandomlyTicking(BlockState state) {
+        return WeatheringCopper.getNext(state.getBlock()).isPresent();
     }
 }
